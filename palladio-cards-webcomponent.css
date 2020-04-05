@@ -1,0 +1,64 @@
+palladio-cards-component:not(:defined) {
+  height: 100px;
+  opacity: 0;
+}
+
+palladio-cards-component {
+  display: block;
+  margin: 20px;
+  overflow-x: hidden;
+  transition: opacity 2s ease-in-out;
+}
+
+.list-title {
+  font-size: 14px;
+  line-height: normal;
+}
+
+.list-image {
+  height: 130px;
+  width: 100px;
+  float: left;
+  background-size: cover;
+  background-position: top center;
+  border: none;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+  background-color: #ddd;
+  color: #bbb;
+  font-size: 12px;
+
+  padding: 20px;
+  text-align: center;
+
+  display: box;
+  box-pack: center;
+  box-align: center;
+}
+
+.list-subtitle {
+  color: #888;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.list-text {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.list-link {
+  text-decoration: none;
+  color: black;
+}
+
+.list-box {
+  height: 150px;
+  padding: 10px;
+  background: #e5e5e5;
+  margin-bottom: 15px;
+}
+
+.list-box:hover {
+  background-color: #ccc;
+}

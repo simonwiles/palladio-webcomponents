@@ -1,0 +1,30 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+  <h1>Palladio WebComponents</h1>
+
+  <input type="file" id="project-file">
+  <br>
+  <input type="text" id="project-url" value="sample_data/Cushman_500.palladio.1.2.9.json">
+  <br>
+  <input type="button" id="load" value="load">
+
+  <!-- <palladio-cards-component project-url="sample_data/Cushman_500.palladio.1.2.9.json" /> -->
+  <palladio-cards-component />
+
+  <script src="palladio-cards-webcomponent.js"></script>
+
+  <script>
+    document.querySelector("#load").addEventListener("click", e => {
+      const projectUrl = document.querySelector("#project-url").value;
+      document.querySelector("palladio-cards-component").setAttribute("project-url", projectUrl);
+    });
+  </script>
+</body>
+
+</html>
