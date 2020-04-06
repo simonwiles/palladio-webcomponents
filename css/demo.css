@@ -13,6 +13,10 @@ input[type="file"]::-webkit-file-upload-button {
   vertical-align: middle;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 header,
 main {
   padding: 0 2em;
@@ -60,7 +64,7 @@ footer svg {
   display: grid;
   font-size: 80%;
   grid-gap: 10px;
-  grid-template-columns: auto 180px;
+  grid-template-columns: auto 200px;
   margin-bottom: 1em;
   max-width: 800px;
   padding: 0.25em;
@@ -74,11 +78,42 @@ footer svg {
 
 #palladio-components {
   display: none;
+  margin-top: 1em;
 }
 
-#palladio-components > div {
-  outline: 1px dashed grey;
-  padding: 0.25em;
+#palladio-components > details {
+  overflow: hidden;
+}
+
+#palladio-components > details:hover {
+  outline: 1px dotted darkgrey;
+  outline-offset: 0.5em;
+}
+
+#palladio-components > details > summary {
+  background-color: var(--main);
+  border-radius: 0.15em;
+  color: white;
+  cursor: pointer;
+  padding: 0.25em 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#palladio-components > details[open] summary ~ * {
+  animation: slide-in 0.5s ease-in-out;
+  position: relative;
+  z-index: -1;
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .error-msg {

@@ -1,13 +1,5 @@
-palladio-cards-component:not(:defined) {
-  height: 100px;
-  opacity: 0;
-}
-
-palladio-cards-component {
+:host {
   display: block;
-  margin: 20px;
-  overflow-x: hidden;
-  transition: opacity 2s ease-in-out;
 }
 
 body {
