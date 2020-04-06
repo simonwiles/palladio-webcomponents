@@ -1,79 +1,14 @@
+import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
+
 window.customElements.define(
   "palladio-cards-component",
-  class extends HTMLElement {
-    static get observedAttributes() {
-      return ["project-url"];
-    }
-
-    attributeChangedCallback(attrName, oldValue, newValue) {
-      if (attrName === "project-url" && newValue !== null) {
-        this.getDataFromUrl(newValue).then((data) => {
-          if (data) this.render(data);
-        });
-      }
-    }
-
+  class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.attachShadow({ mode: "open" });
-    }
-
-    connectedCallback() {
-      const { shadowRoot } = this;
-      shadowRoot.innerHTML = "";
-      let styling = document.createRange().createContextualFragment(`
-          <link rel="stylesheet" type="text/css"
-            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
-          <link rel="stylesheet" type="text/css" href="palladio-cards-webcomponent.css"></link>
-        `);
-      shadowRoot.appendChild(styling);
-
-      // working with a "body" element in the shadow root is necessary
-      //  if the bootstrap styles are to work properly
-      this.body = document.createElement("body");
-      shadowRoot.appendChild(this.body);
-    }
-
-    getDataFromUrl(url) {
-      return fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            console.log("response", response);
-            return this.renderError(`
-                <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
-              `);
-          }
-          return response.json();
-        })
-        .catch((response) => {
-          // TODO: how do we end up here, what does the response look like, and what should the error message be?
-          console.log("response", response);
-          return this.renderError(response);
-        });
-    }
-
-    getSettings(data) {
-      try {
-        return data.vis.find((_vis) => _vis.type === "listView").importJson;
-      } catch (e) {
-        return false;
-      }
-    }
-
-    getRows(data) {
-      try {
-        return data.files[0].data;
-      } catch (e) {
-        return false;
-      }
-    }
-
-    renderError(error) {
-      this.body.innerHTML = "";
-      const errorMessage = document.createElement("p");
-      errorMessage.classList.add("error-msg");
-      errorMessage.innerHTML = error;
-      this.body.appendChild(errorMessage);
+      this.stylesheets = [
+        "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css",
+        "palladio-cards-webcomponent.css",
+      ];
     }
 
     render(data) {
@@ -91,7 +26,7 @@ window.customElements.define(
         `);
       }
 
-      const settings = this.getSettings(data);
+      const settings = this.getSettings(data, "listView");
       if (!settings) {
         return this.renderError(`
         <details>
