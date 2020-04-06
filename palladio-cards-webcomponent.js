@@ -7,7 +7,7 @@ window.customElements.define(
 
     attributeChangedCallback(attrName, oldValue, newValue) {
       if (attrName === "project-url" && newValue !== null) {
-        this.getDataFromURL().then((data) => {
+        this.getDataFromUrl(newValue).then((data) => {
           if (data) this.render(data);
         });
       }
@@ -33,25 +33,22 @@ window.customElements.define(
       shadowRoot.appendChild(this.body);
     }
 
-    getDataFromURL() {
-      if ("project-url" in this.attributes) {
-        return fetch(this.getAttribute("project-url"))
-          .then((response) => {
-            if (!response.ok) {
-              console.log("response", response);
-              return this.renderError(`
+    getDataFromUrl(url) {
+      return fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            console.log("response", response);
+            return this.renderError(`
                 <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
               `);
-            }
-            this.dataError = false;
-            return response.json();
-          })
-          .catch((response) => {
-            console.log("response", response);
-            return this.renderError(response);
-          });
-      }
-      return Promise.resolve(false);
+          }
+          this.dataError = false;
+          return response.json();
+        })
+        .catch((response) => {
+          console.log("response", response);
+          return this.renderError(response);
+        });
     }
 
     getSettings(data) {
