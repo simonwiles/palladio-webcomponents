@@ -80,8 +80,6 @@ window.customElements.define(
         return this.renderError("No Data!");
       }
 
-      console.log("recevied:", data);
-
       const rows = this.getRows(data);
       if (!rows) {
         return this.renderError(`
