@@ -62,3 +62,16 @@ palladio-cards-component {
 .list-box:hover {
   background-color: #ccc;
 }
+
+.error-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  color: #d8000c;
+  background-color: #ffbaba;
+}
+
+.error-msg pre {
+  background: transparent;
+  border: 0;
+}

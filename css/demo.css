@@ -1,0 +1,73 @@
+html {
+  --main: #556d98;
+}
+
+::selection {
+  background: var(--main);
+  color: white;
+  text-shadow: none;
+}
+
+header,
+main {
+  padding: 0 2em;
+}
+
+header,
+footer {
+  background-color: var(--main);
+  color: white;
+}
+
+main {
+  margin: 2em 0;
+}
+
+header h1 {
+  margin-top: 1.25em;
+}
+
+footer {
+  padding: 0.25em 2em;
+  text-align: right;
+}
+
+footer a {
+  border-bottom: 1px solid transparent;
+  color: white;
+  display: inline-flex;
+  width: fit-content;
+}
+
+footer a:hover {
+  color: white;
+  border-bottom: 1px solid white;
+}
+
+footer svg {
+  margin-right: 0.25em;
+  width: 1em;
+}
+
+.controls {
+  border-radius: 0.25em;
+  border: 1px solid var(--main);
+  display: grid;
+  font-size: 80%;
+  grid-gap: 10px;
+  grid-template-columns: auto 180px;
+  margin-bottom: 1em;
+  max-width: 800px;
+  padding: 0.25em;
+}
+
+.controls > * {
+  margin-bottom: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  height: 100%;
+  vertical-align: middle;
+}

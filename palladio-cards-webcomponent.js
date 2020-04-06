@@ -6,8 +6,10 @@ window.customElements.define(
     }
 
     attributeChangedCallback(attrName, oldValue, newValue) {
-      if (attrName === "project-url" && newValue !== oldValue) {
-        this.render();
+      if (attrName === "project-url" && newValue !== null) {
+        this.getDataFromURL().then((data) => {
+          if (data) this.render(data);
+        });
       }
     }
 
@@ -27,51 +29,83 @@ window.customElements.define(
 
       // working with a "body" element in the shadow root is necessary
       //  if the bootstrap styles are to work properly
-      shadowRoot.appendChild(document.createElement("body"));
-      this.render();
+      this.body = document.createElement("body");
+      shadowRoot.appendChild(this.body);
     }
 
-    _getData() {
+    getDataFromURL() {
       if ("project-url" in this.attributes) {
         return fetch(this.getAttribute("project-url"))
           .then((response) => {
             if (!response.ok) {
-              this.dataError = true;
-              return response.status;
+              console.log("response", response);
+              return this.renderError(`
+                <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
+              `);
             }
             this.dataError = false;
             return response.json();
           })
           .catch((response) => {
-            this.dataError = true;
-            return response;
+            console.log("response", response);
+            return this.renderError(response);
           });
-      } else return Promise.resolve(false);
+      }
+      return Promise.resolve(false);
     }
 
-    render() {
-      const body = this.shadowRoot.querySelector("body");
-      body.innerHTML = "";
-      this._getData().then((data) => {
-        if (!data) {
-          const noData = document.createElement("p");
-          noData.innerHTML = "No Data!";
-          body.appendChild(noData);
-          return;
-        }
+    getSettings(data) {
+      try {
+        return data.vis.find((_vis) => _vis.type === "listView").importJson;
+      } catch (e) {
+        return false;
+      }
+    }
 
-        if (this.dataError) {
-          const noData = document.createElement("p");
-          noData.innerHTML = data;
-          body.appendChild(noData);
-          return;
-        }
+    getRows(data) {
+      try {
+        return data.files[0].data;
+      } catch (e) {
+        return false;
+      }
+    }
 
-        const rows = data.files[0].data;
-        const settings = data.vis.find((_vis) => _vis.type === "listView")
-          .importJson;
+    renderError(error) {
+      this.body.innerHTML = "";
+      const errorMessage = document.createElement("p");
+      errorMessage.classList.add("error-msg");
+      errorMessage.innerHTML = error;
+      this.body.appendChild(errorMessage);
+    }
 
-        const defaultTemplate = `
+    render(data) {
+      if (!data) {
+        return this.renderError("No Data!");
+      }
+
+      console.log("recevied:", data);
+
+      const rows = this.getRows(data);
+      if (!rows) {
+        return this.renderError(`
+        <details>
+          <summary>Malformed project data!</summary>
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        </details>
+        `);
+      }
+
+      const settings = this.getSettings(data);
+      if (!settings) {
+        return this.renderError(`
+        <details>
+          <summary>Gallery Visualization not available!</summary>
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        </details>
+        `);
+      }
+
+      const defaultTemplate = `
         <div class="col-lg-3 col-md-4 col-sm-6 list-wrap">
           <a target="_blank" class="list-link">
             <div class="list-box">
@@ -84,35 +118,34 @@ window.customElements.define(
         </div>
         `;
 
-        const row = document.createElement("div");
-        row.classList.add("row");
-        row.setAttribute("id", "list-display");
+      const row = document.createElement("div");
+      row.classList.add("row");
+      row.setAttribute("id", "list-display");
 
-        if ("sortDim" in settings) {
-          // Need some logic here to sort on non-string types
-          rows.sort((a, b) =>
-            a[settings.sortDim].localeCompare(b[settings.sortDim])
-          );
-        }
+      if ("sortDim" in settings) {
+        // Need some logic here to sort on non-string types
+        rows.sort((a, b) =>
+          a[settings.sortDim].localeCompare(b[settings.sortDim])
+        );
+      }
 
-        rows.forEach((datum) => {
-          let node = document
-            .createRange()
-            .createContextualFragment(defaultTemplate);
-          node.querySelector(".list-link").href = datum[settings.linkDim];
-          node.querySelector(".list-image").style.backgroundImage = `url(${
-            datum[settings.imgurlDim]
-          })`;
-          node.querySelector(".list-title").innerText =
-            datum[settings.titleDim];
-          node.querySelector(".list-subtitle").innerText =
-            datum[settings.subtitleDim];
-          node.querySelector(".list-text").innerText = datum[settings.textDim];
-          row.appendChild(node);
-        });
-
-        body.appendChild(row);
+      rows.forEach((datum) => {
+        let node = document
+          .createRange()
+          .createContextualFragment(defaultTemplate);
+        node.querySelector(".list-link").href = datum[settings.linkDim];
+        node.querySelector(".list-image").style.backgroundImage = `url(${
+          datum[settings.imgurlDim]
+        })`;
+        node.querySelector(".list-title").innerText = datum[settings.titleDim];
+        node.querySelector(".list-subtitle").innerText =
+          datum[settings.subtitleDim];
+        node.querySelector(".list-text").innerText = datum[settings.textDim];
+        row.appendChild(node);
       });
+
+      this.body.innerHTML = "";
+      this.body.appendChild(row);
     }
   }
 );
