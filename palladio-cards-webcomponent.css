@@ -10,6 +10,10 @@ palladio-cards-component {
   transition: opacity 2s ease-in-out;
 }
 
+body {
+  background-color: transparent;
+}
+
 .list-title {
   font-size: 14px;
   line-height: normal;
