@@ -22,7 +22,8 @@ window.customElements.define(
       const { shadowRoot } = this;
       shadowRoot.innerHTML = "";
       let styling = document.createRange().createContextualFragment(`
-          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
+          <link rel="stylesheet" type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
           <link rel="stylesheet" type="text/css" href="palladio-cards-webcomponent.css"></link>
         `);
       shadowRoot.appendChild(styling);
@@ -42,10 +43,10 @@ window.customElements.define(
                 <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
               `);
           }
-          this.dataError = false;
           return response.json();
         })
         .catch((response) => {
+          // TODO: how do we end up here, what does the response look like, and what should the error message be?
           console.log("response", response);
           return this.renderError(response);
         });
