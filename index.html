@@ -26,16 +26,21 @@
     <h1>Palladio WebComponents</h1>
   </header>
   <main>
-    <div class="controls">
+    <div id="controls">
       <input type="file" id="project-file">
       <input type="button" id="load-project-file" value="load from file" class="default">
       <input type="text" id="project-url" value="sample_data/Cushman_500.palladio.1.2.9.json">
       <input type="button" id="load-project-url" value="load from url" class="default">
     </div>
-
-    <div class="palladio-components">
+    <div id="project-details">
+      <p>Load a Palladio project file to begin.</p>
+    </div>
+    <div id="palladio-components">
       <!-- <palladio-cards-component project-url="sample_data/Cushman_500.palladio.1.2.9.json" /> -->
-      <palladio-cards-component></palladio-cards-component>
+      <div>
+        <h4>Gallery</h4>
+        <palladio-cards-component></palladio-cards-component>
+      </div>
     </div>
   </main>
 

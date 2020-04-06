@@ -1,4 +1,4 @@
-html {
+:root {
   --main: #556d98;
 }
 
@@ -6,6 +6,11 @@ html {
   background: var(--main);
   color: white;
   text-shadow: none;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  height: 100%;
+  vertical-align: middle;
 }
 
 header,
@@ -49,7 +54,7 @@ footer svg {
   width: 1em;
 }
 
-.controls {
+#controls {
   border-radius: 0.25em;
   border: 1px solid var(--main);
   display: grid;
@@ -61,13 +66,30 @@ footer svg {
   padding: 0.25em;
 }
 
-.controls > * {
+#controls > * {
   margin-bottom: 0;
   max-width: 100%;
   overflow: hidden;
 }
 
-input[type="file"]::-webkit-file-upload-button {
-  height: 100%;
-  vertical-align: middle;
+#palladio-components {
+  display: none;
+}
+
+#palladio-components > div {
+  outline: 1px dashed grey;
+  padding: 0.25em;
+}
+
+.error-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  color: #d8000c;
+  background-color: #ffbaba;
+}
+
+.error-msg pre {
+  background: transparent;
+  border: 0;
 }
