@@ -34,10 +34,27 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       shadowRoot.appendChild(styling);
     }
 
+    if (this.scripts) {
+      this.scriptsReady = Promise.all(this.scripts.map(this.loadScript));
+    }
+
     // working with a "body" element in the shadow root is necessary
     //  if styles from bootstrap are to work properly
     this.body = document.createElement("body");
     shadowRoot.appendChild(this.body);
+  }
+
+  loadScript(src) {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`head > script[src="${src}"]`) !== null)
+        return resolve();
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      document.head.appendChild(script);
+      script.onload = resolve;
+      script.onerror = reject;
+    });
   }
 
   getDataFromUrl(url) {
