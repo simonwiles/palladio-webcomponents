@@ -122,6 +122,9 @@ footer svg {
   color: white;
   cursor: pointer;
   padding: 0.25em 0.5em;
+}
+
+#palladio-components > details[open] > summary {
   margin-bottom: 0.5em;
 }
 
@@ -129,17 +132,6 @@ footer svg {
   animation: slide-in 0.5s ease-in-out;
   position: relative;
   z-index: -1;
-}
-
-@keyframes slide-in {
-  0% {
-    opacity: 0;
-    transform: translateY(-100px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .error-msg {
@@ -153,4 +145,15 @@ footer svg {
 .error-msg pre {
   background: transparent;
   border: 0;
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
