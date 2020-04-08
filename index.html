@@ -14,13 +14,12 @@
 </head>
 
 <body>
-  <!--[if IE]>
   <p class="browserupgrade">
-    This site and the WebComponents it showcases will not work properly on Internet
-    Explorer. Please <a href="https://browsehappy.com/">upgrade your browser</a> to
-    improve your experience and security.
+    This site and the WebComponents it showcases will not work properly on very old browsers
+    such as Internet Explorer and older versions of MS Edge, or on certain uncommon mobile
+    browsers.<br>Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+    your experience and security.
   </p>
-  <![endif]-->
 
   <header>
     <img src="data:image/png;base64,
@@ -129,6 +128,9 @@
 
   <script type="module" src="palladio-cards-webcomponent.js"></script>
   <script src="demo.js"></script>
+  <script>
+    (!window.customElements) && document.documentElement.setAttribute("data-supported", false);
+  </script>
 
 </body>
 

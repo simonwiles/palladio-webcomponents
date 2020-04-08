@@ -8,6 +8,23 @@
   text-shadow: none;
 }
 
+.browserupgrade {
+  display: none;
+}
+
+html[data-supported="false"] .browserupgrade {
+  display: block;
+  background: yellow;
+  text-align: center;
+  margin-bottom: 0;
+  padding: 0.5em 1em;
+  color: #000;
+}
+
+html[data-supported="false"] .browserupgrade a {
+  text-decoration: underline;
+}
+
 input[type="file"]::-webkit-file-upload-button {
   height: 100%;
   vertical-align: middle;
