@@ -71,6 +71,12 @@ function renderComponents(projectData) {
   document.querySelector("palladio-cards-component").render(projectData);
 }
 
+function handleLoadProjectExample(event) {
+  const projectUrl = document.querySelector("#project-example").value;
+  getDataFromUrl(projectUrl).then(renderComponents);
+  event.target.blur();
+}
+
 function handleLoadProjectUrl(event) {
   const projectUrl = document.querySelector("#project-url").value;
   getDataFromUrl(projectUrl).then(renderComponents);
@@ -94,6 +100,10 @@ function handleLoadProjectFile(event) {
   reader.readAsText(projectFile);
   event.target.blur();
 }
+
+document
+  .querySelector("#load-project-example")
+  .addEventListener("click", handleLoadProjectExample);
 
 document
   .querySelector("#load-project-url")

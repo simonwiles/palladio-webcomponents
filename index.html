@@ -82,11 +82,20 @@
   </header>
   <main>
     <nav>
-      <span class="tab active" data-tab-id="load-url">Load from URL</span>
+      <span class="tab active" data-tab-id="load-example">Load Example</span>
+      <span class="tab" data-tab-id="load-url">Load from URL</span>
       <span class="tab" data-tab-id="load-file">Load from File</span>
     </nav>
-    <div id="load-url" class="tab-content active">
-      <input type="text" id="project-url" value="sample_data/Cushman_500.palladio.1.2.9.json">
+    <div id="load-example" class="tab-content active">
+      <select id="project-example">
+        <option value="example_projects/Cushman_500.palladio.1.2.9.json">Cushman Photographs (500 records)</option>
+        <option value="example_projects/Cushman_Photographs.palladio.1.2.9.json">Cushman Photographs (5,369 records)
+        </option>
+      </select>
+      <input type="button" id="load-project-example" value="load example" class="default">
+    </div>
+    <div id="load-url" class="tab-content">
+      <input type="text" id="project-url" placeholder="URL to Palladio project file">
       <input type="button" id="load-project-url" value="load from url" class="default">
     </div>
     <div id="load-file" class="tab-content">
