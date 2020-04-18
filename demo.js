@@ -44,14 +44,23 @@ function renderDetails(projectData) {
       Description: ${projectData.metadata.description}<br>
       Palladio Version: ${projectData.version}
     </p>
-    <strong>Files:</strong>
+    <div><strong>Files:</strong><ul id="project-files"></ul></div>
+    <div><strong>Visualizations:</strong><ul id="project-visualizations"></ul></div>
   `;
+
+  projectFiles = projectDetails.querySelector("#project-files");
   projectData.files.forEach((file) => {
-    projectDetails.innerHTML += `<br>"${file.label}" (${file.fields.length} fields, ${file.data.length} records)`;
+    const fileItem = document.createElement("li");
+    fileItem.innerHTML = `${file.label} (${file.fields.length} fields, ${file.data.length} records)`;
+    projectFiles.appendChild(fileItem);
   });
-  projectDetails.innerHTML += "<br><strong>Visualizations:</strong>";
+  projectVisualizations = projectDetails.querySelector(
+    "#project-visualizations"
+  );
   projectData.vis.forEach((vis) => {
-    projectDetails.innerHTML += `<br>${visTypesMap[vis.type]}`;
+    const visItem = document.createElement("li");
+    visItem.innerHTML = `${visTypesMap[vis.type]}`;
+    projectVisualizations.appendChild(visItem);
   });
 }
 

@@ -102,6 +102,34 @@ footer svg {
   overflow: hidden;
 }
 
+#project-details div {
+  display: flex;
+  margin: 0.5rem 0;
+}
+
+#project-details div strong {
+  flex: 0 0 150px;
+}
+
+#project-details ul {
+  align-items: center;
+  display: flex;
+  margin: 0;
+}
+
+#project-details li {
+  border-radius: 1rem;
+  border: 2px solid var(--main);
+  color: var(--main);
+  display: inline-block;
+  font-size: 70%;
+  font-weight: bold;
+  list-style: none;
+  margin: 0 0.5rem;
+  padding: 0 1rem;
+  text-transform: uppercase;
+}
+
 #palladio-components {
   display: none;
   margin-top: 1em;
