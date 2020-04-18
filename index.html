@@ -81,11 +81,17 @@
     <h1>Palladio WebComponents</h1>
   </header>
   <main>
-    <div id="controls">
-      <input type="file" id="project-file">
-      <input type="button" id="load-project-file" value="load from file" class="default">
+    <nav>
+      <span class="tab active" data-tab-id="load-url">Load from URL</span>
+      <span class="tab" data-tab-id="load-file">Load from File</span>
+    </nav>
+    <div id="load-url" class="tab-content active">
       <input type="text" id="project-url" value="sample_data/Cushman_500.palladio.1.2.9.json">
       <input type="button" id="load-project-url" value="load from url" class="default">
+    </div>
+    <div id="load-file" class="tab-content">
+      <input type="file" id="project-file">
+      <input type="button" id="load-project-file" value="load from file" class="default">
     </div>
     <div id="project-details">
       <p>Load a Palladio project file to begin.</p>

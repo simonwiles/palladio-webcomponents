@@ -85,22 +85,42 @@ footer svg {
   width: 1em;
 }
 
-#controls {
-  border-radius: 0.4rem;
-  border: 1px solid var(--main);
-  display: grid;
-  font-size: 80%;
-  grid-gap: 10px;
-  grid-template-columns: auto 200px;
-  margin-bottom: 1em;
-  max-width: 800px;
-  padding: 0.25em;
+span.tab {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: var(--secondary);
+  cursor: pointer;
+  border-radius: 0.4rem 0.4rem 0 0;
+}
+span.tab.active {
+  background: var(--main);
 }
 
-#controls > * {
+div.tab-content {
+  display: none;
+}
+div.tab-content.active {
+  display: flex;
+  font-size: 80%;
+  max-width: 800px;
+  padding: 0 1rem;
+  border: 1px solid var(--main);
+  height: 75px;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+}
+
+div.tab-content.active :first-child {
+  flex-grow: 1;
   margin-bottom: 0;
-  max-width: 100%;
-  overflow: hidden;
+}
+
+div.tab-content.active :last-child {
+  flex: 0 0 200px;
+  margin-left: 1rem;
+  margin-bottom: 0;
 }
 
 #project-details ul.metadata {

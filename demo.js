@@ -106,3 +106,18 @@ document.querySelector("#project-url").addEventListener("keypress", (event) => {
 document
   .querySelector("#load-project-file")
   .addEventListener("click", handleLoadProjectFile);
+
+document.querySelectorAll(".tab").forEach((tab) => {
+  tab.addEventListener("click", (e) => {
+    document
+      .querySelectorAll(".tab")
+      .forEach((_tab) => _tab.classList.remove("active"));
+    tab.classList.add("active");
+    document
+      .querySelectorAll(".tab-content")
+      .forEach((tabContent) => tabContent.classList.remove("active"));
+    document
+      .querySelector(`#${tab.getAttribute("data-tab-id")}`)
+      .classList.add("active");
+  });
+});
