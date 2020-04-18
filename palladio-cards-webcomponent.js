@@ -64,10 +64,12 @@ window.customElements.define(
         let node = document
           .createRange()
           .createContextualFragment(defaultTemplate);
-        node.querySelector(".list-link").href = datum[settings.linkDim];
-        node.querySelector(".list-image").style.backgroundImage = `url(${
-          datum[settings.imgurlDim]
-        })`;
+        if (datum[settings.linkDim])
+          node.querySelector(".list-link").href = datum[settings.linkDim];
+        if (datum[settings.imgurlDim])
+          node.querySelector(".list-image").style.backgroundImage = `url(${
+            datum[settings.imgurlDim]
+          })`;
         node.querySelector(".list-title").innerText = datum[settings.titleDim];
         node.querySelector(".list-subtitle").innerText =
           datum[settings.subtitleDim];
