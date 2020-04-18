@@ -844,9 +844,7 @@ main {
  */
 
 body {
-  font-family: "Open Sans", Corbel, "Lucida Grande", "Lucida Sans Unicode",
-    "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans",
-    Verdana, "Verdana Ref", sans-serif;
+  font-family: var(--body-font-stack);
   font-size: 1.8em;
   font-weight: 300;
   line-height: 1.6;
@@ -862,10 +860,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Montserrat", Frutiger, "Frutiger Linotype", Univers, Calibri,
-    "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed",
-    "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue",
-    Helvetica, Arial, sans-serif;
+  font-family: var(--header-font-stack);
   font-weight: 500;
 }
 

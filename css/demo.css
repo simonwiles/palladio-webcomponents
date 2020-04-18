@@ -1,6 +1,13 @@
 :root {
   --main: #556d98;
   --secondary: gainsboro;
+  --body-font-stack: "Open Sans", Corbel, "Lucida Grande", "Lucida Sans Unicode",
+    "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans",
+    Verdana, "Verdana Ref", sans-serif;
+  --header-font-stack: "Montserrat", Frutiger, "Frutiger Linotype", Univers,
+    Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad,
+    "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva,
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 ::selection {
@@ -29,6 +36,10 @@ html[data-supported="false"] .browserupgrade a {
 input[type="file"]::-webkit-file-upload-button {
   height: 100%;
   vertical-align: middle;
+}
+
+select:focus:active {
+  border-radius: 0.4rem 0.4rem 0 0;
 }
 
 body {
@@ -86,13 +97,15 @@ footer svg {
 }
 
 span.tab {
+  background-color: var(--secondary);
+  border-radius: 0.4rem 0.4rem 0 0;
+  color: white;
+  cursor: pointer;
+  font-family: var(--header-font-stack);
   display: inline-block;
   padding: 0.5rem 1rem;
-  color: white;
-  background-color: var(--secondary);
-  cursor: pointer;
-  border-radius: 0.4rem 0.4rem 0 0;
 }
+
 span.tab.active {
   background: var(--main);
 }
@@ -140,19 +153,24 @@ div.tab-content.active :last-child {
 }
 
 #project-details ul.metadata span:first-child {
-  flex: 0 0 auto;
-  padding: 0 1rem;
   background-color: var(--main);
-  text-align: right;
-  color: #fff;
   border-radius: 0.4rem 0 0 0.4rem;
+  color: #fff;
+  flex: 0 0 auto;
+  font-family: var(--header-font-stack);
+  font-size: 80%;
+  padding: 0 1rem;
+  text-align: right;
 }
 
 #project-details ul.metadata span:last-child {
-  padding: 0 1rem;
-  border-radius: 0 0.4rem 0.4rem 0;
-  margin: 0;
+  align-items: center;
   background-color: white;
+  border-radius: 0 0.4rem 0.4rem 0;
+  display: flex;
+  font-size: 80%;
+  margin: 0;
+  padding: 0 1rem;
 }
 
 #project-details div {
@@ -202,6 +220,7 @@ div.tab-content.active :last-child {
   border-radius: 0.15em;
   color: white;
   cursor: pointer;
+  font-family: var(--header-font-stack);
   padding: 0.25em 0.5em;
 }
 
