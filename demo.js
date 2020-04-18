@@ -37,15 +37,15 @@ function renderDetails(projectData) {
   const projectDetails = document.querySelector("#project-details");
   projectDetails.innerHTML = "";
   projectDetails.innerHTML = `
-    <p>
-      Title: ${projectData.metadata.title}<br>
-      Author: ${projectData.metadata.author}<br>
-      Date: ${projectData.metadata.date}<br>
-      Description: ${projectData.metadata.description}<br>
-      Palladio Version: ${projectData.version}
-    </p>
-    <div><strong>Files:</strong><ul id="project-files"></ul></div>
-    <div><strong>Visualizations:</strong><ul id="project-visualizations"></ul></div>
+    <ul class="metadata">
+      <li><span>Title:</span><span>${projectData.metadata.title}</span></li>
+      <li><span>Author:</span><span>${projectData.metadata.author}</span></li>
+      <li><span>Date:</span><span>${projectData.metadata.date}</span></li>
+      <li><span>Palladio Version:</span><span>${projectData.version}</span></li>
+      <li><span>Description:</span><span>${projectData.metadata.description}</span></li>
+    </ul>
+    <div><strong>Files:</strong><ul id="project-files" class="pills"></ul></div>
+    <div><strong>Visualizations:</strong><ul id="project-visualizations" class="pills"></ul></div>
   `;
 
   projectFiles = projectDetails.querySelector("#project-files");

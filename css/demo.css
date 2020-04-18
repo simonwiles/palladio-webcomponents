@@ -1,5 +1,6 @@
 :root {
   --main: #556d98;
+  --secondary: gainsboro;
 }
 
 ::selection {
@@ -85,7 +86,7 @@ footer svg {
 }
 
 #controls {
-  border-radius: 0.25em;
+  border-radius: 0.4rem;
   border: 1px solid var(--main);
   display: grid;
   font-size: 80%;
@@ -102,6 +103,38 @@ footer svg {
   overflow: hidden;
 }
 
+#project-details ul.metadata {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 1rem 1rem 0;
+  background: var(--secondary);
+  border: 1px solid var(--main);
+  border-radius: 0.4rem;
+}
+
+#project-details ul.metadata li {
+  display: flex;
+  border: 1px solid var(--main);
+  border-radius: 0.4rem;
+  margin-right: 1rem;
+}
+
+#project-details ul.metadata span:first-child {
+  flex: 0 0 auto;
+  padding: 0 1rem;
+  background-color: var(--main);
+  text-align: right;
+  color: #fff;
+  border-radius: 0.4rem 0 0 0.4rem;
+}
+
+#project-details ul.metadata span:last-child {
+  padding: 0 1rem;
+  border-radius: 0 0.4rem 0.4rem 0;
+  margin: 0;
+  background-color: white;
+}
+
 #project-details div {
   display: flex;
   margin: 0.5rem 0;
@@ -111,13 +144,13 @@ footer svg {
   flex: 0 0 150px;
 }
 
-#project-details ul {
+#project-details ul.pills {
   align-items: center;
   display: flex;
   margin: 0;
 }
 
-#project-details li {
+#project-details ul.pills li {
   border-radius: 1rem;
   border: 2px solid var(--main);
   color: var(--main);
