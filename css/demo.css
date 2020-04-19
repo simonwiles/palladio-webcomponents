@@ -136,13 +136,20 @@ div.tab-content.active :last-child {
   margin-bottom: 0;
 }
 
-#project-details ul.metadata {
-  display: flex;
-  flex-flow: row wrap;
-  padding: 1rem 1rem 0;
+#project-details {
+  padding: 1rem;
   background: var(--secondary);
   border: 1px solid var(--main);
   border-radius: 0.4rem;
+}
+
+#project-details p {
+  margin: 0;
+}
+
+#project-details ul.metadata {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 #project-details ul.metadata li {
@@ -189,6 +196,7 @@ div.tab-content.active :last-child {
 }
 
 #project-details ul.pills li {
+  background-color: white;
   border-radius: 1rem;
   border: 2px solid var(--main);
   color: var(--main);
