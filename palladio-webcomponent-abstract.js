@@ -83,6 +83,15 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     }
   }
 
+  getFields(data) {
+    // TODO: this is going to need to be able to handle multiple files in a project.
+    try {
+      return data.files[0].fields;
+    } catch (e) {
+      return false;
+    }
+  }
+
   getRows(data) {
     // TODO: this is going to need to be able to handle multiple files in a project.
     try {
