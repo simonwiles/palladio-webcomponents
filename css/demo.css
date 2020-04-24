@@ -83,6 +83,7 @@ footer a {
   border-bottom: 1px solid transparent;
   color: white;
   display: inline-flex;
+  vertical-align: bottom;
   width: fit-content;
 }
 
@@ -94,6 +95,14 @@ footer a:hover {
 footer svg {
   margin-right: 0.25em;
   width: 1em;
+}
+
+footer svg rect {
+  fill: #fff;
+}
+
+footer svg path {
+  fill: var(--main);
 }
 
 span.tab {
