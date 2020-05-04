@@ -227,6 +227,7 @@ div.tab-content.active :last-child {
 }
 
 #palladio-components > details {
+  margin-bottom: 1em;
   overflow: hidden;
 }
 
