@@ -55,7 +55,7 @@ function renderDetails(projectData) {
     projectFiles.appendChild(fileItem);
   });
   projectVisualizations = projectDetails.querySelector(
-    "#project-visualizations"
+    "#project-visualizations",
   );
   projectData.vis.forEach((vis) => {
     const visItem = document.createElement("li");
@@ -68,6 +68,7 @@ function renderComponents(projectData) {
   if (!projectData) return;
   renderDetails(projectData);
   document.querySelector("#palladio-components").style.display = "block";
+  document.querySelector("palladio-map-component").render(projectData);
   document.querySelector("palladio-cards-component").render(projectData);
 }
 
