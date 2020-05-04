@@ -75,6 +75,8 @@
       <select id="project-example">
         <option value="example_projects/Cushman_500.palladio.1.2.9.json">Cushman Photographs (500 records)</option>
         <option value="example_projects/Cushman_Photographs.palladio.1.2.9.json">Cushman Photographs (5,369 records)
+        <option value="example_projects/Taiwanese_Buddhist_Temples.palladio.1.2.9.json">Buddhist Temples in Taiwan
+          (2,404 records)
         </option>
       </select>
       <input type="button" id="load-project-example" value="load example" class="default">
@@ -92,6 +94,10 @@
     </div>
     <div id="palladio-components">
       <details open>
+        <summary>Map</summary>
+        <palladio-map-component></palladio-map-component>
+      </details>
+      <details>
         <summary>Gallery</summary>
         <palladio-cards-component></palladio-cards-component>
       </details>
@@ -109,6 +115,7 @@
       </svg>GitHub</a>
   </footer>
 
+  <script type="module" src="palladio-map-webcomponent.js"></script>
   <script type="module" src="palladio-cards-webcomponent.js"></script>
   <script src="demo.js"></script>
   <script>
