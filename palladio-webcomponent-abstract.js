@@ -27,9 +27,9 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
           `${this.stylesheets
             .map(
               (stylesheet) =>
-                `<link rel="stylesheet" type="text/css" href="${stylesheet}">`
+                `<link rel="stylesheet" type="text/css" href="${stylesheet}">`,
             )
-            .join("\n")}`
+            .join("\n")}`,
         );
       shadowRoot.appendChild(styling);
     }
@@ -46,13 +46,21 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
   loadScript(src) {
     return new Promise((resolve, reject) => {
-      if (document.querySelector(`head > script[src="${src}"]`) !== null)
-        return resolve();
-      const script = document.createElement("script");
+      let script = document.querySelector(`head > script[src="${src}"]`);
+      if (script !== null) {
+        if (script.getAttribute("data-loaded") == "true") return resolve();
+        script.addEventListener("load", resolve);
+        script.addEventListener("error", reject);
+        return;
+      }
+      script = document.createElement("script");
       script.src = src;
       script.async = true;
       document.head.appendChild(script);
-      script.onload = resolve;
+      script.onload = () => {
+        script.setAttribute("data-loaded", true);
+        resolve();
+      };
       script.onerror = reject;
     });
   }
