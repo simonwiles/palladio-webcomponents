@@ -16051,10 +16051,10 @@
   "links": [],
   "layout": "grid",
   "metadata": {
-    "title": "Cushman 500",
-    "author": null,
-    "date": null,
-    "description": null
+    "title": "Cushman Photographs",
+    "author": "Palladio-WebComponents Examples",
+    "date": "2020",
+    "description": "Visualizations from the Charles Weever Cushman Collection of photographs at Indiana University (http://webapp1.dlib.indiana.edu/cushman/index.jsp).\n\nThese visualizations were prepared according to Miriam Posner's \"Getting started with Palladio\" tutorial (https://miriamposner.com/blog/getting-started-with-palladio/) and are based on Miriam's preparation of a subset of the Cushman Collection metadata.  This project file contains the first 500 records."
   },
   "vis": [
     {

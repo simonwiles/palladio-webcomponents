@@ -24231,7 +24231,7 @@
         "description": "LAT/LONG",
         "enabled": true,
         "layerType": "data",
-        "descriptiveDimKey": "NAME-py",
+        "descriptiveDimKey": "NAME-zh",
         "mapping":
         {
           "sourceCoordinatesKey": "LAT/LONG",
