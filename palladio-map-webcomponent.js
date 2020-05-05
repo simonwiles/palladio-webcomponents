@@ -42,16 +42,28 @@ window.customElements.define(
       // iterate tile set layers in reverse order
       // (see palladio-map-view.js:1138)
       [...tileSets].reverse().forEach((tileSet, i) => {
-        const layer = L.tileLayer(
-          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-          {
-            maxZoom: this.mapConfig.maxZoom,
-            id: this.mapMap[tileSet.mbId],
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: this.mapConfig.accessToken,
-          },
-        ).addTo(this.map);
+        if ("mbId" in tileSet) {
+          const layer = L.tileLayer(
+            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+            {
+              maxZoom: this.mapConfig.maxZoom,
+              //id: this.mapMap[tileSet.mbId],
+              id: "mapbox/light-v9",
+              tileSize: 512,
+              zoomOffset: -1,
+              accessToken: this.mapConfig.accessToken,
+            },
+          ).addTo(this.map);
+        }
+        if ("wmsUrl" in tileSet) {
+          const layer = L.tileLayer
+            .wms(tileSet.wmsUrl, {
+              layers: tileSet.wmsLayers,
+              format: "image/png",
+              transparent: true,
+            })
+            .addTo(this.map);
+        }
       });
     }
 
