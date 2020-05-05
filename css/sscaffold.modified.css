@@ -199,7 +199,7 @@ textarea {
   /* Set the font styles to match the rest of the document in
 	   all browsers. [1],[4] */
   font: inherit;
-  line-height: 1.15;
+  /* line-height: 1.15; */
   /* Remove the margin in Firefox and Safari. [1] */
   margin: 0;
 }
