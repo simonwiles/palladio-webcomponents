@@ -8,10 +8,6 @@ window.customElements.define(
       this.stylesheets = ["https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"];
       this.scripts = ["https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"];
 
-      this.mapMap = {
-        "cesta.hd9ak6ie": "mapbox/light-v9",
-      };
-
       this.mapConfig = {
         center: [45.464, 9.1916],
         zoom: 3,
@@ -44,11 +40,12 @@ window.customElements.define(
       [...tileSets].reverse().forEach((tileSet, i) => {
         if ("mbId" in tileSet) {
           const layer = L.tileLayer(
-            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+            // The Palladio tilesets are MapBox "Classic Projects" that contain raster tiles.
+            // see: https://docs.mapbox.com/api/maps/#raster-tiles
+            "https://api.mapbox.com/v4/{id}/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}",
             {
               maxZoom: this.mapConfig.maxZoom,
-              //id: this.mapMap[tileSet.mbId],
-              id: "mapbox/light-v9",
+              id: tileSet.mbId,
               tileSize: 512,
               zoomOffset: -1,
               accessToken: this.mapConfig.accessToken,
