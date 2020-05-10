@@ -1,0 +1,32 @@
+body {
+  background: #eee;
+}
+
+.links line {
+  stroke: #ccc;
+  stroke-opacity: 1;
+  stroke-width: 1;
+}
+
+/* .nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+} */
+
+text {
+  color: #565a5c;
+  font-family: karla, Arial, Helvetica;
+  font-size: 11px;
+}
+
+.nodes circle {
+  cursor: pointer;
+  fill-opacity: 0.95;
+  fill: #bbbbbb;
+  stroke-width: 2px;
+  stroke: #eee;
+}
+
+.node.highlighted {
+  fill: #666;
+}
