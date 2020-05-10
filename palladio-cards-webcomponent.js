@@ -56,7 +56,7 @@ window.customElements.define(
       if ("sortDim" in settings) {
         // Need some logic here to sort on non-string types
         rows.sort((a, b) =>
-          a[settings.sortDim].localeCompare(b[settings.sortDim])
+          a[settings.sortDim].localeCompare(b[settings.sortDim]),
         );
       }
 
@@ -80,5 +80,5 @@ window.customElements.define(
       this.body.innerHTML = "";
       this.body.appendChild(row);
     }
-  }
+  },
 );
