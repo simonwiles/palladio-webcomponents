@@ -16,13 +16,7 @@ window.customElements.define(
         highlightTarget,
       } = settings;
 
-      const svg = d3
-          .select(this.svg)
-          .call(
-            d3
-              .zoom()
-              .on("zoom", () => svg.attr("transform", d3.event.transform)),
-          ),
+      const svg = d3.select(this.svg),
         width = +svg.attr("width"),
         height = +svg.attr("height");
 
