@@ -271,7 +271,14 @@ div.tab-content.active :last-child {
 #palladio-components > details[open] summary ~ * {
   animation: slide-in 0.5s ease-in-out;
   position: relative;
-  z-index: -1;
+}
+
+#palladio-components palladio-map-component,
+#palladio-components palladio-graph-component,
+#palladio-components palladio-cards-component {
+  display: block;
+  margin: 0.5rem;
+  overflow: hidden;
 }
 
 .error-msg {
@@ -290,7 +297,7 @@ div.tab-content.active :last-child {
 @keyframes slide-in {
   0% {
     opacity: 0;
-    transform: translateY(-100px);
+    transform: translateY(+100px);
   }
   100% {
     opacity: 1;
