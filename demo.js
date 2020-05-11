@@ -69,6 +69,7 @@ function renderComponents(projectData) {
   renderDetails(projectData);
   document.querySelector("#palladio-components").style.display = "block";
   document.querySelector("palladio-map-component").render(projectData);
+  document.querySelector("palladio-graph-component").render(projectData);
   document.querySelector("palladio-cards-component").render(projectData);
 }
 
