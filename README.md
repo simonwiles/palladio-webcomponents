@@ -1,8 +1,7 @@
 
 # Palladio Web Components
+<a href="https://app.netlify.com/sites/palladio-webcomponents/deploys"><img src="https://api.netlify.com/api/v1/badges/0867bc87-5b80-4f24-a7e6-23bb73776371/deploy-status" align="right" alt="Netlify Status"></a>
 https://palladio-webcomponets.netlify.app/
-
-[![Netlify Status](https://api.netlify.com/api/v1/badges/0867bc87-5b80-4f24-a7e6-23bb73776371/deploy-status)](https://app.netlify.com/sites/palladio-webcomponents/deploys)
 
 This is an exploratory attempt to redevelop from scratch a minimum viable subset of functionality for Palladio components in the form of modern ES6 web components.
 
