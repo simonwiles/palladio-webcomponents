@@ -12,6 +12,8 @@ window.customElements.define(
     drawGraph(graph, settings) {
       const {
         nodeSize, // whether to size the nodes or not
+        highlightSource,
+        highlightTarget,
       } = settings;
 
       const svg = d3
@@ -81,6 +83,11 @@ window.customElements.define(
                 d.fy = null;
               }),
           );
+
+        if (highlightSource)
+          svg.selectAll(".source").classed("highlighted", true);
+        if (highlightTarget)
+          svg.selectAll(".target").classed("highlighted", true);
 
         const labels = node
           .append("text")

@@ -27,6 +27,6 @@ text {
   stroke: #eee;
 }
 
-.node.highlighted {
+.nodes circle.highlighted {
   fill: #666;
 }
