@@ -55,6 +55,8 @@ select:focus:active {
 body {
   overflow-y: scroll;
   font-size: 1.75em;
+  background-color: #ffffff;
+  background-image: url("old-mathematics.png");
 }
 
 header,
@@ -142,6 +144,7 @@ span.tab.active {
 }
 
 div.tab-content {
+  background-color: #ffffff;
   display: none;
 }
 div.tab-content.active {
@@ -274,7 +277,7 @@ div.tab-content.active :last-child {
 .error-msg {
   margin: 10px 0;
   padding: 10px;
-  border-radius: 3px 3px 3px 3px;
+  border-radius: 0.4rem;
   color: #d8000c;
   background-color: #ffbaba;
 }
