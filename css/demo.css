@@ -270,6 +270,7 @@ div.tab-content.active :last-child {
 
 #palladio-components > details[open] summary ~ * {
   animation: slide-in 0.5s ease-in-out;
+  outline: 1px solid var(--palladio);
   position: relative;
 }
 
