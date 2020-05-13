@@ -119,7 +119,7 @@ window.customElements.define(
 
       this.body.innerHTML = "";
       this.body.appendChild(view);
-      this.body.querySelector("div.map-view").style.height = "400px";
+      this.body.querySelector("div.map-view").style.height = "100%";
 
       this.scriptsReady.then(() => {
         this.initMap();
