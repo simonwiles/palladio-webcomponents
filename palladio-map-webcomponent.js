@@ -45,6 +45,7 @@ window.customElements.define(
             "https://api.mapbox.com/v4/{id}/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}",
             {
               maxZoom: this.mapConfig.maxZoom,
+              minZoom: this.mapConfig.minZoom,
               id: tileSet.mbId,
               tileSize: 512,
               zoomOffset: -1,
