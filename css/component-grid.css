@@ -1,0 +1,39 @@
+.grid-stack {
+  background-color: transparent;
+  transition: background-color 5s ease;
+}
+
+.grid-stack.dragging {
+  background-color: lightgoldenrodyellow;
+}
+
+.grid-stack-item-content {
+  outline: 2px solid var(--palladio);
+}
+
+.grid-stack-item-content .drag-handle {
+  background-color: var(--palladio);
+  cursor: move;
+  height: 30px;
+  text-align: center;
+}
+
+.grid-stack-item-content .drag-handle svg {
+  fill: white;
+  left: 8px;
+  opacity: 0;
+  position: absolute;
+  top: 2px;
+  transition: opacity 0.5s ease;
+}
+
+.grid-stack-item-content:hover .drag-handle svg {
+  opacity: 1;
+}
+
+.grid-stack-item-content .drag-handle span {
+  color: white;
+  position: absolute;
+  right: 8px;
+  top: 0px;
+}

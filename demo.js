@@ -67,10 +67,31 @@ function renderDetails(projectData) {
 function renderComponents(projectData) {
   if (!projectData) return;
   renderDetails(projectData);
-  document.querySelector("#palladio-components").style.display = "block";
-  document.querySelector("palladio-map-component").render(projectData);
-  document.querySelector("palladio-graph-component").render(projectData);
-  document.querySelector("palladio-cards-component").render(projectData);
+
+  [
+    { title: "Map", component: "palladio-map-component" },
+    { title: "Graph", component: "palladio-graph-component" },
+    { title: "Gallery", component: "palladio-cards-component" },
+  ].forEach((component) => {
+    let widget = grid.addWidget(
+      `<div><div class="grid-stack-item-content">
+         <div class="drag-handle">
+           <svg height="24" version="1.1" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><title/><path d="M14.016 15v3h3l-5.016 5.016-5.016-5.016h3v-3h4.031zM23.016 12l-5.016 5.016v-3h-3v-4.031h3v-3zM9 9.984v4.031h-3v3l-5.016-5.016 5.016-5.016v3h3zM9.984 9v-3h-3l5.016-5.016 5.016 5.016h-3v3h-4.031z"/></svg>
+           ${component.title}
+           <span>✕</span>
+         </div>
+         <${component.component}></${component.component}>
+       </div></div>`,
+      {
+        width: 6,
+        height: 6,
+      },
+    );
+    widget.querySelector(component.component).render(projectData);
+    widget
+      .querySelector("span")
+      .addEventListener("click", () => grid.removeWidget(widget));
+  });
 }
 
 function handleLoadProjectExample(event) {
@@ -132,4 +153,27 @@ document.querySelectorAll(".tab").forEach((tab) => {
       .querySelector(`#${tab.getAttribute("data-tab-id")}`)
       .classList.add("active");
   });
+});
+
+const grid = GridStack.init({
+  resizable: {
+    handles: "n, e, se, s, sw, w, nw",
+  },
+  handleClass: "drag-handle",
+  alwaysShowResizeHandle: true,
+  float: true,
+  minRow: 4,
+  animate: false,
+});
+
+grid.on("dragstart", function (event, ui) {
+  const grid = this;
+  // const element = event.target;
+  grid.classList.add("dragging");
+});
+
+grid.on("dragstop", function (event, ui) {
+  const grid = this;
+  // const element = event.target;
+  grid.classList.remove("dragging");
 });

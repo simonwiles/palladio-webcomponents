@@ -4,7 +4,7 @@
   --background: floralwhite;
   --header-text: #595959;
   --border: rgba(0, 0, 0, 0.25);
-  --palladio: #4ebde5;
+  --palladio: rgba(78, 189, 229, 0.8);
   --body-font-stack: Karla, Arial, sans-serif;
   --header-font-stack: "Montserrat", Frutiger, "Frutiger Linotype", Univers,
     Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad,
@@ -240,46 +240,11 @@ div.tab-content.active :last-child {
   text-transform: uppercase;
 }
 
-#palladio-components {
-  display: none;
-  margin-top: 1em;
-}
-
-#palladio-components > details {
-  margin-bottom: 1em;
+palladio-map-component,
+palladio-graph-component,
+palladio-cards-component {
   overflow: hidden;
-}
-
-#palladio-components > details:hover {
-  outline: 1px dotted darkgrey;
-  outline-offset: 0.5em;
-}
-
-#palladio-components > details > summary {
-  background-color: var(--main);
-  border-radius: 0.15em;
-  color: white;
-  cursor: pointer;
-  font-family: var(--header-font-stack);
-  padding: 0.25em 0.5em;
-}
-
-#palladio-components > details[open] > summary {
-  margin-bottom: 0.5em;
-}
-
-#palladio-components > details[open] summary ~ * {
-  animation: slide-in 0.5s ease-in-out;
-  outline: 1px solid var(--palladio);
-  position: relative;
-}
-
-#palladio-components palladio-map-component,
-#palladio-components palladio-graph-component,
-#palladio-components palladio-cards-component {
-  display: block;
-  margin: 0.5rem;
-  overflow: hidden;
+  height: calc(100% - 30px);
 }
 
 .error-msg {
