@@ -20,8 +20,14 @@ window.customElements.define(
         highlightTarget,
       } = settings;
 
-      const svg = d3.select(this.svg);
+      const zoom = d3
+        .zoom()
+        .scaleExtent([0.5, 40])
+        .on("zoom", () => g.attr("transform", d3.event.transform));
+
+      const svg = d3.select(this.svg).call(zoom);
       const { height, width } = this.svg.getBoundingClientRect();
+      const g = svg.append("g");
 
       const sizeScale = d3.scaleSqrt().range([5, 20]);
       // Set the domain on the size scale.
@@ -41,7 +47,7 @@ window.customElements.define(
         .force("collision", d3.forceCollide().radius(60));
 
       const draw = (graph) => {
-        const link = svg
+        const link = g
           .append("g")
           .attr("class", "links")
           .selectAll("line")
@@ -50,7 +56,7 @@ window.customElements.define(
           .append("line")
           .attr("stroke-width", 0.5);
 
-        const node = svg
+        const node = g
           .append("g")
           .attr("class", "nodes")
           .selectAll("g")
