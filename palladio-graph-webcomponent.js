@@ -49,7 +49,7 @@ window.customElements.define(
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("collision", d3.forceCollide().radius(60));
 
-      const link = g
+      const links = g
         .append("g")
         .attr("class", "links")
         .selectAll("line")
@@ -58,7 +58,7 @@ window.customElements.define(
         .append("line")
         .attr("stroke-width", 0.5);
 
-      const node = g
+      const nodes = g
         .append("g")
         .attr("class", "nodes")
         .selectAll("circle")
@@ -67,6 +67,12 @@ window.customElements.define(
         .append("circle")
         .attr("r", (d) => (nodeSize ? sizeScale(d.count) : 5))
         .attr("class", (d) => d.class)
+        .on("mouseover", function (d) {
+          d3.select(labels.nodes()[d.index]).style("font-weight", "bold");
+        })
+        .on("mouseout", function (d) {
+          d3.select(labels.nodes()[d.index]).style("font-weight", "normal");
+        })
         .call(
           d3
             .drag()
@@ -86,7 +92,7 @@ window.customElements.define(
             }),
         );
 
-      const label = g
+      const labels = g
         .append("g")
         .attr("class", "labels")
         .selectAll("text")
@@ -96,15 +102,15 @@ window.customElements.define(
         .text((d) => d.id);
 
       simulation.nodes(graph.nodes).on("tick", () => {
-        link
+        links
           .attr("x1", (d) => d.source.x)
           .attr("y1", (d) => d.source.y)
           .attr("x2", (d) => d.target.x)
           .attr("y2", (d) => d.target.y);
 
-        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+        nodes.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
 
-        label
+        labels
           .attr("dx", (d) => d.x + (nodeSize ? sizeScale(d.count) + 5 : 10))
           .attr("dy", (d) => d.y + 5);
       });

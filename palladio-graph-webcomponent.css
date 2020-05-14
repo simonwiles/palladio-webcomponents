@@ -8,11 +8,6 @@ body {
   stroke-width: 1;
 }
 
-/* .nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
-} */
-
 text {
   color: #565a5c;
   font-family: karla, Arial, Helvetica;
@@ -29,11 +24,7 @@ text {
 
 .nodes circle:hover {
   fill: #ddd;
-  ill-opacity: 1;
-}
-
-.nodes circle:hover + text {
-  font-weight: bold;
+  fill-opacity: 1;
 }
 
 .nodes circle.highlighted {
