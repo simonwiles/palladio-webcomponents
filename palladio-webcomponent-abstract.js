@@ -26,7 +26,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     const style = document.createElement("style");
     shadowRoot.appendChild(style);
     style.textContent = `
-      :host { display: block; }
+      :host { display: block; overflow: hidden; }
       body { height: 100%; width: 100%; margin: 0; }`;
 
     if (this.stylesheets) {
