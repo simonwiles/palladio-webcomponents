@@ -10,7 +10,7 @@ window.customElements.define(
         //       better just to bundle it anyway and then the problem goes away.
         new URL(import.meta.url).href.replace(/\.js$/, ".css"),
       ];
-      this.scripts = ["https://d3js.org/d3.v4.min.js"];
+      this.scripts = ["https://d3js.org/d3.v5.min.js"];
     }
 
     drawGraph(graph, settings) {
