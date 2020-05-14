@@ -1,5 +1,7 @@
 body {
   background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .list-title {
