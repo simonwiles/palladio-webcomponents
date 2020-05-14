@@ -20,9 +20,8 @@ window.customElements.define(
         highlightTarget,
       } = settings;
 
-      const svg = d3.select(this.svg),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
+      const svg = d3.select(this.svg);
+      const { height, width } = this.svg.getBoundingClientRect();
 
       const sizeScale = d3.scaleSqrt().range([5, 20]);
       // Set the domain on the size scale.
@@ -168,8 +167,11 @@ window.customElements.define(
         `);
       }
 
-      this.body.innerHTML = '<svg width="960" height="600"></svg>';
-      this.svg = this.body.querySelector("svg");
+      this.body.innerHTML = "";
+      this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      this.svg.style.height = "100%";
+      this.svg.style.width = "100%";
+      this.body.appendChild(this.svg);
       const graph = this.buildNodesAndLinks(rows, settings);
       this.scriptsReady.then(() => {
         this.drawGraph(JSON.parse(JSON.stringify(graph)), settings);
