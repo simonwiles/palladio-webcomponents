@@ -27,6 +27,15 @@ text {
   stroke: #eee;
 }
 
+.nodes circle:hover {
+  fill: #ddd;
+  ill-opacity: 1;
+}
+
+.nodes circle:hover + text {
+  font-weight: bold;
+}
+
 .nodes circle.highlighted {
   fill: #666;
 }
