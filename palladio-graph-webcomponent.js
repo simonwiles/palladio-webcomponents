@@ -82,8 +82,8 @@ window.customElements.define(
               })
               .on("end", (d) => {
                 if (!d3.event.active) simulation.alphaTarget(0);
-                d.fx = null;
-                d.fy = null;
+                d.fx = d3.event.x;
+                d.fy = d3.event.y;
               }),
           );
 
@@ -97,8 +97,6 @@ window.customElements.define(
           .text((d) => d.id)
           .attr("x", (d) => (nodeSize ? sizeScale(d.count) + 5 : 10))
           .attr("y", (d) => (nodeSize ? sizeScale(d.count) : 5));
-
-        // node.append("title").text((d) => d.id);
 
         simulation.nodes(graph.nodes).on("tick", () => {
           link
