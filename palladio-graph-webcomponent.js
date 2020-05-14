@@ -95,8 +95,8 @@ window.customElements.define(
         const labels = node
           .append("text")
           .text((d) => d.id)
-          .attr("x", 6)
-          .attr("y", 3);
+          .attr("x", (d) => (nodeSize ? sizeScale(d.count) + 5 : 10))
+          .attr("y", (d) => (nodeSize ? sizeScale(d.count) : 5));
 
         // node.append("title").text((d) => d.id);
 
