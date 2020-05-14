@@ -20,12 +20,12 @@ window.customElements.define(
         highlightTarget,
       } = settings;
 
-      const zoom = d3
-        .zoom()
-        .scaleExtent([0.5, 40])
-        .on("zoom", () => g.attr("transform", d3.event.transform));
-
-      const svg = d3.select(this.svg).call(zoom);
+      const svg = d3.select(this.svg).call(
+        d3
+          .zoom()
+          .scaleExtent([0.5, 40])
+          .on("zoom", () => g.attr("transform", d3.event.transform)),
+      );
       const { height, width } = this.svg.getBoundingClientRect();
       const g = svg.append("g");
 
@@ -40,7 +40,10 @@ window.customElements.define(
         .forceSimulation()
         .force(
           "link",
-          d3.forceLink().id((d) => d.id),
+          d3
+            .forceLink()
+            .id((d) => d.id)
+            .distance(50),
         )
         .force("charge", d3.forceManyBody().strength(-1000))
         .force("center", d3.forceCenter(width / 2, height / 2))
@@ -59,12 +62,9 @@ window.customElements.define(
         const node = g
           .append("g")
           .attr("class", "nodes")
-          .selectAll("g")
+          .selectAll("circle")
           .data(graph.nodes)
           .enter()
-          .append("g");
-
-        const circles = node
           .append("circle")
           .attr("r", (d) => (nodeSize ? sizeScale(d.count) : 5))
           .attr("class", (d) => d.class)
@@ -92,11 +92,14 @@ window.customElements.define(
         if (highlightTarget)
           svg.selectAll(".target").classed("highlighted", true);
 
-        const labels = node
+        const label = g
+          .append("g")
+          .attr("class", "labels")
+          .selectAll("text")
+          .data(graph.nodes)
+          .enter()
           .append("text")
-          .text((d) => d.id)
-          .attr("x", (d) => (nodeSize ? sizeScale(d.count) + 5 : 10))
-          .attr("y", (d) => (nodeSize ? sizeScale(d.count) : 5));
+          .text((d) => d.id);
 
         simulation.nodes(graph.nodes).on("tick", () => {
           link
@@ -104,8 +107,14 @@ window.customElements.define(
             .attr("y1", (d) => d.source.y)
             .attr("x2", (d) => d.target.x)
             .attr("y2", (d) => d.target.y);
-          node.attr("transform", (d) => "translate(" + d.x + "," + d.y + ")");
+
+          node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+
+          label
+            .attr("dx", (d) => d.x + (nodeSize ? sizeScale(d.count) + 5 : 10))
+            .attr("dy", (d) => d.y + 5);
         });
+
         simulation.force("link").links(graph.links);
       };
 
