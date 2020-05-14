@@ -16,9 +16,11 @@ window.customElements.define(
     drawGraph(graph, settings) {
       const {
         nodeSize, // whether to size the nodes or not
-        highlightSource,
-        highlightTarget,
+        highlightSource, // whether to "highlight" the source nodes
+        highlightTarget, // whether to "highlight" the target nodes
       } = settings;
+
+      const { height, width } = this.svg.getBoundingClientRect();
 
       const svg = d3.select(this.svg).call(
         d3
@@ -26,11 +28,9 @@ window.customElements.define(
           .scaleExtent([0.5, 40])
           .on("zoom", () => g.attr("transform", d3.event.transform)),
       );
-      const { height, width } = this.svg.getBoundingClientRect();
       const g = svg.append("g");
 
       const sizeScale = d3.scaleSqrt().range([5, 20]);
-      // Set the domain on the size scale.
       sizeScale.domain([
         d3.min(graph.nodes, (d) => d.count),
         d3.max(graph.nodes, (d) => d.count),
@@ -49,76 +49,72 @@ window.customElements.define(
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("collision", d3.forceCollide().radius(60));
 
-      const draw = (graph) => {
-        const link = g
-          .append("g")
-          .attr("class", "links")
-          .selectAll("line")
-          .data(graph.links)
-          .enter()
-          .append("line")
-          .attr("stroke-width", 0.5);
+      const link = g
+        .append("g")
+        .attr("class", "links")
+        .selectAll("line")
+        .data(graph.links)
+        .enter()
+        .append("line")
+        .attr("stroke-width", 0.5);
 
-        const node = g
-          .append("g")
-          .attr("class", "nodes")
-          .selectAll("circle")
-          .data(graph.nodes)
-          .enter()
-          .append("circle")
-          .attr("r", (d) => (nodeSize ? sizeScale(d.count) : 5))
-          .attr("class", (d) => d.class)
-          .call(
-            d3
-              .drag()
-              .on("start", (d) => {
-                if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-                d.fx = d.x;
-                d.fy = d.y;
-              })
-              .on("drag", (d) => {
-                d.fx = d3.event.x;
-                d.fy = d3.event.y;
-              })
-              .on("end", (d) => {
-                if (!d3.event.active) simulation.alphaTarget(0);
-                d.fx = d3.event.x;
-                d.fy = d3.event.y;
-              }),
-          );
+      const node = g
+        .append("g")
+        .attr("class", "nodes")
+        .selectAll("circle")
+        .data(graph.nodes)
+        .enter()
+        .append("circle")
+        .attr("r", (d) => (nodeSize ? sizeScale(d.count) : 5))
+        .attr("class", (d) => d.class)
+        .call(
+          d3
+            .drag()
+            .on("start", (d) => {
+              if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+              d.fx = d.x;
+              d.fy = d.y;
+            })
+            .on("drag", (d) => {
+              d.fx = d3.event.x;
+              d.fy = d3.event.y;
+            })
+            .on("end", (d) => {
+              if (!d3.event.active) simulation.alphaTarget(0);
+              d.fx = d3.event.x;
+              d.fy = d3.event.y;
+            }),
+        );
 
-        if (highlightSource)
-          svg.selectAll(".source").classed("highlighted", true);
-        if (highlightTarget)
-          svg.selectAll(".target").classed("highlighted", true);
+      const label = g
+        .append("g")
+        .attr("class", "labels")
+        .selectAll("text")
+        .data(graph.nodes)
+        .enter()
+        .append("text")
+        .text((d) => d.id);
 
-        const label = g
-          .append("g")
-          .attr("class", "labels")
-          .selectAll("text")
-          .data(graph.nodes)
-          .enter()
-          .append("text")
-          .text((d) => d.id);
+      simulation.nodes(graph.nodes).on("tick", () => {
+        link
+          .attr("x1", (d) => d.source.x)
+          .attr("y1", (d) => d.source.y)
+          .attr("x2", (d) => d.target.x)
+          .attr("y2", (d) => d.target.y);
 
-        simulation.nodes(graph.nodes).on("tick", () => {
-          link
-            .attr("x1", (d) => d.source.x)
-            .attr("y1", (d) => d.source.y)
-            .attr("x2", (d) => d.target.x)
-            .attr("y2", (d) => d.target.y);
+        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
 
-          node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+        label
+          .attr("dx", (d) => d.x + (nodeSize ? sizeScale(d.count) + 5 : 10))
+          .attr("dy", (d) => d.y + 5);
+      });
 
-          label
-            .attr("dx", (d) => d.x + (nodeSize ? sizeScale(d.count) + 5 : 10))
-            .attr("dy", (d) => d.y + 5);
-        });
+      simulation.force("link").links(graph.links);
 
-        simulation.force("link").links(graph.links);
-      };
-
-      draw(graph);
+      if (highlightSource)
+        svg.selectAll(".source").classed("highlighted", true);
+      if (highlightTarget)
+        svg.selectAll(".target").classed("highlighted", true);
     }
 
     buildNodesAndLinks(rows, settings) {
