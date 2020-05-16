@@ -33,6 +33,7 @@
 
 .grid-stack-item-content .drag-handle span {
   color: white;
+  cursor: pointer;
   position: absolute;
   right: 8px;
   top: 0px;
