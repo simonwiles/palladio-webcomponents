@@ -9,6 +9,9 @@ The intention is that they will be published to NPM and CDNs such that they can 
 ```
 <palladio-map-component project-url="my_project.palladio.1.2.9.json"></palladio-map-component>
 ```
+
+See [https://codepen.io/simonwiles/pen/yLYEKrW](https://codepen.io/simonwiles/pen/yLYEKrW) for an example.
+
 Once the components have something close to feature-parity with the original AngularJS-based modules it will be possible to look at adding additional functionality.
 
 Browser support is decent (see https://caniuse.com/#feat=custom-elementsv1 -- Safari and iOS Safari/Chrome are fine), and [polyfills are available](https://www.webcomponents.org/polyfills) if necessary.
