@@ -88,7 +88,7 @@ function renderComponents(projectData) {
     let widget = grid.addWidget(
       `<div><div class="grid-stack-item-content">
          <div class="drag-handle">
-           <svg height="24" version="1.1" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><title/><path d="M14.016 15v3h3l-5.016 5.016-5.016-5.016h3v-3h4.031zM23.016 12l-5.016 5.016v-3h-3v-4.031h3v-3zM9 9.984v4.031h-3v3l-5.016-5.016 5.016-5.016v3h3zM9.984 9v-3h-3l5.016-5.016 5.016 5.016h-3v3h-4.031z"/></svg>
+           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.016 15v3h3l-5.016 5.016-5.016-5.016h3v-3h4.031zM23.016 12l-5.016 5.016v-3h-3v-4.031h3v-3zM9 9.984v4.031h-3v3l-5.016-5.016 5.016-5.016v3h3zM9.984 9v-3h-3l5.016-5.016 5.016 5.016h-3v3h-4.031z"/></svg>
            ${component.title}
            <span>✕</span>
          </div>

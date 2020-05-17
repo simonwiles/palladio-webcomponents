@@ -20,11 +20,13 @@
 
 .grid-stack-item-content .drag-handle svg {
   fill: white;
+  height: 24px;
   left: 8px;
   opacity: 0;
   position: absolute;
   top: 2px;
   transition: opacity 0.5s ease;
+  width: 24px;
 }
 
 .grid-stack-item-content:hover .drag-handle svg {
