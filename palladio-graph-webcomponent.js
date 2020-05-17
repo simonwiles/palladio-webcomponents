@@ -21,13 +21,26 @@ window.customElements.define(
       } = settings;
 
       const { height, width } = this.svg.getBoundingClientRect();
+      const zoom = d3
+        .zoom()
+        .scaleExtent([0.1, 2])
+        .on("zoom", () => g.attr("transform", d3.event.transform));
 
-      const svg = d3.select(this.svg).call(
-        d3
-          .zoom()
-          .scaleExtent([0.1, 2])
-          .on("zoom", () => g.attr("transform", d3.event.transform)),
-      );
+      const zoomToFit = () => {
+        const box = g.node().getBBox();
+        const scale = 0.85 * Math.min(width / box.width, height / box.height);
+
+        let transform = d3.zoomIdentity;
+        transform = transform.translate(width / 2, height / 2);
+        transform = transform.scale(scale);
+        transform = transform.translate(
+          -box.x - box.width / 2,
+          -box.y - box.height / 2,
+        );
+        svg.transition().duration(500).call(zoom.transform, transform);
+      };
+
+      const svg = d3.select(this.svg).call(zoom);
       const g = svg.append("g");
 
       const sizeScale = d3.scaleSqrt().range([5, 20]);
@@ -47,7 +60,12 @@ window.customElements.define(
         )
         .force("charge", d3.forceManyBody().strength(0))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collision", d3.forceCollide().radius(60));
+        .force("collision", d3.forceCollide().radius(60))
+        .on("end", () => {
+          clearInterval(interval);
+          simulation.on("end", null);
+          zoomToFit();
+        });
 
       const links = g
         .append("g")
@@ -116,6 +134,7 @@ window.customElements.define(
       });
 
       simulation.force("link").links(graph.links);
+      const interval = setInterval(zoomToFit, 250);
 
       if (highlightSource)
         svg.selectAll(".source").classed("highlighted", true);
