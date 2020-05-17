@@ -25,7 +25,7 @@ window.customElements.define(
       const svg = d3.select(this.svg).call(
         d3
           .zoom()
-          .scaleExtent([0.5, 40])
+          .scaleExtent([0.1, 2])
           .on("zoom", () => g.attr("transform", d3.event.transform)),
       );
       const g = svg.append("g");
@@ -43,9 +43,9 @@ window.customElements.define(
           d3
             .forceLink()
             .id((d) => d.id)
-            .distance(50),
+            .distance(40),
         )
-        .force("charge", d3.forceManyBody().strength(-1000))
+        .force("charge", d3.forceManyBody().strength(0))
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("collision", d3.forceCollide().radius(60));
 
@@ -77,7 +77,7 @@ window.customElements.define(
           d3
             .drag()
             .on("start", (d) => {
-              if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+              if (!d3.event.active) simulation.alphaTarget(0.1).restart();
               d.fx = d.x;
               d.fy = d.y;
             })
