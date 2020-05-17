@@ -42,7 +42,7 @@ window.customElements.define(
           const layer = L.tileLayer(
             // The Palladio tilesets are MapBox "Classic Projects" that contain raster tiles.
             // see: https://docs.mapbox.com/api/maps/#raster-tiles
-            "https://api.mapbox.com/v4/{id}/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}",
+            "https://api.mapbox.com/v4/{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
             {
               maxZoom: this.mapConfig.maxZoom,
               minZoom: this.mapConfig.minZoom,
@@ -50,6 +50,7 @@ window.customElements.define(
               tileSize: 512,
               zoomOffset: -1,
               accessToken: this.mapConfig.accessToken,
+              detectRetina: true,
             },
           ).addTo(this.map);
         }
