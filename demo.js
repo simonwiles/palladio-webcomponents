@@ -88,8 +88,10 @@ function renderComponents(projectData) {
     let widget = grid.addWidget(
       `<div><div class="grid-stack-item-content">
          <div class="drag-handle">
-           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.016 15v3h3l-5.016 5.016-5.016-5.016h3v-3h4.031zM23.016 12l-5.016 5.016v-3h-3v-4.031h3v-3zM9 9.984v4.031h-3v3l-5.016-5.016 5.016-5.016v3h3zM9.984 9v-3h-3l5.016-5.016 5.016 5.016h-3v3h-4.031z"/></svg>
+           <svg id="move" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.016 15v3h3l-5.016 5.016-5.016-5.016h3v-3h4.031zM23.016 12l-5.016 5.016v-3h-3v-4.031h3v-3zM9 9.984v4.031h-3v3l-5.016-5.016 5.016-5.016v3h3zM9.984 9v-3h-3l5.016-5.016 5.016 5.016h-3v3h-4.031z"/></svg>
            ${component.title}
+           <svg id="full-screen" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M883 1056q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23zm781-864v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45z"/></svg>
+           <svg id="exit-full-screen" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z"/></svg>
            <span>✕</span>
          </div>
          <${component.component}></${component.component}>
@@ -100,11 +102,34 @@ function renderComponents(projectData) {
     widget
       .querySelector("span")
       .addEventListener("click", () => grid.removeWidget(widget));
+    widget
+      .querySelector("svg#full-screen")
+      .addEventListener("click", () => makeFullscreen(widget));
+    widget
+      .querySelector("svg#exit-full-screen")
+      .addEventListener("click", () => exitFullscreen());
   });
   window.scrollTo({
     behavior: "smooth",
     top: document.body.scrollHeight - window.innerHeight - 50,
   });
+}
+
+function makeFullscreen(widget) {
+  const widgetContent = widget.querySelector(".grid-stack-item-content");
+  if (widgetContent.requestFullscreen) {
+    widgetContent.requestFullscreen();
+  } else if (widgetContent.webkitRequestFullscreen) {
+    widgetContent.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
 }
 
 function handleLoadProjectExample(event) {

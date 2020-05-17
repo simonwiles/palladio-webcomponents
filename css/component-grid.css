@@ -13,6 +13,7 @@
 
 .grid-stack-item-content .drag-handle {
   background-color: var(--palladio);
+  color: white;
   cursor: move;
   height: 30px;
   text-align: center;
@@ -20,17 +21,31 @@
 
 .grid-stack-item-content .drag-handle svg {
   fill: white;
-  height: 24px;
-  left: 8px;
-  opacity: 0;
+  height: 20px;
   position: absolute;
-  top: 2px;
+  top: 4px;
   transition: opacity 0.5s ease;
-  width: 24px;
+  width: 20px;
 }
 
-.grid-stack-item-content:hover .drag-handle svg {
+.grid-stack-item-content .drag-handle svg#move {
+  left: 8px;
+  opacity: 0;
+}
+
+.grid-stack-item-content:hover .drag-handle svg#move {
   opacity: 1;
+}
+
+.grid-stack-item-content .drag-handle svg#full-screen {
+  cursor: pointer;
+  right: 40px;
+}
+
+.grid-stack-item-content .drag-handle svg#exit-full-screen {
+  cursor: pointer;
+  display: none;
+  right: 8px;
 }
 
 .grid-stack-item-content .drag-handle span {
@@ -39,4 +54,16 @@
   position: absolute;
   right: 8px;
   top: 0px;
+}
+
+.grid-stack-item-content:fullscreen .drag-handle span {
+  display: none;
+}
+
+.grid-stack-item-content:fullscreen .drag-handle svg#full-screen {
+  display: none;
+}
+
+.grid-stack-item-content:fullscreen .drag-handle svg#exit-full-screen {
+  display: block;
 }
