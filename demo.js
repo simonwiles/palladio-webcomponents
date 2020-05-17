@@ -92,6 +92,10 @@ function renderComponents(projectData) {
       .querySelector("span")
       .addEventListener("click", () => grid.removeWidget(widget));
   });
+  window.scrollTo({
+    behavior: "smooth",
+    top: document.body.scrollHeight - window.innerHeight - 50,
+  });
 }
 
 function handleLoadProjectExample(event) {
