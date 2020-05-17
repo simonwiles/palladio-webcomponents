@@ -69,9 +69,21 @@ function renderComponents(projectData) {
   renderDetails(projectData);
 
   [
-    { title: "Map", component: "palladio-map-component" },
-    { title: "Graph", component: "palladio-graph-component" },
-    { title: "Gallery", component: "palladio-cards-component" },
+    {
+      title: "Map",
+      component: "palladio-map-component",
+      conf: { width: 6, height: 6 },
+    },
+    {
+      title: "Graph",
+      component: "palladio-graph-component",
+      conf: { width: 6, height: 6 },
+    },
+    {
+      title: "Gallery",
+      component: "palladio-cards-component",
+      conf: { width: 12, height: 6 },
+    },
   ].forEach((component) => {
     let widget = grid.addWidget(
       `<div><div class="grid-stack-item-content">
@@ -82,10 +94,7 @@ function renderComponents(projectData) {
          </div>
          <${component.component}></${component.component}>
        </div></div>`,
-      {
-        width: 6,
-        height: 6,
-      },
+      component.conf,
     );
     widget.querySelector(component.component).render(projectData);
     widget
