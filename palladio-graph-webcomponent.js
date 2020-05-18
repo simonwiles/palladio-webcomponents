@@ -13,6 +13,10 @@ window.customElements.define(
       this.scripts = ["https://d3js.org/d3.v5.min.js"];
     }
 
+    onResize() {
+      this.zoomToFit();
+    }
+
     drawGraph(graph, settings) {
       const {
         nodeSize, // whether to size the nodes or not
@@ -26,9 +30,10 @@ window.customElements.define(
         .scaleExtent([0.1, 2])
         .on("zoom", () => g.attr("transform", d3.event.transform));
 
-      const zoomToFit = () => {
+      this.zoomToFit = () => {
         const box = g.node().getBBox();
-        const scale = 0.85 * Math.min(width / box.width, height / box.height);
+        const { height, width } = this.svg.getBoundingClientRect();
+        const scale = 0.95 * Math.min(width / box.width, height / box.height);
 
         let transform = d3.zoomIdentity;
         transform = transform.translate(width / 2, height / 2);
@@ -62,9 +67,8 @@ window.customElements.define(
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("collision", d3.forceCollide().radius(60))
         .on("end", () => {
-          clearInterval(interval);
           simulation.on("end", null);
-          zoomToFit();
+          this.zoomToFit();
         });
 
       const links = g
@@ -134,7 +138,7 @@ window.customElements.define(
       });
 
       simulation.force("link").links(graph.links);
-      const interval = setInterval(zoomToFit, 250);
+      setTimeout(this.zoomToFit, 250);
 
       if (highlightSource)
         svg.selectAll(".source").classed("highlighted", true);
@@ -207,9 +211,9 @@ window.customElements.define(
       this.svg.style.width = "100%";
       this.body.appendChild(this.svg);
       const graph = this.buildNodesAndLinks(rows, settings);
-      this.scriptsReady.then(() => {
-        this.drawGraph(JSON.parse(JSON.stringify(graph)), settings);
-      });
+      this.scriptsReady.then(() =>
+        this.drawGraph(JSON.parse(JSON.stringify(graph)), settings),
+      );
     }
   },
 );
