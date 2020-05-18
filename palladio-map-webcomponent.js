@@ -38,7 +38,7 @@ window.customElements.define(
       // iterate tile set layers in reverse order
       // (see palladio-map-view.js:1138)
       [...tileSets].reverse().forEach((tileSet, i) => {
-        if ("mbId" in tileSet) {
+        if ("mbId" in tileSet && tileSet.mbId) {
           const layer = L.tileLayer(
             // The Palladio tilesets are MapBox "Classic Projects" that contain raster tiles.
             // see: https://docs.mapbox.com/api/maps/#raster-tiles
