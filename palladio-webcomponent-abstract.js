@@ -49,7 +49,9 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
         // ResizeObserver was only rolled out in Safari and Safari/Chrome on iOS in
         //  March 2020, so probably needs to be polyfilled for the time being.
         if (this.onResize) {
-          this.resizeObserver = new ResizeObserver(this.onResize.bind(this));
+          this.resizeObserver = new ResizeObserver(
+            throttle(this.onResize.bind(this), 250),
+          );
           this.resizeObserver.observe(this);
         }
       });
@@ -138,5 +140,23 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     this.body.appendChild(errorMessage);
   }
 }
+
+const throttle = (fn, wait) => {
+  let previouslyRun, queuedToRun;
+
+  return function invokeFn(...args) {
+    const now = Date.now();
+    queuedToRun = clearTimeout(queuedToRun);
+    if (!previouslyRun || now - previouslyRun >= wait) {
+      fn.apply(null, args);
+      previouslyRun = now;
+    } else {
+      queuedToRun = setTimeout(
+        invokeFn.bind(null, ...args),
+        wait - (now - previouslyRun),
+      );
+    }
+  };
+};
 
 export default PalladioWebComponentAbstractBase;
