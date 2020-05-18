@@ -45,6 +45,12 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
     if (this.scripts) {
       this.scriptsReady = Promise.all(this.scripts.map(this.loadScript));
+      this.scriptsReady.then(() => {
+        // ResizeObserver was only rolled out in Safari and Safari/Chrome on iOS in
+        //  March 2020, so probably needs to be polyfilled for the time being.
+        if (this.onResize)
+          new ResizeObserver(this.onResize.bind(this)).observe(this);
+      });
     }
 
     // working with a "body" element in the shadow root is necessary
