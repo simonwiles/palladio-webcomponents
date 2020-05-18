@@ -13,9 +13,14 @@ window.customElements.define(
         zoom: 3,
         minZoom: 2,
         maxZoom: 20,
+        trackResize: false,
         accessToken:
           "pk.eyJ1IjoiY2VzdGEiLCJhIjoiMFo5dmlVZyJ9.Io52RcCMMnYukT77GjDJGA",
       };
+    }
+
+    onResize() {
+      this.zoomToFit();
     }
 
     initMap() {
@@ -34,10 +39,10 @@ window.customElements.define(
       L.control.scale().addTo(this.map);
     }
 
-    addTileSets(tileSets) {
+    addTileSets() {
       // iterate tile set layers in reverse order
       // (see palladio-map-view.js:1138)
-      [...tileSets].reverse().forEach((tileSet, i) => {
+      [...this.settings.tileSets].reverse().forEach((tileSet, i) => {
         if ("mbId" in tileSet && tileSet.mbId) {
           const layer = L.tileLayer(
             // The Palladio tilesets are MapBox "Classic Projects" that contain raster tiles.
@@ -66,10 +71,10 @@ window.customElements.define(
       });
     }
 
-    addLayers(layers, rows) {
-      layers.forEach((layer) => {
+    addLayers() {
+      this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
-          rows.forEach((row) => {
+          this.rows.forEach((row) => {
             L.circle(row[layer.mapping.sourceCoordinatesKey].split(","), {
               color: layer.color,
               fillColor: layer.color,
@@ -79,15 +84,25 @@ window.customElements.define(
               .bindPopup(row[layer.descriptiveDimKey])
               .addTo(this.map);
           });
-
-          // this needs to be more sophisticated if there are multiple data layers
-          this.map.fitBounds(
-            rows.map((row) =>
-              row[layer.mapping.sourceCoordinatesKey].split(","),
-            ),
-          );
         }
       });
+
+      this.zoomToFit();
+    }
+
+    zoomToFit() {
+      // this needs to be more sophisticated if there are multiple data layers
+      const dataLayers = this.settings.layers.filter(
+        (layer) => layer.layerType === "data",
+      );
+      if (dataLayers) {
+        this.map.invalidateSize();
+        this.map.fitBounds(
+          this.rows.map((row) =>
+            row[dataLayers[0].mapping.sourceCoordinatesKey].split(","),
+          ),
+        );
+      }
     }
 
     render(data) {
@@ -123,11 +138,14 @@ window.customElements.define(
       this.body.appendChild(view);
       this.body.querySelector("div.map-view").style.height = "100%";
 
+      this.settings = settings;
+      this.rows = rows;
+
       this.scriptsReady.then(() => {
         this.initMap();
         if ("tileSets" in settings) {
-          this.addTileSets(settings.tileSets);
-          this.addLayers(settings.layers, rows);
+          this.addTileSets();
+          this.addLayers();
         }
       });
     }
