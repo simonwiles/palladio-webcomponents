@@ -5,6 +5,7 @@
 
 .grid-stack.dragging {
   background-color: lightgoldenrodyellow;
+  outline: 1px dashed var(--border);
 }
 
 .grid-stack-item-content {
