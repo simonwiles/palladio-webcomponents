@@ -145,12 +145,6 @@ function handleLoadProjectUrl(event) {
 }
 
 function handleLoadProjectFile(event) {
-  // clear the project-url attribute for the avoidance of confusion
-  // (this is not otherwise necessary)
-  document
-    .querySelector("palladio-cards-component")
-    .removeAttribute("project-url");
-
   const projectFile = document.querySelector("#project-file").files[0];
   const reader = new FileReader();
 
