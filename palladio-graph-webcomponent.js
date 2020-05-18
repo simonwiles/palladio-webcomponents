@@ -13,6 +13,12 @@ window.customElements.define(
       this.scripts = ["https://d3js.org/d3.v5.min.js"];
     }
 
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      this.simulation.stop();
+      if (this.initialZoomTimer) clearTimeout(this.initialZoomTimer);
+    }
+
     onResize() {
       this.zoomToFit();
     }
@@ -54,7 +60,7 @@ window.customElements.define(
         d3.max(graph.nodes, (d) => d.count),
       ]);
 
-      const simulation = d3
+      this.simulation = d3
         .forceSimulation()
         .force(
           "link",
@@ -67,7 +73,7 @@ window.customElements.define(
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("collision", d3.forceCollide().radius(60))
         .on("end", () => {
-          simulation.on("end", null);
+          this.simulation.on("end", null);
           this.zoomToFit();
         });
 
@@ -99,7 +105,7 @@ window.customElements.define(
           d3
             .drag()
             .on("start", (d) => {
-              if (!d3.event.active) simulation.alphaTarget(0.1).restart();
+              if (!d3.event.active) this.simulation.alphaTarget(0.1).restart();
               d.fx = d.x;
               d.fy = d.y;
             })
@@ -108,7 +114,7 @@ window.customElements.define(
               d.fy = d3.event.y;
             })
             .on("end", (d) => {
-              if (!d3.event.active) simulation.alphaTarget(0);
+              if (!d3.event.active) this.simulation.alphaTarget(0);
               d.fx = d3.event.x;
               d.fy = d3.event.y;
             }),
@@ -123,7 +129,7 @@ window.customElements.define(
         .append("text")
         .text((d) => d.id);
 
-      simulation.nodes(graph.nodes).on("tick", () => {
+      this.simulation.nodes(graph.nodes).on("tick", () => {
         links
           .attr("x1", (d) => d.source.x)
           .attr("y1", (d) => d.source.y)
@@ -137,8 +143,8 @@ window.customElements.define(
           .attr("dy", (d) => d.y + 5);
       });
 
-      simulation.force("link").links(graph.links);
-      setTimeout(this.zoomToFit, 250);
+      this.simulation.force("link").links(graph.links);
+      this.initialZoomTimer = setTimeout(this.zoomToFit, 250);
 
       if (highlightSource)
         svg.selectAll(".source").classed("highlighted", true);
