@@ -204,14 +204,9 @@ const grid = GridStack.init({
   animate: false,
 });
 
-grid.on("dragstart", function (event, ui) {
-  const grid = this;
-  // const element = event.target;
-  grid.classList.add("dragging");
-});
-
-grid.on("dragstop", function (event, ui) {
-  const grid = this;
-  // const element = event.target;
-  grid.classList.remove("dragging");
-});
+grid.on("dragstart", (event, ui) =>
+  event.currentTarget.classList.add("dragging"),
+);
+grid.on("dragstop", (event, ui) =>
+  event.currentTarget.classList.remove("dragging"),
+);
