@@ -9,8 +9,13 @@
 
   <link rel="preconnect" href="//fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:500|Karla&display=swap">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gridstack@1.1.1/dist/gridstack.all.js"></script>
+
   <link rel="stylesheet" href="css/sscaffold.modified.css">
   <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/component-grid.css">
 </head>
 
 <body>
@@ -65,12 +70,14 @@
     W0a0JpoN1boFGiIlcokdBtGGIZLmQdLCYoLmjblf6BXy/8HvHNpAY1jv5YAAAAASUVORK5CYII=">
     <h1>Palladio Web Components</h1>
   </header>
+
   <main>
     <nav>
       <span class="tab active" data-tab-id="load-example">Load Example</span>
       <span class="tab" data-tab-id="load-url">Load from URL</span>
       <span class="tab" data-tab-id="load-file">Load from File</span>
     </nav>
+
     <div id="load-example" class="tab-content active">
       <select id="project-example">
         <option value="example_projects/Cushman_500.palladio.1.2.9.json">Cushman Photographs (500 records)</option>
@@ -91,23 +98,12 @@
       <input type="file" id="project-file">
       <input type="button" id="load-project-file" value="load from file" class="default">
     </div>
+
     <div id="project-details">
       <p>Load a Palladio project file to begin.</p>
     </div>
-    <div id="palladio-components">
-      <details open>
-        <summary>Map</summary>
-        <palladio-map-component height="400px"></palladio-map-component>
-      </details>
-      <details open>
-        <summary>Graph</summary>
-        <palladio-graph-component height="400px"></palladio-graph-component>
-      </details>
-      <details open>
-        <summary>Gallery</summary>
-        <palladio-cards-component height="400px"></palladio-cards-component>
-      </details>
-    </div>
+
+    <div class="grid-stack"></div>
   </main>
 
   <footer>
@@ -125,9 +121,7 @@
   <script type="module" src="palladio-graph-webcomponent.js"></script>
   <script type="module" src="palladio-cards-webcomponent.js"></script>
   <script src="demo.js"></script>
-  <script>
-    (!window.customElements) && document.documentElement.setAttribute("data-supported", false);
-  </script>
+  <script>(!window.customElements) && document.documentElement.setAttribute("data-supported", false);</script>
 
 </body>
 
