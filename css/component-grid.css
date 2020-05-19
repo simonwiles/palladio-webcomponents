@@ -11,7 +11,7 @@
 .grid-stack-item-content {
   outline: 2px solid var(--palladio);
 }
-
+.grid-stack-item-content:-webkit-full-screen,
 .grid-stack-item-content:fullscreen {
   background-color: #eee;
 }
@@ -42,17 +42,6 @@
   opacity: 1;
 }
 
-.grid-stack-item-content .drag-handle svg#full-screen {
-  cursor: pointer;
-  right: 40px;
-}
-
-.grid-stack-item-content .drag-handle svg#exit-full-screen {
-  cursor: pointer;
-  display: none;
-  right: 8px;
-}
-
 .grid-stack-item-content .drag-handle span {
   color: white;
   cursor: pointer;
@@ -65,10 +54,25 @@
   display: none;
 }
 
+.grid-stack-item-content .drag-handle svg#full-screen {
+  cursor: pointer;
+  right: 40px;
+}
+
+.grid-stack-item-content .drag-handle svg#exit-full-screen {
+  cursor: pointer;
+  display: none;
+  right: 8px;
+}
+
 .grid-stack-item-content:fullscreen .drag-handle svg#full-screen {
   display: none;
 }
 
 .grid-stack-item-content:fullscreen .drag-handle svg#exit-full-screen {
   display: block;
+}
+
+html[data-fullscreen="false"] svg#full-screen {
+  display: none;
 }

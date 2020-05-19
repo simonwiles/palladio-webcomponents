@@ -204,3 +204,6 @@ grid.on("dragstart", (event, ui) =>
 grid.on("dragstop", (event, ui) =>
   event.currentTarget.classList.remove("dragging"),
 );
+
+!(document.fullscreenEnabled || document.webkitFullscreenEnabled) &&
+  document.documentElement.setAttribute("data-fullscreen", false);
