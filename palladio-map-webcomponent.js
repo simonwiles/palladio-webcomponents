@@ -1,5 +1,16 @@
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
+const mapboxStylesMap = {
+  // Maps IDs from old "Classic" style mapbox tileset to IDs for newly created
+  //  "modern" tilesets that are more-or-less equivalent.
+  // (Saved projects will reference these, so they need to be supported.)
+  "cesta.hd9ak6ie": "cesta/ckg1piv57010w19putr06104b", // "Land"
+  "cesta.k8gof2np": "mapbox/satellite-v9", // "Satellite"
+  "cesta.k8m9p19p": "cesta/ckg1qp80v02631apq1amjacri", // "Streets"
+  "cesta.k8ghh462": "cesta/ckg2j7auf0tyz19s2fqt7o07n", // "Terrain"
+  "cesta.k8g7eofo": "cesta/ckg2k36b80upx19pua1dy7y4z", // "Buildings and Areas"
+};
+
 window.customElements.define(
   "palladio-map-component",
   class extends PalladioWebComponentAbstractBase {
@@ -45,13 +56,18 @@ window.customElements.define(
       [...this.settings.tileSets].reverse().forEach((tileSet, i) => {
         if ("mbId" in tileSet && tileSet.mbId) {
           const layer = L.tileLayer(
-            // The Palladio tilesets are MapBox "Classic Projects" that contain raster tiles.
-            // see: https://docs.mapbox.com/api/maps/#raster-tiles
-            "https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
+            // The Palladio tilesets have been migrated to MapBox's "Static Tiles API".
+            // see: https://docs.mapbox.com/api/maps/#static-tiles
+            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
             {
               maxZoom: this.mapConfig.maxZoom,
               minZoom: this.mapConfig.minZoom,
-              id: tileSet.mbId,
+              id: Object.prototype.hasOwnProperty.call(
+                mapboxStylesMap,
+                tileSet.mbId,
+              )
+                ? mapboxStylesMap[tileSet.mbId]
+                : tileSet.mbId,
               tileSize: 512,
               zoomOffset: -1,
               accessToken: this.mapConfig.accessToken,
