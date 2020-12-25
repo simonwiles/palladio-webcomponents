@@ -109,11 +109,11 @@ window.customElements.define(
       this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
           this.rows.forEach((row) => {
-            L.circle(row[layer.mapping.sourceCoordinatesKey].split(","), {
+            L.circleMarker(row[layer.mapping.sourceCoordinatesKey].split(","), {
               color: layer.color,
               fillColor: layer.color,
               fillOpacity: 0.5,
-              radius: 100,
+              radius: 2,
             })
               .bindPopup(row[layer.descriptiveDimKey])
               .addTo(this.map);
