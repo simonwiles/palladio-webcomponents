@@ -123,10 +123,23 @@ window.customElements.define(
             new Map(),
           );
 
+          const getAggregatedValue = (points) =>
+            layer.aggregationType == "COUNT"
+              ? // "COUNT" -- scale according to number of points
+                points.length
+              : // "SUM" -- scale according to sum of layer.aggregateKey properties
+                points.reduce(
+                  (a, b) => a + parseInt(b[layer.aggregateKey] || 0),
+                  0,
+                );
+
           const maxValue = Math.max(
-            ...Array.from(pointsMap.values()).map((points) => points.length),
+            ...Array.from(pointsMap.values()).map((points) =>
+              getAggregatedValue(points),
+            ),
           );
           const minValue = 1;
+
           const scale = (value) =>
             ((maxPointSize - minPointSize) * (value - minValue)) /
               (maxValue - minValue) +
@@ -137,7 +150,9 @@ window.customElements.define(
               stroke: false,
               fillColor: layer.color,
               fillOpacity: 0.8,
-              radius: layer.pointSize ? scale(points.length) : minPointSize,
+              radius: layer.pointSize
+                ? scale(getAggregatedValue(points))
+                : minPointSize,
             })
               .bindPopup(
                 "• " +
