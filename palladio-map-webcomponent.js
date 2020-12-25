@@ -24,6 +24,8 @@ window.customElements.define(
         zoom: 2,
         minZoom: 1,
         maxZoom: 20,
+        minPointSize: 3,
+        maxPointSize: 26,
         trackResize: false,
         accessToken:
           "pk.eyJ1IjoiY2VzdGEiLCJhIjoiMFo5dmlVZyJ9.Io52RcCMMnYukT77GjDJGA",
@@ -118,6 +120,17 @@ window.customElements.define(
               ]),
             new Map(),
           );
+
+          const maxValue = Math.max(
+            ...Array.from(pointsMap.values()).map((points) => points.length),
+          );
+          const minValue = 1;
+          const scale = (value) =>
+            ((this.mapConfig.maxPointSize - this.mapConfig.minPointSize) *
+              (value - minValue)) /
+              (maxValue - minValue) +
+            this.mapConfig.minPointSize;
+
           pointsMap.forEach((points, coords) => {
             L.circleMarker(coords.split(","), {
               stroke: true,
@@ -125,7 +138,9 @@ window.customElements.define(
               fillColor: layer.color,
               fillOpacity: 1,
               opacity: 0.8,
-              radius: layer.pointSize ? 3 * points.length : 3,
+              radius: layer.pointSize
+                ? scale(points.length)
+                : this.mapConfig.minPointSize,
             })
               .bindPopup(
                 points
