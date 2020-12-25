@@ -24,6 +24,8 @@ window.customElements.define(
         zoom: 2,
         minZoom: 1,
         maxZoom: 20,
+        minPointSize: 3,
+        maxPointSize: 26,
         trackResize: false,
         accessToken:
           "pk.eyJ1IjoiY2VzdGEiLCJhIjoiMFo5dmlVZyJ9.Io52RcCMMnYukT77GjDJGA",
@@ -106,16 +108,59 @@ window.customElements.define(
     }
 
     addLayers() {
+      const { minPointSize, maxPointSize } = this.mapConfig;
+
       this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
-          this.rows.forEach((row) => {
-            L.circleMarker(row[layer.mapping.sourceCoordinatesKey].split(","), {
-              color: layer.color,
+          // create a pointsMap to group points by location
+          const pointsMap = this.rows.reduce(
+            (pointsMap, row) =>
+              pointsMap.set(row[layer.mapping.sourceCoordinatesKey], [
+                ...(pointsMap.get(row[layer.mapping.sourceCoordinatesKey]) ||
+                  []),
+                row,
+              ]),
+            new Map(),
+          );
+
+          const getAggregatedValue = (points) =>
+            layer.aggregationType == "COUNT"
+              ? // "COUNT" -- scale according to number of points
+                points.length
+              : // "SUM" -- scale according to sum of layer.aggregateKey properties
+                points.reduce(
+                  (a, b) => a + parseInt(b[layer.aggregateKey] || 0),
+                  0,
+                );
+
+          const maxValue = Math.max(
+            ...Array.from(pointsMap.values()).map((points) =>
+              getAggregatedValue(points),
+            ),
+          );
+          const minValue = 1;
+
+          const scale = (value) =>
+            ((maxPointSize - minPointSize) * (value - minValue)) /
+              (maxValue - minValue) +
+            minPointSize;
+
+          pointsMap.forEach((points, coords) => {
+            L.circleMarker(coords.split(","), {
+              stroke: false,
               fillColor: layer.color,
-              fillOpacity: 0.5,
-              radius: 2,
+              fillOpacity: 0.8,
+              radius: layer.pointSize
+                ? scale(getAggregatedValue(points))
+                : minPointSize,
             })
-              .bindPopup(row[layer.descriptiveDimKey])
+              .bindPopup(
+                "• " +
+                  points
+                    .map((point) => point[layer.descriptiveDimKey])
+                    .join("<br>• ") +
+                  (points.length > 1 ? `<br> (${points.length} records)` : ""),
+              )
               .addTo(this.map);
           });
         }
