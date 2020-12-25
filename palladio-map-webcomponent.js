@@ -143,10 +143,11 @@ window.customElements.define(
                 : this.mapConfig.minPointSize,
             })
               .bindPopup(
-                points
-                  .map((point) => point[layer.descriptiveDimKey])
-                  .join("; ") +
-                  (points.length > 1 ? ` (${points.length})` : ""),
+                "• " +
+                  points
+                    .map((point) => point[layer.descriptiveDimKey])
+                    .join("<br>• ") +
+                  (points.length > 1 ? `<br> (${points.length} records)` : ""),
               )
               .addTo(this.map);
           });
