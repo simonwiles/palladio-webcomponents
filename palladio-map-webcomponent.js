@@ -134,11 +134,9 @@ window.customElements.define(
 
           pointsMap.forEach((points, coords) => {
             L.circleMarker(coords.split(","), {
-              stroke: true,
-              color: layer.color,
+              stroke: false,
               fillColor: layer.color,
-              fillOpacity: 1,
-              opacity: 0.8,
+              fillOpacity: 0.8,
               radius: layer.pointSize ? scale(points.length) : minPointSize,
             })
               .bindPopup(
