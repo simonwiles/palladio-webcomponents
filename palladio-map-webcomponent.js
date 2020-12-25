@@ -108,6 +108,8 @@ window.customElements.define(
     }
 
     addLayers() {
+      const { minPointSize, maxPointSize } = this.mapConfig;
+
       this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
           // create a pointsMap to group points by location
@@ -126,10 +128,9 @@ window.customElements.define(
           );
           const minValue = 1;
           const scale = (value) =>
-            ((this.mapConfig.maxPointSize - this.mapConfig.minPointSize) *
-              (value - minValue)) /
+            ((maxPointSize - minPointSize) * (value - minValue)) /
               (maxValue - minValue) +
-            this.mapConfig.minPointSize;
+            minPointSize;
 
           pointsMap.forEach((points, coords) => {
             L.circleMarker(coords.split(","), {
@@ -138,9 +139,7 @@ window.customElements.define(
               fillColor: layer.color,
               fillOpacity: 1,
               opacity: 0.8,
-              radius: layer.pointSize
-                ? scale(points.length)
-                : this.mapConfig.minPointSize,
+              radius: layer.pointSize ? scale(points.length) : minPointSize,
             })
               .bindPopup(
                 "• " +
