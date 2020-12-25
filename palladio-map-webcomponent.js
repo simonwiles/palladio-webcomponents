@@ -108,14 +108,25 @@ window.customElements.define(
     addLayers() {
       this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
-          this.rows.forEach((row) => {
-            L.circleMarker(row[layer.mapping.sourceCoordinatesKey].split(","), {
+          // create a pointsMap to group points by location
+          const pointsMap = this.rows.reduce(
+            (pointsMap, row) =>
+              pointsMap.set(row[layer.mapping.sourceCoordinatesKey], [
+                ...(pointsMap.get(row[layer.mapping.sourceCoordinatesKey]) ||
+                  []),
+                row,
+              ]),
+            new Map(),
+          );
+          pointsMap.forEach((points, coords) => {
+            L.circleMarker(coords.split(","), {
+              stroke: true,
               color: layer.color,
               fillColor: layer.color,
               fillOpacity: 0.5,
               radius: 2,
             })
-              .bindPopup(row[layer.descriptiveDimKey])
+              .bindPopup(points[0][layer.descriptiveDimKey])
               .addTo(this.map);
           });
         }
