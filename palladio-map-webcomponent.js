@@ -123,8 +123,9 @@ window.customElements.define(
               stroke: true,
               color: layer.color,
               fillColor: layer.color,
-              fillOpacity: 0.5,
-              radius: 2,
+              fillOpacity: 1,
+              opacity: 0.8,
+              radius: layer.pointSize ? 3 * points.length : 3,
             })
               .bindPopup(
                 points
