@@ -126,7 +126,12 @@ window.customElements.define(
               fillOpacity: 0.5,
               radius: 2,
             })
-              .bindPopup(points[0][layer.descriptiveDimKey])
+              .bindPopup(
+                points
+                  .map((point) => point[layer.descriptiveDimKey])
+                  .join("; ") +
+                  (points.length > 1 ? ` (${points.length})` : ""),
+              )
               .addTo(this.map);
           });
         }
