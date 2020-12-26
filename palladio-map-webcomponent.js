@@ -169,6 +169,14 @@ window.customElements.define(
                   ),
                 new Map(),
               );
+
+            edgesMap.forEach((points, [sourceCoords, targetCoords]) => {
+              L.polyline([sourceCoords.split(","), targetCoords.split(",")], {
+                color: "rgba(102,102,102,.2)",
+                weight: 2,
+                smoothFactor: 1,
+              }).addTo(this.map);
+            });
           }
 
           const getAggregatedValue = (points) =>
