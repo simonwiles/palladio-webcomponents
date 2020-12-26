@@ -1,0 +1,8 @@
+{
+  "name": "palladio-webcomponents",
+  "version": "0.1.0",
+  "description": "Palladio Web Components",
+  "repository": "git@github.com:simonwiles/palladio-webcomponents.git",
+  "author": "Simon Wiles <simonjwiles@gmail.com>",
+  "license": "MIT"
+}
