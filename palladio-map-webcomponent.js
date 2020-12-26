@@ -210,7 +210,7 @@ window.customElements.define(
                 ? scale(getAggregatedValue(points))
                 : minPointSize,
             })
-              .bindPopup(
+              .bindTooltip(
                 "• " +
                   points
                     .map((point) => point[layer.descriptiveDimKey])
