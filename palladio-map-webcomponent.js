@@ -113,7 +113,7 @@ window.customElements.define(
       this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
           // create a pointsMap to group points by location
-          const pointsMap = this.rows
+          let pointsMap = this.rows
             .filter((row) => row[layer.mapping.sourceCoordinatesKey])
             .reduce(
               (pointsMap, row) =>
@@ -124,6 +124,21 @@ window.customElements.define(
                 ]),
               new Map(),
             );
+
+          if (layer.type === "point-to-point") {
+            pointsMap = this.rows
+              .filter((row) => row[layer.mapping.destinationCoordinatesKey])
+              .reduce(
+                (pointsMap, row) =>
+                  pointsMap.set(row[layer.mapping.destinationCoordinatesKey], [
+                    ...(pointsMap.get(
+                      row[layer.mapping.destinationCoordinatesKey],
+                    ) || []),
+                    row,
+                  ]),
+                pointsMap,
+              );
+          }
 
           const getAggregatedValue = (points) =>
             layer.aggregationType == "COUNT"
