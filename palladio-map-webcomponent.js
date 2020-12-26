@@ -234,7 +234,9 @@ window.customElements.define(
                   points
                     .map((point) => point[layer.descriptiveDimKey])
                     .join("<br>• ") +
-                  (points.length > 1 ? `<br> (${points.length} records)` : ""),
+                  `<br> [${points.length} record${
+                    points.length > 1 ? "s" : ""
+                  }]`,
                 { className: "map-tooltip", direction: "top" },
               )
               .addTo(this.map);
