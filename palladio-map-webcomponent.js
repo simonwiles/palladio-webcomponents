@@ -52,18 +52,11 @@ window.customElements.define(
     }
 
     static get observedAttributes() {
-      return ["height", "width", "project-url", "zoom-to-fit"];
+      return [...super.observedAttributes, "zoom-to-fit"];
     }
 
     attributeChangedCallback(attrName, oldValue, newValue) {
-      if (attrName === "project-url" && newValue !== null) {
-        this.getDataFromUrl(newValue).then((data) => {
-          if (data) this.render(data);
-        });
-      }
-      if (["height", "width"].indexOf(attrName) !== -1) {
-        this.style[attrName] = newValue;
-      }
+      super.attributeChangedCallback(attrName, oldValue, newValue);
       if (attrName === "zoom-to-fit" && newValue !== null) {
         this.isZoomToFit = true;
       }
