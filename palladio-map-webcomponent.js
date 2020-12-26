@@ -91,10 +91,9 @@ window.customElements.define(
 
     addTileSets() {
       // iterate tile set layers in reverse order
-      // (see palladio-map-view.js:1138)
       [...this.settings.tileSets].reverse().forEach((tileSet, i) => {
         if ("mbId" in tileSet && tileSet.mbId) {
-          const layer = L.tileLayer(
+          L.tileLayer(
             // The Palladio tilesets have been migrated to MapBox's "Static Tiles API".
             // see: https://docs.mapbox.com/api/maps/#static-tiles
             "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
@@ -115,7 +114,7 @@ window.customElements.define(
           ).addTo(this.map);
         }
         if ("wmsUrl" in tileSet) {
-          const layer = L.tileLayer
+          L.tileLayer
             .wms(tileSet.wmsUrl, {
               layers: tileSet.wmsLayers,
               format: "image/png",
