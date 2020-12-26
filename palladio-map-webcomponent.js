@@ -32,6 +32,25 @@ window.customElements.define(
       };
     }
 
+    connectedCallback() {
+      super.connectedCallback();
+      const style = document.createElement("style");
+      this.shadowRoot.appendChild(style);
+      style.textContent = `
+      .map-tooltip {
+        background: rgba(0,0,0,.8);
+        border: 0;
+        border-radius: 2px;
+        color: #fff;
+      }
+
+      .map-tooltip.leaflet-tooltip-top:before { border-top-color: rgba(0,0,0,.8); }
+      .map-tooltip.leaflet-tooltip-right:before { border-right-color: rgba(0,0,0,.8); }
+      .map-tooltip.leaflet-tooltip-bottom:before { border-bottom-color: rgba(0,0,0,.8); }
+      .map-tooltip.leaflet-tooltip-left:before { border-left-color: rgba(0,0,0,.8); }
+      `;
+    }
+
     static get observedAttributes() {
       return ["height", "width", "project-url", "zoom-to-fit"];
     }
@@ -216,6 +235,7 @@ window.customElements.define(
                     .map((point) => point[layer.descriptiveDimKey])
                     .join("<br>• ") +
                   (points.length > 1 ? `<br> (${points.length} records)` : ""),
+                { className: "map-tooltip", direction: "top" },
               )
               .addTo(this.map);
           });
