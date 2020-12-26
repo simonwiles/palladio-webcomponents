@@ -113,15 +113,71 @@ window.customElements.define(
       this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
           // create a pointsMap to group points by location
-          const pointsMap = this.rows.reduce(
-            (pointsMap, row) =>
-              pointsMap.set(row[layer.mapping.sourceCoordinatesKey], [
-                ...(pointsMap.get(row[layer.mapping.sourceCoordinatesKey]) ||
-                  []),
-                row,
-              ]),
-            new Map(),
-          );
+          let pointsMap = this.rows
+            .filter((row) => row[layer.mapping.sourceCoordinatesKey])
+            .reduce(
+              (pointsMap, row) =>
+                pointsMap.set(row[layer.mapping.sourceCoordinatesKey], [
+                  ...(pointsMap.get(row[layer.mapping.sourceCoordinatesKey]) ||
+                    []),
+                  row,
+                ]),
+              new Map(),
+            );
+
+          if (layer.type === "point-to-point") {
+            // if this is a point-to-point map, we need markers for the
+            //  destination locations too
+            pointsMap = this.rows
+              .filter((row) => row[layer.mapping.destinationCoordinatesKey])
+              .reduce(
+                (pointsMap, row) =>
+                  pointsMap.set(row[layer.mapping.destinationCoordinatesKey], [
+                    ...(pointsMap.get(
+                      row[layer.mapping.destinationCoordinatesKey],
+                    ) || []),
+                    row,
+                  ]),
+                pointsMap,
+              );
+
+            // and an edgesMap
+            const edgesMap = this.rows
+              .filter(
+                (row) =>
+                  row[layer.mapping.sourceCoordinatesKey] &&
+                  row[layer.mapping.destinationCoordinatesKey] &&
+                  !(
+                    row[layer.mapping.sourceCoordinatesKey] ===
+                    row[layer.mapping.destinationCoordinatesKey]
+                  ),
+              )
+              .reduce(
+                (edgesMap, row) =>
+                  edgesMap.set(
+                    [
+                      row[layer.mapping.sourceCoordinatesKey],
+                      row[layer.mapping.destinationCoordinatesKey],
+                    ],
+                    [
+                      ...(edgesMap.get([
+                        row[layer.mapping.sourceCoordinatesKey],
+                        row[layer.mapping.destinationCoordinatesKey],
+                      ]) || []),
+                      row,
+                    ],
+                  ),
+                new Map(),
+              );
+
+            edgesMap.forEach((points, [sourceCoords, targetCoords]) => {
+              L.polyline([sourceCoords.split(","), targetCoords.split(",")], {
+                color: "rgba(102,102,102,.2)",
+                weight: 2,
+                smoothFactor: 1,
+              }).addTo(this.map);
+            });
+          }
 
           const getAggregatedValue = (points) =>
             layer.aggregationType == "COUNT"
