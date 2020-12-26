@@ -126,6 +126,8 @@ window.customElements.define(
             );
 
           if (layer.type === "point-to-point") {
+            // if this is a point-to-point map, we need markers for the
+            //  destination locations too
             pointsMap = this.rows
               .filter((row) => row[layer.mapping.destinationCoordinatesKey])
               .reduce(
