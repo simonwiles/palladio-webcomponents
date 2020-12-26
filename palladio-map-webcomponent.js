@@ -140,6 +140,35 @@ window.customElements.define(
                   ]),
                 pointsMap,
               );
+
+            // and an edgesMap
+            const edgesMap = this.rows
+              .filter(
+                (row) =>
+                  row[layer.mapping.sourceCoordinatesKey] &&
+                  row[layer.mapping.destinationCoordinatesKey] &&
+                  !(
+                    row[layer.mapping.sourceCoordinatesKey] ===
+                    row[layer.mapping.destinationCoordinatesKey]
+                  ),
+              )
+              .reduce(
+                (edgesMap, row) =>
+                  edgesMap.set(
+                    [
+                      row[layer.mapping.sourceCoordinatesKey],
+                      row[layer.mapping.destinationCoordinatesKey],
+                    ],
+                    [
+                      ...(edgesMap.get([
+                        row[layer.mapping.sourceCoordinatesKey],
+                        row[layer.mapping.destinationCoordinatesKey],
+                      ]) || []),
+                      row,
+                    ],
+                  ),
+                new Map(),
+              );
           }
 
           const getAggregatedValue = (points) =>
