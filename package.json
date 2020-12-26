@@ -5,6 +5,9 @@
   "repository": "git@github.com:simonwiles/palladio-webcomponents.git",
   "author": "Simon Wiles <simonjwiles@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build:map": "parcel build --detailed-report --no-cache --no-source-maps palladio-map-webcomponent.js"
+  },
   "devDependencies": {
     "parcel": "^2.0.0-beta.1"
   }
