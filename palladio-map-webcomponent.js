@@ -186,7 +186,21 @@ window.customElements.define(
                 color: "rgba(102,102,102,.2)",
                 weight: 2,
                 smoothFactor: 1,
-              }).addTo(this.map);
+              })
+                .bindTooltip(
+                  "• " +
+                    points
+                      .map((point) => point[layer.descriptiveDimKey])
+                      .join("<br>• ") +
+                    `<br> [${points.length} record${
+                      points.length > 1 ? "s" : ""
+                    }]`,
+                  {
+                    className: "map-tooltip",
+                    direction: "top",
+                  },
+                )
+                .addTo(this.map);
             });
           }
 
