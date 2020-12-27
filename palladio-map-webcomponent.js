@@ -123,6 +123,13 @@ window.customElements.define(
 
       this.settings.layers.forEach((layer) => {
         if (layer.layerType === "data") {
+          const tooltipText = (points) =>
+            "• " +
+            points
+              .map((point) => point[layer.descriptiveDimKey])
+              .join("<br>• ") +
+            `<br> [${points.length} record${points.length > 1 ? "s" : ""}]`;
+
           // create a pointsMap to group points by location
           let pointsMap = this.rows
             .filter((row) => row[layer.mapping.sourceCoordinatesKey])
@@ -187,19 +194,10 @@ window.customElements.define(
                 weight: 2,
                 smoothFactor: 1,
               })
-                .bindTooltip(
-                  "• " +
-                    points
-                      .map((point) => point[layer.descriptiveDimKey])
-                      .join("<br>• ") +
-                    `<br> [${points.length} record${
-                      points.length > 1 ? "s" : ""
-                    }]`,
-                  {
-                    className: "map-tooltip",
-                    direction: "top",
-                  },
-                )
+                .bindTooltip(tooltipText(points), {
+                  className: "map-tooltip",
+                  direction: "top",
+                })
                 .addTo(this.map);
             });
           }
@@ -235,16 +233,10 @@ window.customElements.define(
                 ? scale(getAggregatedValue(points))
                 : minPointSize,
             })
-              .bindTooltip(
-                "• " +
-                  points
-                    .map((point) => point[layer.descriptiveDimKey])
-                    .join("<br>• ") +
-                  `<br> [${points.length} record${
-                    points.length > 1 ? "s" : ""
-                  }]`,
-                { className: "map-tooltip", direction: "top" },
-              )
+              .bindTooltip(tooltipText(points), {
+                className: "map-tooltip",
+                direction: "top",
+              })
               .addTo(this.map);
           });
         }
