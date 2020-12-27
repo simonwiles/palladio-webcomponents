@@ -121,8 +121,15 @@ window.customElements.define(
     addLayers() {
       const { minPointSize, maxPointSize } = this.mapConfig;
 
-      this.settings.layers.forEach((layer) => {
-        if (layer.layerType === "data") {
+      this.settings.layers
+        .filter(({ layerType }) => layerType === "data")
+        .forEach((layer) => {
+          // destructure some properties into the local scope
+          const {
+            sourceCoordinatesKey,
+            destinationCoordinatesKey,
+          } = layer.mapping;
+
           const tooltipText = (points) =>
             "• " +
             points
@@ -132,12 +139,11 @@ window.customElements.define(
 
           // create a pointsMap to group points by location
           let pointsMap = this.rows
-            .filter((row) => row[layer.mapping.sourceCoordinatesKey])
+            .filter((row) => row[sourceCoordinatesKey])
             .reduce(
               (pointsMap, row) =>
-                pointsMap.set(row[layer.mapping.sourceCoordinatesKey], [
-                  ...(pointsMap.get(row[layer.mapping.sourceCoordinatesKey]) ||
-                    []),
+                pointsMap.set(row[sourceCoordinatesKey], [
+                  ...(pointsMap.get(row[sourceCoordinatesKey]) || []),
                   row,
                 ]),
               new Map(),
@@ -147,13 +153,11 @@ window.customElements.define(
             // if this is a point-to-point map, we need markers for the
             //  destination locations too
             pointsMap = this.rows
-              .filter((row) => row[layer.mapping.destinationCoordinatesKey])
+              .filter((row) => row[destinationCoordinatesKey])
               .reduce(
                 (pointsMap, row) =>
-                  pointsMap.set(row[layer.mapping.destinationCoordinatesKey], [
-                    ...(pointsMap.get(
-                      row[layer.mapping.destinationCoordinatesKey],
-                    ) || []),
+                  pointsMap.set(row[destinationCoordinatesKey], [
+                    ...(pointsMap.get(row[destinationCoordinatesKey]) || []),
                     row,
                   ]),
                 pointsMap,
@@ -163,24 +167,20 @@ window.customElements.define(
             const edgesMap = this.rows
               .filter(
                 (row) =>
-                  row[layer.mapping.sourceCoordinatesKey] &&
-                  row[layer.mapping.destinationCoordinatesKey] &&
+                  row[sourceCoordinatesKey] &&
+                  row[destinationCoordinatesKey] &&
                   !(
-                    row[layer.mapping.sourceCoordinatesKey] ===
-                    row[layer.mapping.destinationCoordinatesKey]
+                    row[sourceCoordinatesKey] === row[destinationCoordinatesKey]
                   ),
               )
               .reduce(
                 (edgesMap, row) =>
                   edgesMap.set(
-                    [
-                      row[layer.mapping.sourceCoordinatesKey],
-                      row[layer.mapping.destinationCoordinatesKey],
-                    ],
+                    [row[sourceCoordinatesKey], row[destinationCoordinatesKey]],
                     [
                       ...(edgesMap.get([
-                        row[layer.mapping.sourceCoordinatesKey],
-                        row[layer.mapping.destinationCoordinatesKey],
+                        row[sourceCoordinatesKey],
+                        row[destinationCoordinatesKey],
                       ]) || []),
                       row,
                     ],
@@ -239,8 +239,7 @@ window.customElements.define(
               })
               .addTo(this.map);
           });
-        }
-      });
+        });
 
       if (this.isZoomToFit) this.zoomToFit();
     }
