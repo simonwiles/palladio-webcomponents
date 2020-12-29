@@ -43,6 +43,12 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       shadowRoot.appendChild(stylesheetLink);
     }
 
+    if (this.inlineStylesheets) {
+      const styleTag = document.createElement("style");
+      styleTag.textContent = this.inlineStylesheets.join("\n\n");
+      this.shadowRoot.appendChild(styleTag);
+    }
+
     if (this.externalScripts) {
       this.scriptsReady = Promise.all(
         this.externalScripts.map(this.loadScript),
