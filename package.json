@@ -4,5 +4,8 @@
   "description": "Palladio Web Components",
   "repository": "git@github.com:simonwiles/palladio-webcomponents.git",
   "author": "Simon Wiles <simonjwiles@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.1"
+  }
 }
