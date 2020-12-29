@@ -8,6 +8,8 @@ import {
   circleMarker,
 } from "./node_modules/leaflet/dist/leaflet-src.esm.js";
 
+import leafletBaseStyles from "bundle-text:./node_modules/leaflet/dist/leaflet.css";
+
 const mapboxStylesMap = {
   // Maps IDs from old "Classic" style mapbox tileset to IDs for newly created
   //  "modern" tilesets that are more-or-less equivalent.
@@ -19,14 +21,27 @@ const mapboxStylesMap = {
   "cesta.k8g7eofo": "cesta/ckg2k36b80upx19pua1dy7y4z", // "Buildings and Areas"
 };
 
+const tooltipStyleOverrides = `
+  .map-tooltip {
+    background: rgba(0,0,0,.8);
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
+  }
+
+  .map-tooltip.leaflet-tooltip-top:before { border-top-color: rgba(0,0,0,.8); }
+  .map-tooltip.leaflet-tooltip-right:before { border-right-color: rgba(0,0,0,.8); }
+  .map-tooltip.leaflet-tooltip-bottom:before { border-bottom-color: rgba(0,0,0,.8); }
+  .map-tooltip.leaflet-tooltip-left:before { border-left-color: rgba(0,0,0,.8); }
+`;
+
 window.customElements.define(
   "palladio-map-component",
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.externalStylesheets = [
-        "https://unpkg.com/leaflet@1.6.0/dist/leaflet.css",
-      ];
+
+      this.inlineStylesheets = [leafletBaseStyles, tooltipStyleOverrides];
 
       this.mapConfig = {
         center: [45.464, 9.1916],
@@ -39,25 +54,6 @@ window.customElements.define(
         accessToken:
           "pk.eyJ1IjoiY2VzdGEiLCJhIjoiMFo5dmlVZyJ9.Io52RcCMMnYukT77GjDJGA",
       };
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-      const style = document.createElement("style");
-      this.shadowRoot.appendChild(style);
-      style.textContent = `
-      .map-tooltip {
-        background: rgba(0,0,0,.8);
-        border: 0;
-        border-radius: 2px;
-        color: #fff;
-      }
-
-      .map-tooltip.leaflet-tooltip-top:before { border-top-color: rgba(0,0,0,.8); }
-      .map-tooltip.leaflet-tooltip-right:before { border-right-color: rgba(0,0,0,.8); }
-      .map-tooltip.leaflet-tooltip-bottom:before { border-bottom-color: rgba(0,0,0,.8); }
-      .map-tooltip.leaflet-tooltip-left:before { border-left-color: rgba(0,0,0,.8); }
-      `;
     }
 
     static get observedAttributes() {
