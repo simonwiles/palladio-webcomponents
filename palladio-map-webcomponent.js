@@ -24,7 +24,9 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.stylesheets = ["https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"];
+      this.externalStylesheets = [
+        "https://unpkg.com/leaflet@1.6.0/dist/leaflet.css",
+      ];
 
       this.mapConfig = {
         center: [45.464, 9.1916],

@@ -5,7 +5,7 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.stylesheets = [
+      this.externalStylesheets = [
         "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css",
         // TODO: this is a bit hacky -- could perhaps be done in the ABC, or maybe it's
         //       better just to bundle it anyway and then the problem goes away.

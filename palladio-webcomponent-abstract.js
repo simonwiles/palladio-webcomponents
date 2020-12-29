@@ -29,18 +29,18 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       :host { display: block; overflow: hidden; }
       body { height: 100%; width: 100%; margin: 0; }`;
 
-    if (this.stylesheets) {
-      let styling = document
+    if (this.externalStylesheets) {
+      const stylesheetLink = document
         .createRange()
         .createContextualFragment(
-          `${this.stylesheets
+          `${this.externalStylesheets
             .map(
-              (stylesheet) =>
-                `<link rel="stylesheet" type="text/css" href="${stylesheet}">`,
+              (stylesheetUrl) =>
+                `<link rel="stylesheet" type="text/css" href="${stylesheetUrl}">`,
             )
             .join("\n")}`,
         );
-      shadowRoot.appendChild(styling);
+      shadowRoot.appendChild(stylesheetLink);
     }
 
     if (this.externalScripts) {
