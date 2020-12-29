@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "parcel": "^2.0.0-beta.1"
+  },
+  "dependencies": {
+    "leaflet": "^1.7.1"
   }
 }
