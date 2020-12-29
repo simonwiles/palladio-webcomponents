@@ -17,7 +17,9 @@ window.customElements.define(
     constructor() {
       super();
       this.stylesheets = ["https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"];
-      this.scripts = ["https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"];
+      this.externalScripts = [
+        "https://unpkg.com/leaflet@1.6.0/dist/leaflet.js",
+      ];
 
       this.mapConfig = {
         center: [45.464, 9.1916],
