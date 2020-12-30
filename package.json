@@ -9,6 +9,9 @@
     "build:map": "parcel build --detailed-report --no-cache --no-source-maps palladio-map-webcomponent.js",
     "watch:map": "parcel watch palladio-map-webcomponent.js"
   },
+  "files": [
+    "dist/*"
+  ],
   "devDependencies": {
     "parcel": "^2.0.0-beta.1"
   },

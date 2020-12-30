@@ -6,9 +6,9 @@ import {
   tileLayer,
   polyline,
   circleMarker,
-} from "./node_modules/leaflet/dist/leaflet-src.esm.js";
+} from "leaflet/dist/leaflet-src.esm.js";
 
-import leafletBaseStyles from "bundle-text:./node_modules/leaflet/dist/leaflet.css";
+import leafletBaseStyles from "bundle-text:leaflet/dist/leaflet.css";
 
 const mapboxStylesMap = {
   // Maps IDs from old "Classic" style mapbox tileset to IDs for newly created
