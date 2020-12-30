@@ -1,0 +1,25 @@
+{
+  "name": "@palladio/map-component",
+  "version": "0.0.0",
+  "description": "Palladio Map Web Component",
+  "repository": "git@github.com:simonwiles/palladio-webcomponents.git",
+  "author": "Simon Wiles <simonjwiles@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "targets": {
+    "main": {
+      "includeNodeModules": true
+    }
+  },
+  "scripts": {
+    "build": "parcel build --detailed-report --no-cache --no-source-maps --cache-dir=./.parcel-cache --no-scope-hoist index.js",
+    "watch": "parcel watch index.js"
+  },
+  "dependencies": {
+    "@palladio/base-component": "^0.0.0",
+    "leaflet": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.5.19"
+  }
+}

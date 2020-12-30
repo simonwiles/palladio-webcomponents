@@ -5,6 +5,10 @@
   "repository": "git@github.com:simonwiles/palladio-webcomponents.git",
   "author": "Simon Wiles <simonjwiles@gmail.com>",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "components/*"
+  ],
   "scripts": {
     "lint": "eslint . --ext js",
     "build:map": "parcel build --detailed-report --no-cache --no-source-maps palladio-map-webcomponent.js",
@@ -26,6 +30,7 @@
     "eslint-import-resolver-parcel2": "^1.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
+    "lerna": "^3.22.1",
     "parcel": "^2.0.0-beta.1"
   },
   "dependencies": {
