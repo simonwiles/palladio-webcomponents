@@ -26,10 +26,21 @@
     "eslint-import-resolver-parcel2": "^1.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
-    "parcel": "^2.0.0-beta.1"
+    "parcel": "^2.0.0-nightly.495",
+    "postcss-image-inliner": "^4.0.4"
   },
   "dependencies": {
     "d3": "^5.16.0",
     "leaflet": "^1.7.1"
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-image-inliner": {
+        "strict": true,
+        "assetPaths": [
+          "node_modules/leaflet/dist/"
+        ]
+      }
+    }
   }
 }
