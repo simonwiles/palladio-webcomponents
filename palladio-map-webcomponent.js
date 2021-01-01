@@ -1,4 +1,4 @@
-import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
+import leafletBaseStyles from "bundle-text:leaflet/dist/leaflet.css";
 import {
   map,
   LatLng,
@@ -6,9 +6,8 @@ import {
   tileLayer,
   polyline,
   circleMarker,
-} from "leaflet/dist/leaflet-src.esm.js";
-
-import leafletBaseStyles from "bundle-text:leaflet/dist/leaflet.css";
+} from "leaflet/dist/leaflet-src.esm";
+import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract";
 
 const mapboxStylesMap = {
   // Maps IDs from old "Classic" style mapbox tileset to IDs for newly created
@@ -89,7 +88,7 @@ window.customElements.define(
 
     addTileSets() {
       // iterate tile set layers in reverse order
-      [...this.settings.tileSets].reverse().forEach((tileSet, i) => {
+      [...this.settings.tileSets].reverse().forEach((tileSet) => {
         if ("mbId" in tileSet && tileSet.mbId) {
           tileLayer(
             // The Palladio tilesets have been migrated to MapBox's "Static Tiles API".
@@ -136,19 +135,19 @@ window.customElements.define(
           } = layer.mapping;
 
           const tooltipText = (points) =>
-            "• " +
-            points
+            `• ${points
               .map((point) => point[layer.descriptiveDimKey])
-              .join("<br>• ") +
-            `<br> [${points.length} record${points.length > 1 ? "s" : ""}]`;
+              .join("<br>• ")}<br> [${points.length} record${
+              points.length > 1 ? "s" : ""
+            }]`;
 
           // create a pointsMap to group points by location
           let pointsMap = this.rows
             .filter((row) => row[sourceCoordinatesKey])
             .reduce(
-              (pointsMap, row) =>
-                pointsMap.set(row[sourceCoordinatesKey], [
-                  ...(pointsMap.get(row[sourceCoordinatesKey]) || []),
+              (_pointsMap, row) =>
+                _pointsMap.set(row[sourceCoordinatesKey], [
+                  ...(_pointsMap.get(row[sourceCoordinatesKey]) || []),
                   row,
                 ]),
               new Map(),
@@ -160,9 +159,9 @@ window.customElements.define(
             pointsMap = this.rows
               .filter((row) => row[destinationCoordinatesKey])
               .reduce(
-                (pointsMap, row) =>
-                  pointsMap.set(row[destinationCoordinatesKey], [
-                    ...(pointsMap.get(row[destinationCoordinatesKey]) || []),
+                (_pointsMap, row) =>
+                  _pointsMap.set(row[destinationCoordinatesKey], [
+                    ...(_pointsMap.get(row[destinationCoordinatesKey]) || []),
                     row,
                   ]),
                 pointsMap,
@@ -179,11 +178,11 @@ window.customElements.define(
                   ),
               )
               .reduce(
-                (edgesMap, row) =>
-                  edgesMap.set(
+                (_edgesMap, row) =>
+                  _edgesMap.set(
                     [row[sourceCoordinatesKey], row[destinationCoordinatesKey]],
                     [
-                      ...(edgesMap.get([
+                      ...(_edgesMap.get([
                         row[sourceCoordinatesKey],
                         row[destinationCoordinatesKey],
                       ]) || []),
@@ -208,12 +207,12 @@ window.customElements.define(
           }
 
           const getAggregatedValue = (points) =>
-            layer.aggregationType == "COUNT"
+            layer.aggregationType === "COUNT"
               ? // "COUNT" -- scale according to number of points
                 points.length
               : // "SUM" -- scale according to sum of layer.aggregateKey properties
                 points.reduce(
-                  (a, b) => a + parseInt(b[layer.aggregateKey] || 0),
+                  (a, b) => a + parseInt(b[layer.aggregateKey] || 0, 10),
                   0,
                 );
 
@@ -266,12 +265,12 @@ window.customElements.define(
 
     render(data) {
       if (!data) {
-        return this.renderError("No Data!");
+        this.renderError("No Data!");
       }
 
       const rows = this.getRows(data);
       if (!rows) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Malformed project data!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -281,7 +280,7 @@ window.customElements.define(
 
       const settings = this.getSettings(data, "mapView");
       if (!settings) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Map Visualization not available!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
