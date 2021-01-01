@@ -86,9 +86,9 @@ window.customElements.define(
       control.scale().addTo(this.map);
     }
 
-    addTileSets() {
+    addTileSets(tileSets) {
       // iterate tile set layers in reverse order
-      [...this.settings.tileSets].reverse().forEach((tileSet) => {
+      [...tileSets].reverse().forEach((tileSet) => {
         if ("mbId" in tileSet && tileSet.mbId) {
           tileLayer(
             // The Palladio tilesets have been migrated to MapBox's "Static Tiles API".
@@ -122,10 +122,10 @@ window.customElements.define(
       });
     }
 
-    addLayers() {
+    addLayers(layers) {
       const { minPointSize, maxPointSize } = this.mapConfig;
 
-      this.settings.layers
+      layers
         .filter(({ layerType }) => layerType === "data")
         .forEach((layer) => {
           // destructure some properties into the local scope
@@ -250,7 +250,7 @@ window.customElements.define(
 
     zoomToFit() {
       // this needs to be more sophisticated if there are multiple data layers
-      const dataLayers = this.settings.layers.filter(
+      const dataLayers = this.layers.filter(
         (layer) => layer.layerType === "data",
       );
       if (dataLayers) {
@@ -296,14 +296,14 @@ window.customElements.define(
       this.body.appendChild(view);
       this.body.querySelector("div.map-view").style.height = "100%";
 
-      this.settings = settings;
       this.rows = rows;
+      this.layers = settings.layers;
 
       this.scriptsReady.then(() => {
         this.initMap();
         if ("tileSets" in settings) {
-          this.addTileSets();
-          this.addLayers();
+          this.addTileSets(settings.tileSets);
+          this.addLayers(settings.layers);
         }
       });
     }
