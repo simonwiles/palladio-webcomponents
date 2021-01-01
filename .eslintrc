@@ -10,5 +10,6 @@
   },
   "settings": {
     "import/resolver": "parcel2"
-  }
+  },
+  "ignorePatterns": ["dist/*.js"]
 }
