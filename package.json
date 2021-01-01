@@ -6,6 +6,7 @@
   "author": "Simon Wiles <simonjwiles@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint . --ext js",
     "build:map": "parcel build --detailed-report --no-cache --no-source-maps palladio-map-webcomponent.js",
     "watch:map": "parcel watch palladio-map-webcomponent.js"
   },
@@ -13,6 +14,12 @@
     "dist/*"
   ],
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-import-resolver-parcel2": "^1.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "parcel": "^2.0.0-beta.1"
   },
   "dependencies": {
