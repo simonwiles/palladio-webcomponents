@@ -1,12 +1,5 @@
 import leafletBaseStyles from "bundle-text:leaflet/dist/leaflet.css";
-import {
-  map,
-  LatLng,
-  control,
-  tileLayer,
-  polyline,
-  circleMarker,
-} from "leaflet/dist/leaflet-src.esm";
+import * as L from "leaflet/dist/leaflet-src.esm";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract";
 
 const mapboxStylesMap = {
@@ -73,8 +66,8 @@ window.customElements.define(
     initMap() {
       this.element = this.body.querySelector("div.map-view");
 
-      this.map = map(this.element).setView(
-        new LatLng(...this.mapConfig.center),
+      this.map = L.map(this.element).setView(
+        new L.LatLng(...this.mapConfig.center),
         this.mapConfig.zoom,
       );
 
@@ -83,14 +76,14 @@ window.customElements.define(
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
           'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       );
-      control.scale().addTo(this.map);
+      L.control.scale().addTo(this.map);
     }
 
     addTileSets(tileSets) {
       // iterate tile set layers in reverse order
       [...tileSets].reverse().forEach((tileSet) => {
         if ("mbId" in tileSet && tileSet.mbId) {
-          tileLayer(
+          L.tileLayer(
             // The Palladio tilesets have been migrated to MapBox's "Static Tiles API".
             // see: https://docs.mapbox.com/api/maps/#static-tiles
             "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
@@ -111,7 +104,7 @@ window.customElements.define(
           ).addTo(this.map);
         }
         if ("wmsUrl" in tileSet) {
-          tileLayer
+          L.tileLayer
             .wms(tileSet.wmsUrl, {
               layers: tileSet.wmsLayers,
               format: "image/png",
@@ -193,7 +186,7 @@ window.customElements.define(
               );
 
             edgesMap.forEach((points, [sourceCoords, targetCoords]) => {
-              polyline([sourceCoords.split(","), targetCoords.split(",")], {
+              L.polyline([sourceCoords.split(","), targetCoords.split(",")], {
                 color: "rgba(102,102,102,.2)",
                 weight: 2,
                 smoothFactor: 1,
@@ -229,7 +222,7 @@ window.customElements.define(
             minPointSize;
 
           pointsMap.forEach((points, coords) => {
-            circleMarker(coords.split(","), {
+            L.circleMarker(coords.split(","), {
               stroke: false,
               fillColor: layer.color,
               fillOpacity: 0.8,
