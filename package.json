@@ -11,6 +11,8 @@
     "watch:map": "parcel watch palladio-map-webcomponent.js",
     "build:graph": "parcel build --detailed-report --no-cache --no-source-maps palladio-graph-webcomponent.js",
     "watch:graph": "parcel watch palladio-graph-webcomponent.js",
+    "build:cards": "parcel build --detailed-report --no-cache --no-source-maps palladio-cards-webcomponent.js",
+    "watch:cards": "parcel watch palladio-cards-webcomponent.js",
     "build": "parcel build --detailed-report --no-cache --no-source-maps palladio-*-webcomponent.js",
     "watch": "parcel watch palladio-*-webcomponent.js"
   },
