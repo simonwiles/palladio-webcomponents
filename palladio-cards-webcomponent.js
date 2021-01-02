@@ -14,12 +14,12 @@ window.customElements.define(
 
     render(data) {
       if (!data) {
-        return this.renderError("No Data!");
+        this.renderError("No Data!");
       }
 
       const rows = this.constructor.getRows(data);
       if (!rows) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Malformed project data!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -29,7 +29,7 @@ window.customElements.define(
 
       const settings = this.constructor.getSettings(data, "listView");
       if (!settings) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Gallery Visualization not available!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -62,7 +62,7 @@ window.customElements.define(
       }
 
       rows.forEach((datum) => {
-        let node = document
+        const node = document
           .createRange()
           .createContextualFragment(defaultTemplate);
         if (datum[settings.linkDim])
