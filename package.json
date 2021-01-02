@@ -25,6 +25,7 @@
     "parcel": "^2.0.0-beta.1"
   },
   "dependencies": {
+    "d3": "^5.16.0",
     "leaflet": "^1.7.1"
   }
 }
