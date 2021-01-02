@@ -51,7 +51,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
     if (this.externalScripts) {
       this.scriptsReady = Promise.all(
-        this.externalScripts.map(this.loadScript),
+        this.externalScripts.map(this.constructor.loadScript),
       );
       this.scriptsReady.then(() => {
         // ResizeObserver was only rolled out in Safari and Safari/Chrome on iOS in
@@ -77,7 +77,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     if (this.resizeObserver) this.resizeObserver.disconnect();
   }
 
-  loadScript(src) {
+  static loadScript(src) {
     return new Promise((resolve, reject) => {
       let script = document.querySelector(`head > script[src="${src}"]`);
       if (script !== null) {
@@ -116,7 +116,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       });
   }
 
-  getSettings(data, visType) {
+  static getSettings(data, visType) {
     try {
       return data.vis.find((vis) => vis.type === visType).importJson;
     } catch (e) {
@@ -124,7 +124,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     }
   }
 
-  getFields(data) {
+  static getFields(data) {
     // TODO: this is going to need to be able to handle multiple files in a project.
     try {
       return data.files[0].fields;
@@ -133,7 +133,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     }
   }
 
-  getRows(data) {
+  static getRows(data) {
     // TODO: this is going to need to be able to handle multiple files in a project.
     try {
       return data.files[0].data;

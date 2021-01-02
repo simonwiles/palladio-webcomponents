@@ -18,7 +18,7 @@ window.customElements.define(
         return this.renderError("No Data!");
       }
 
-      const rows = this.getRows(data);
+      const rows = this.constructor.getRows(data);
       if (!rows) {
         return this.renderError(`
         <details>
@@ -28,7 +28,7 @@ window.customElements.define(
         `);
       }
 
-      const settings = this.getSettings(data, "listView");
+      const settings = this.constructor.getSettings(data, "listView");
       if (!settings) {
         return this.renderError(`
         <details>

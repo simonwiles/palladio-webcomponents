@@ -268,7 +268,7 @@ window.customElements.define(
         this.renderError("No Data!");
       }
 
-      const rows = this.getRows(data);
+      const rows = this.constructor.getRows(data);
       if (!rows) {
         this.renderError(`
         <details>
@@ -278,7 +278,7 @@ window.customElements.define(
         `);
       }
 
-      const settings = this.getSettings(data, "mapView");
+      const settings = this.constructor.getSettings(data, "mapView");
       if (!settings) {
         this.renderError(`
         <details>

@@ -191,7 +191,7 @@ window.customElements.define(
         return this.renderError("No Data!");
       }
 
-      const rows = this.getRows(data);
+      const rows = this.constructor.getRows(data);
       if (!rows) {
         return this.renderError(`
         <details>
@@ -201,7 +201,7 @@ window.customElements.define(
         `);
       }
 
-      const settings = this.getSettings(data, "graphView");
+      const settings = this.constructor.getSettings(data, "graphView");
       if (!settings) {
         return this.renderError(`
         <details>
