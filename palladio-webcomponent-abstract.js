@@ -122,6 +122,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     return fetch(url)
       .then((response) => {
         if (!response.ok) {
+          // eslint-disable-next-line no-console
           console.log("response", response);
           return this.renderError(`
             <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
@@ -131,6 +132,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       })
       .catch((response) => {
         // TODO: how do we end up here, what does the response look like, and what should the error message be?
+        // eslint-disable-next-line no-console
         console.log("response", response);
         return this.renderError(response);
       });
