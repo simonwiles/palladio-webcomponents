@@ -11,5 +11,11 @@
   "settings": {
     "import/resolver": "parcel2"
   },
-  "ignorePatterns": ["dist/*.js"]
+  "ignorePatterns": ["dist/*.js"],
+  "rules": {
+    "no-param-reassign": [
+      "error",
+      { "props": true, "ignorePropertyModificationsFor": ["d"] }
+    ]
+  }
 }
