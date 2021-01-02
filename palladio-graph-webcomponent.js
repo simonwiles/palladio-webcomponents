@@ -1,4 +1,4 @@
-/* global d3 */
+import * as d3 from "d3";
 import graphComponentStyles from "bundle-text:./palladio-graph-webcomponent.css";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
@@ -8,7 +8,6 @@ window.customElements.define(
     constructor() {
       super();
       this.inlineStylesheets = [graphComponentStyles];
-      this.externalScripts = ["https://d3js.org/d3.v5.min.js"];
     }
 
     disconnectedCallback() {
