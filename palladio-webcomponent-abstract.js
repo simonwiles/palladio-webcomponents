@@ -1,3 +1,22 @@
+const throttle = (fn, wait) => {
+  let previouslyRun;
+  let queuedToRun;
+
+  return function invokeFn(...args) {
+    const now = Date.now();
+    queuedToRun = clearTimeout(queuedToRun);
+    if (!previouslyRun || now - previouslyRun >= wait) {
+      fn(...args);
+      previouslyRun = now;
+    } else {
+      queuedToRun = setTimeout(
+        invokeFn.bind(null, ...args),
+        wait - (now - previouslyRun),
+      );
+    }
+  };
+};
+
 class PalladioWebComponentAbstractBase extends HTMLElement {
   static get observedAttributes() {
     return ["height", "width", "project-url"];
@@ -81,10 +100,10 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     return new Promise((resolve, reject) => {
       let script = document.querySelector(`head > script[src="${src}"]`);
       if (script !== null) {
-        if (script.getAttribute("data-loaded") == "true") return resolve();
+        if (script.getAttribute("data-loaded") === "true") return resolve();
         script.addEventListener("load", resolve);
         script.addEventListener("error", reject);
-        return;
+        return true;
       }
       script = document.createElement("script");
       script.src = src;
@@ -95,6 +114,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
         resolve();
       };
       script.onerror = reject;
+      return true;
     });
   }
 
@@ -150,23 +170,5 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     this.body.appendChild(errorMessage);
   }
 }
-
-const throttle = (fn, wait) => {
-  let previouslyRun, queuedToRun;
-
-  return function invokeFn(...args) {
-    const now = Date.now();
-    queuedToRun = clearTimeout(queuedToRun);
-    if (!previouslyRun || now - previouslyRun >= wait) {
-      fn.apply(null, args);
-      previouslyRun = now;
-    } else {
-      queuedToRun = setTimeout(
-        invokeFn.bind(null, ...args),
-        wait - (now - previouslyRun),
-      );
-    }
-  };
-};
 
 export default PalladioWebComponentAbstractBase;
