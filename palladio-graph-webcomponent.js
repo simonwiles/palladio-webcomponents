@@ -1,4 +1,5 @@
 /* global d3 */
+import graphComponentStyles from "bundle-text:./palladio-graph-webcomponent.css";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
 window.customElements.define(
@@ -6,11 +7,7 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.externalStylesheets = [
-        // TODO: this is a bit hacky -- could perhaps be done in the ABC, or maybe it's
-        //       better just to bundle it anyway and then the problem goes away.
-        new URL(import.meta.url).href.replace(/\.js$/, ".css"),
-      ];
+      this.inlineStylesheets = [graphComponentStyles];
       this.externalScripts = ["https://d3js.org/d3.v5.min.js"];
     }
 
