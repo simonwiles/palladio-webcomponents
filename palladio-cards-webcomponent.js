@@ -1,3 +1,4 @@
+import cardsComponentStyles from "bundle-text:./palladio-cards-webcomponent.css";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
 window.customElements.define(
@@ -7,10 +8,8 @@ window.customElements.define(
       super();
       this.externalStylesheets = [
         "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css",
-        // TODO: this is a bit hacky -- could perhaps be done in the ABC, or maybe it's
-        //       better just to bundle it anyway and then the problem goes away.
-        new URL(import.meta.url).href.replace(/\.js$/, ".css"),
       ];
+      this.inlineStylesheets = [cardsComponentStyles];
     }
 
     render(data) {
