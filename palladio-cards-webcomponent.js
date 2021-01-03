@@ -6,9 +6,6 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.externalStylesheets = [
-        "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css",
-      ];
       this.inlineStylesheets = [cardsComponentStyles];
     }
 
@@ -38,21 +35,18 @@ window.customElements.define(
       }
 
       const defaultTemplate = `
-        <div class="col-lg-3 col-md-4 col-sm-6 list-wrap">
-          <a target="_blank" class="list-link">
-            <div class="list-box">
-              <div class="list-image"></div>
-              <div class="list-title"></div>
-              <div class="list-subtitle"></div>
-              <div class="list-text margin-top"></div>
-            </div>
-          </a>
-        </div>
-        `;
+        <a target="_blank" class="link">
+          <div class="card">
+            <div class="image"></div>
+            <div class="title"></div>
+            <div class="subtitle"></div>
+            <div class="text"></div>
+          </div>
+        </a>
+      `;
 
-      const row = document.createElement("div");
-      row.classList.add("row");
-      row.setAttribute("id", "list-display");
+      const container = document.createElement("div");
+      container.classList.add("palladio-cards");
 
       if ("sortDim" in settings) {
         // Need some logic here to sort on non-string types
@@ -61,25 +55,24 @@ window.customElements.define(
         );
       }
 
-      rows.forEach((datum) => {
+      rows.forEach((row) => {
         const node = document
           .createRange()
           .createContextualFragment(defaultTemplate);
-        if (datum[settings.linkDim])
-          node.querySelector(".list-link").href = datum[settings.linkDim];
-        if (datum[settings.imgurlDim])
-          node.querySelector(".list-image").style.backgroundImage = `url(${
-            datum[settings.imgurlDim]
+        if (row[settings.linkDim])
+          node.querySelector(".link").href = row[settings.linkDim];
+        if (row[settings.imgurlDim])
+          node.querySelector(".image").style.backgroundImage = `url(${
+            row[settings.imgurlDim]
           })`;
-        node.querySelector(".list-title").innerText = datum[settings.titleDim];
-        node.querySelector(".list-subtitle").innerText =
-          datum[settings.subtitleDim];
-        node.querySelector(".list-text").innerText = datum[settings.textDim];
-        row.appendChild(node);
+        node.querySelector(".title").innerText = row[settings.titleDim];
+        node.querySelector(".subtitle").innerText = row[settings.subtitleDim];
+        node.querySelector(".text").innerText = row[settings.textDim];
+        container.appendChild(node);
       });
 
       this.body.innerHTML = "";
-      this.body.appendChild(row);
+      this.body.appendChild(container);
     }
   },
 );
