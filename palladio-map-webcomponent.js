@@ -54,11 +54,14 @@ window.customElements.define(
     }
 
     static get observedAttributes() {
-      return [...super.observedAttributes, "zoom-to-fit"];
+      return [...super.observedAttributes, "mapbox-token", "zoom-to-fit"];
     }
 
     attributeChangedCallback(attrName, oldValue, newValue) {
       super.attributeChangedCallback(attrName, oldValue, newValue);
+      if (attrName === "mapbox-token" && newValue !== null) {
+        this.mapConfig.accessToken = newValue;
+      }
       if (attrName === "zoom-to-fit" && newValue !== null) {
         this.isZoomToFit = true;
       }
