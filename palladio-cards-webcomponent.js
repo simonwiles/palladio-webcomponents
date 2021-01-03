@@ -1,6 +1,17 @@
 import cardsComponentStyles from "bundle-text:./palladio-cards-webcomponent.css";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
+const defaultTemplate = `
+  <a target="_blank" class="link">
+    <div class="card">
+      <div class="image"></div>
+      <div class="title"></div>
+      <div class="subtitle"></div>
+      <div class="text"></div>
+    </div>
+  </a>
+`;
+
 window.customElements.define(
   "palladio-cards-component",
   class extends PalladioWebComponentAbstractBase {
@@ -34,40 +45,35 @@ window.customElements.define(
         `);
       }
 
-      const defaultTemplate = `
-        <a target="_blank" class="link">
-          <div class="card">
-            <div class="image"></div>
-            <div class="title"></div>
-            <div class="subtitle"></div>
-            <div class="text"></div>
-          </div>
-        </a>
-      `;
+      const {
+        imgurlDim,
+        linkDim,
+        sortDim,
+        subtitleDim,
+        textDim,
+        titleDim,
+      } = settings;
 
       const container = document.createElement("div");
       container.classList.add("palladio-cards");
 
-      if ("sortDim" in settings) {
+      if (sortDim) {
         // Need some logic here to sort on non-string types
-        rows.sort((a, b) =>
-          a[settings.sortDim].localeCompare(b[settings.sortDim]),
-        );
+        rows.sort((a, b) => a[sortDim].localeCompare(b[sortDim]));
       }
 
       rows.forEach((row) => {
         const node = document
           .createRange()
           .createContextualFragment(defaultTemplate);
-        if (row[settings.linkDim])
-          node.querySelector(".link").href = row[settings.linkDim];
-        if (row[settings.imgurlDim])
-          node.querySelector(".image").style.backgroundImage = `url(${
-            row[settings.imgurlDim]
-          })`;
-        node.querySelector(".title").innerText = row[settings.titleDim];
-        node.querySelector(".subtitle").innerText = row[settings.subtitleDim];
-        node.querySelector(".text").innerText = row[settings.textDim];
+        if (row[linkDim]) node.querySelector(".link").href = row[linkDim];
+        if (row[imgurlDim])
+          node.querySelector(
+            ".image",
+          ).style.backgroundImage = `url(${row[imgurlDim]})`;
+        node.querySelector(".title").innerText = row[titleDim];
+        node.querySelector(".subtitle").innerText = row[subtitleDim];
+        node.querySelector(".text").innerText = row[textDim];
         container.appendChild(node);
       });
 
