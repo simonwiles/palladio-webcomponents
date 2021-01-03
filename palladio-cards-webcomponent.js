@@ -1,26 +1,33 @@
+import cardsComponentStyles from "bundle-text:./palladio-cards-webcomponent.css";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
+
+const defaultTemplate = `
+  <a target="_blank" class="link">
+    <div class="card">
+      <div class="image"></div>
+      <div class="title"></div>
+      <div class="subtitle"></div>
+      <div class="text"></div>
+    </div>
+  </a>
+`;
 
 window.customElements.define(
   "palladio-cards-component",
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.stylesheets = [
-        "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css",
-        // TODO: this is a bit hacky -- could perhaps be done in the ABC, or maybe it's
-        //       better just to bundle it anyway and then the problem goes away.
-        new URL(import.meta.url).href.replace(/\.js$/, ".css"),
-      ];
+      this.inlineStylesheets = [cardsComponentStyles];
     }
 
     render(data) {
       if (!data) {
-        return this.renderError("No Data!");
+        this.renderError("No Data!");
       }
 
-      const rows = this.getRows(data);
+      const rows = this.constructor.getRows(data);
       if (!rows) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Malformed project data!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -28,9 +35,9 @@ window.customElements.define(
         `);
       }
 
-      const settings = this.getSettings(data, "listView");
+      const settings = this.constructor.getSettings(data, "listView");
       if (!settings) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Gallery Visualization not available!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -38,49 +45,40 @@ window.customElements.define(
         `);
       }
 
-      const defaultTemplate = `
-        <div class="col-lg-3 col-md-4 col-sm-6 list-wrap">
-          <a target="_blank" class="list-link">
-            <div class="list-box">
-              <div class="list-image"></div>
-              <div class="list-title"></div>
-              <div class="list-subtitle"></div>
-              <div class="list-text margin-top"></div>
-            </div>
-          </a>
-        </div>
-        `;
+      const {
+        imgurlDim,
+        linkDim,
+        sortDim,
+        subtitleDim,
+        textDim,
+        titleDim,
+      } = settings;
 
-      const row = document.createElement("div");
-      row.classList.add("row");
-      row.setAttribute("id", "list-display");
+      const container = document.createElement("div");
+      container.classList.add("palladio-cards");
 
-      if ("sortDim" in settings) {
+      if (sortDim) {
         // Need some logic here to sort on non-string types
-        rows.sort((a, b) =>
-          a[settings.sortDim].localeCompare(b[settings.sortDim]),
-        );
+        rows.sort((a, b) => a[sortDim].localeCompare(b[sortDim]));
       }
 
-      rows.forEach((datum) => {
-        let node = document
+      rows.forEach((row) => {
+        const node = document
           .createRange()
           .createContextualFragment(defaultTemplate);
-        if (datum[settings.linkDim])
-          node.querySelector(".list-link").href = datum[settings.linkDim];
-        if (datum[settings.imgurlDim])
-          node.querySelector(".list-image").style.backgroundImage = `url(${
-            datum[settings.imgurlDim]
-          })`;
-        node.querySelector(".list-title").innerText = datum[settings.titleDim];
-        node.querySelector(".list-subtitle").innerText =
-          datum[settings.subtitleDim];
-        node.querySelector(".list-text").innerText = datum[settings.textDim];
-        row.appendChild(node);
+        if (row[linkDim]) node.querySelector(".link").href = row[linkDim];
+        if (row[imgurlDim])
+          node.querySelector(
+            ".image",
+          ).style.backgroundImage = `url(${row[imgurlDim]})`;
+        node.querySelector(".title").innerText = row[titleDim];
+        node.querySelector(".subtitle").innerText = row[subtitleDim];
+        node.querySelector(".text").innerText = row[textDim];
+        container.appendChild(node);
       });
 
       this.body.innerHTML = "";
-      this.body.appendChild(row);
+      this.body.appendChild(container);
     }
   },
 );

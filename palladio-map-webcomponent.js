@@ -1,4 +1,6 @@
-import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
+import leafletBaseStyles from "bundle-text:leaflet/dist/leaflet.css";
+import * as L from "leaflet/dist/leaflet-src.esm";
+import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract";
 
 const mapboxStylesMap = {
   // Maps IDs from old "Classic" style mapbox tileset to IDs for newly created
@@ -11,13 +13,27 @@ const mapboxStylesMap = {
   "cesta.k8g7eofo": "cesta/ckg2k36b80upx19pua1dy7y4z", // "Buildings and Areas"
 };
 
+const tooltipStyleOverrides = `
+  .map-tooltip {
+    background: rgba(0,0,0,.8);
+    border: 0;
+    border-radius: 2px;
+    color: #fff;
+  }
+
+  .map-tooltip.leaflet-tooltip-top:before { border-top-color: rgba(0,0,0,.8); }
+  .map-tooltip.leaflet-tooltip-right:before { border-right-color: rgba(0,0,0,.8); }
+  .map-tooltip.leaflet-tooltip-bottom:before { border-bottom-color: rgba(0,0,0,.8); }
+  .map-tooltip.leaflet-tooltip-left:before { border-left-color: rgba(0,0,0,.8); }
+`;
+
 window.customElements.define(
   "palladio-map-component",
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.stylesheets = ["https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"];
-      this.scripts = ["https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"];
+
+      this.inlineStylesheets = [leafletBaseStyles, tooltipStyleOverrides];
 
       this.mapConfig = {
         center: [45.464, 9.1916],
@@ -30,25 +46,6 @@ window.customElements.define(
         accessToken:
           "pk.eyJ1IjoiY2VzdGEiLCJhIjoiMFo5dmlVZyJ9.Io52RcCMMnYukT77GjDJGA",
       };
-    }
-
-    connectedCallback() {
-      super.connectedCallback();
-      const style = document.createElement("style");
-      this.shadowRoot.appendChild(style);
-      style.textContent = `
-      .map-tooltip {
-        background: rgba(0,0,0,.8);
-        border: 0;
-        border-radius: 2px;
-        color: #fff;
-      }
-
-      .map-tooltip.leaflet-tooltip-top:before { border-top-color: rgba(0,0,0,.8); }
-      .map-tooltip.leaflet-tooltip-right:before { border-right-color: rgba(0,0,0,.8); }
-      .map-tooltip.leaflet-tooltip-bottom:before { border-bottom-color: rgba(0,0,0,.8); }
-      .map-tooltip.leaflet-tooltip-left:before { border-left-color: rgba(0,0,0,.8); }
-      `;
     }
 
     static get observedAttributes() {
@@ -82,9 +79,9 @@ window.customElements.define(
       L.control.scale().addTo(this.map);
     }
 
-    addTileSets() {
+    addTileSets(tileSets) {
       // iterate tile set layers in reverse order
-      [...this.settings.tileSets].reverse().forEach((tileSet, i) => {
+      [...tileSets].reverse().forEach((tileSet) => {
         if ("mbId" in tileSet && tileSet.mbId) {
           L.tileLayer(
             // The Palladio tilesets have been migrated to MapBox's "Static Tiles API".
@@ -118,10 +115,10 @@ window.customElements.define(
       });
     }
 
-    addLayers() {
+    addLayers(layers) {
       const { minPointSize, maxPointSize } = this.mapConfig;
 
-      this.settings.layers
+      layers
         .filter(({ layerType }) => layerType === "data")
         .forEach((layer) => {
           // destructure some properties into the local scope
@@ -131,19 +128,19 @@ window.customElements.define(
           } = layer.mapping;
 
           const tooltipText = (points) =>
-            "• " +
-            points
+            `• ${points
               .map((point) => point[layer.descriptiveDimKey])
-              .join("<br>• ") +
-            `<br> [${points.length} record${points.length > 1 ? "s" : ""}]`;
+              .join("<br>• ")}<br> [${points.length} record${
+              points.length > 1 ? "s" : ""
+            }]`;
 
           // create a pointsMap to group points by location
           let pointsMap = this.rows
             .filter((row) => row[sourceCoordinatesKey])
             .reduce(
-              (pointsMap, row) =>
-                pointsMap.set(row[sourceCoordinatesKey], [
-                  ...(pointsMap.get(row[sourceCoordinatesKey]) || []),
+              (_pointsMap, row) =>
+                _pointsMap.set(row[sourceCoordinatesKey], [
+                  ...(_pointsMap.get(row[sourceCoordinatesKey]) || []),
                   row,
                 ]),
               new Map(),
@@ -155,9 +152,9 @@ window.customElements.define(
             pointsMap = this.rows
               .filter((row) => row[destinationCoordinatesKey])
               .reduce(
-                (pointsMap, row) =>
-                  pointsMap.set(row[destinationCoordinatesKey], [
-                    ...(pointsMap.get(row[destinationCoordinatesKey]) || []),
+                (_pointsMap, row) =>
+                  _pointsMap.set(row[destinationCoordinatesKey], [
+                    ...(_pointsMap.get(row[destinationCoordinatesKey]) || []),
                     row,
                   ]),
                 pointsMap,
@@ -174,11 +171,11 @@ window.customElements.define(
                   ),
               )
               .reduce(
-                (edgesMap, row) =>
-                  edgesMap.set(
+                (_edgesMap, row) =>
+                  _edgesMap.set(
                     [row[sourceCoordinatesKey], row[destinationCoordinatesKey]],
                     [
-                      ...(edgesMap.get([
+                      ...(_edgesMap.get([
                         row[sourceCoordinatesKey],
                         row[destinationCoordinatesKey],
                       ]) || []),
@@ -203,12 +200,12 @@ window.customElements.define(
           }
 
           const getAggregatedValue = (points) =>
-            layer.aggregationType == "COUNT"
+            layer.aggregationType === "COUNT"
               ? // "COUNT" -- scale according to number of points
                 points.length
               : // "SUM" -- scale according to sum of layer.aggregateKey properties
                 points.reduce(
-                  (a, b) => a + parseInt(b[layer.aggregateKey] || 0),
+                  (a, b) => a + parseInt(b[layer.aggregateKey] || 0, 10),
                   0,
                 );
 
@@ -246,7 +243,7 @@ window.customElements.define(
 
     zoomToFit() {
       // this needs to be more sophisticated if there are multiple data layers
-      const dataLayers = this.settings.layers.filter(
+      const dataLayers = this.layers.filter(
         (layer) => layer.layerType === "data",
       );
       if (dataLayers) {
@@ -261,12 +258,12 @@ window.customElements.define(
 
     render(data) {
       if (!data) {
-        return this.renderError("No Data!");
+        this.renderError("No Data!");
       }
 
-      const rows = this.getRows(data);
+      const rows = this.constructor.getRows(data);
       if (!rows) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Malformed project data!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -274,9 +271,9 @@ window.customElements.define(
         `);
       }
 
-      const settings = this.getSettings(data, "mapView");
+      const settings = this.constructor.getSettings(data, "mapView");
       if (!settings) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Map Visualization not available!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -292,14 +289,14 @@ window.customElements.define(
       this.body.appendChild(view);
       this.body.querySelector("div.map-view").style.height = "100%";
 
-      this.settings = settings;
       this.rows = rows;
+      this.layers = settings.layers;
 
       this.scriptsReady.then(() => {
         this.initMap();
         if ("tileSets" in settings) {
-          this.addTileSets();
-          this.addLayers();
+          this.addTileSets(settings.tileSets);
+          this.addLayers(settings.layers);
         }
       });
     }

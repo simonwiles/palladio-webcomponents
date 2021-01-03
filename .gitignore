@@ -1,1 +1,4 @@
 test.html
+node_modules
+.parcel-cache
+dist

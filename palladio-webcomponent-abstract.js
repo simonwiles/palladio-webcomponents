@@ -1,3 +1,22 @@
+const throttle = (fn, wait) => {
+  let previouslyRun;
+  let queuedToRun;
+
+  return function invokeFn(...args) {
+    const now = Date.now();
+    queuedToRun = clearTimeout(queuedToRun);
+    if (!previouslyRun || now - previouslyRun >= wait) {
+      fn(...args);
+      previouslyRun = now;
+    } else {
+      queuedToRun = setTimeout(
+        invokeFn.bind(null, ...args),
+        wait - (now - previouslyRun),
+      );
+    }
+  };
+};
+
 class PalladioWebComponentAbstractBase extends HTMLElement {
   static get observedAttributes() {
     return ["height", "width", "project-url"];
@@ -29,22 +48,30 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       :host { display: block; overflow: hidden; }
       body { height: 100%; width: 100%; margin: 0; }`;
 
-    if (this.stylesheets) {
-      let styling = document
+    if (this.externalStylesheets) {
+      const stylesheetLink = document
         .createRange()
         .createContextualFragment(
-          `${this.stylesheets
+          `${this.externalStylesheets
             .map(
-              (stylesheet) =>
-                `<link rel="stylesheet" type="text/css" href="${stylesheet}">`,
+              (stylesheetUrl) =>
+                `<link rel="stylesheet" type="text/css" href="${stylesheetUrl}">`,
             )
             .join("\n")}`,
         );
-      shadowRoot.appendChild(styling);
+      shadowRoot.appendChild(stylesheetLink);
     }
 
-    if (this.scripts) {
-      this.scriptsReady = Promise.all(this.scripts.map(this.loadScript));
+    if (this.inlineStylesheets) {
+      const styleTag = document.createElement("style");
+      styleTag.textContent = this.inlineStylesheets.join("\n\n");
+      this.shadowRoot.appendChild(styleTag);
+    }
+
+    if (this.externalScripts) {
+      this.scriptsReady = Promise.all(
+        this.externalScripts.map(this.constructor.loadScript),
+      );
       this.scriptsReady.then(() => {
         // ResizeObserver was only rolled out in Safari and Safari/Chrome on iOS in
         //  March 2020, so probably needs to be polyfilled for the time being.
@@ -55,6 +82,8 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
           this.resizeObserver.observe(this);
         }
       });
+    } else {
+      this.scriptsReady = Promise.resolve();
     }
 
     // working with a "body" element in the shadow root is necessary
@@ -67,14 +96,14 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     if (this.resizeObserver) this.resizeObserver.disconnect();
   }
 
-  loadScript(src) {
+  static loadScript(src) {
     return new Promise((resolve, reject) => {
       let script = document.querySelector(`head > script[src="${src}"]`);
       if (script !== null) {
-        if (script.getAttribute("data-loaded") == "true") return resolve();
+        if (script.getAttribute("data-loaded") === "true") return resolve();
         script.addEventListener("load", resolve);
         script.addEventListener("error", reject);
-        return;
+        return true;
       }
       script = document.createElement("script");
       script.src = src;
@@ -85,6 +114,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
         resolve();
       };
       script.onerror = reject;
+      return true;
     });
   }
 
@@ -92,6 +122,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     return fetch(url)
       .then((response) => {
         if (!response.ok) {
+          // eslint-disable-next-line no-console
           console.log("response", response);
           return this.renderError(`
             <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
@@ -101,12 +132,13 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       })
       .catch((response) => {
         // TODO: how do we end up here, what does the response look like, and what should the error message be?
+        // eslint-disable-next-line no-console
         console.log("response", response);
         return this.renderError(response);
       });
   }
 
-  getSettings(data, visType) {
+  static getSettings(data, visType) {
     try {
       return data.vis.find((vis) => vis.type === visType).importJson;
     } catch (e) {
@@ -114,7 +146,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     }
   }
 
-  getFields(data) {
+  static getFields(data) {
     // TODO: this is going to need to be able to handle multiple files in a project.
     try {
       return data.files[0].fields;
@@ -123,7 +155,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     }
   }
 
-  getRows(data) {
+  static getRows(data) {
     // TODO: this is going to need to be able to handle multiple files in a project.
     try {
       return data.files[0].data;
@@ -140,23 +172,5 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     this.body.appendChild(errorMessage);
   }
 }
-
-const throttle = (fn, wait) => {
-  let previouslyRun, queuedToRun;
-
-  return function invokeFn(...args) {
-    const now = Date.now();
-    queuedToRun = clearTimeout(queuedToRun);
-    if (!previouslyRun || now - previouslyRun >= wait) {
-      fn.apply(null, args);
-      previouslyRun = now;
-    } else {
-      queuedToRun = setTimeout(
-        invokeFn.bind(null, ...args),
-        wait - (now - previouslyRun),
-      );
-    }
-  };
-};
 
 export default PalladioWebComponentAbstractBase;

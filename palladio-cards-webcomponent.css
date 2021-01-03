@@ -1,60 +1,54 @@
 body {
-  background-color: transparent;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-.list-title {
-  font-size: 14px;
+.palladio-cards {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.card {
+  height: 150px;
+  padding: 0.5em;
+  background: #e5e5e5;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.5em;
+}
+
+.card:hover {
+  background-color: #ccc;
+}
+
+.title {
+  font-size: 1.25em;
   line-height: normal;
 }
 
-.list-image {
-  height: 130px;
-  width: 100px;
-  float: left;
-  background-size: cover;
-  background-position: top center;
-  border: none;
-  margin-right: 10px;
-  background-repeat: no-repeat;
-  background-color: #ddd;
-  color: #bbb;
-  font-size: 12px;
-
-  padding: 20px;
-  text-align: center;
-
-  display: box;
-  box-pack: center;
-  box-align: center;
-}
-
-.list-subtitle {
+.subtitle {
   color: #888;
-  font-size: 13px;
-  margin-top: 5px;
+  font-size: 1.125em;
 }
 
-.list-text {
-  font-size: 12px;
-  margin-top: 5px;
+.text {
+  font-size: 1em;
+  overflow-y: auto;
 }
 
-.list-link {
+.image {
+  grid-row: 1/-1;
+  width: 100px;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  background-repeat: no-repeat;
+}
+
+.link {
   text-decoration: none;
-  color: black;
-}
-
-.list-box {
-  height: 150px;
-  padding: 10px;
-  background: #e5e5e5;
-  margin-bottom: 15px;
-}
-
-.list-box:hover {
-  background-color: #ccc;
 }
 
 .error-msg {

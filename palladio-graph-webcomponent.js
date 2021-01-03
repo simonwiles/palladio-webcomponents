@@ -1,3 +1,5 @@
+import * as d3 from "d3";
+import graphComponentStyles from "bundle-text:./palladio-graph-webcomponent.css";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
 window.customElements.define(
@@ -5,12 +7,7 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
-      this.stylesheets = [
-        // TODO: this is a bit hacky -- could perhaps be done in the ABC, or maybe it's
-        //       better just to bundle it anyway and then the problem goes away.
-        new URL(import.meta.url).href.replace(/\.js$/, ".css"),
-      ];
-      this.scripts = ["https://d3js.org/d3.v5.min.js"];
+      this.inlineStylesheets = [graphComponentStyles];
     }
 
     disconnectedCallback() {
@@ -30,15 +27,21 @@ window.customElements.define(
         highlightTarget, // whether to "highlight" the target nodes
       } = settings;
 
-      const { height, width } = this.svg.getBoundingClientRect();
+      let { height, width } = this.svg.getBoundingClientRect();
+
+      const svg = d3.select(this.svg);
+      const g = svg.append("g");
+
       const zoom = d3
         .zoom()
         .scaleExtent([0.1, 2])
         .on("zoom", () => g.attr("transform", d3.event.transform));
 
+      svg.call(zoom);
+
       this.zoomToFit = () => {
         const box = g.node().getBBox();
-        const { height, width } = this.svg.getBoundingClientRect();
+        ({ height, width } = this.svg.getBoundingClientRect());
         const scale = 0.95 * Math.min(width / box.width, height / box.height);
 
         let transform = d3.zoomIdentity;
@@ -50,9 +53,6 @@ window.customElements.define(
         );
         svg.transition().duration(500).call(zoom.transform, transform);
       };
-
-      const svg = d3.select(this.svg).call(zoom);
-      const g = svg.append("g");
 
       const sizeScale = d3.scaleSqrt().range([5, 20]);
       sizeScale.domain([
@@ -86,6 +86,15 @@ window.customElements.define(
         .append("line")
         .attr("stroke-width", 0.5);
 
+      const labels = g
+        .append("g")
+        .attr("class", "labels")
+        .selectAll("text")
+        .data(graph.nodes)
+        .enter()
+        .append("text")
+        .text((d) => d.id);
+
       const nodes = g
         .append("g")
         .attr("class", "nodes")
@@ -95,12 +104,12 @@ window.customElements.define(
         .append("circle")
         .attr("r", (d) => (nodeSize ? sizeScale(d.count) : 5))
         .attr("class", (d) => d.class)
-        .on("mouseover", function (d) {
-          d3.select(labels.nodes()[d.index]).style("font-weight", "bold");
-        })
-        .on("mouseout", function (d) {
-          d3.select(labels.nodes()[d.index]).style("font-weight", "normal");
-        })
+        .on("mouseover", (d) =>
+          d3.select(labels.nodes()[d.index]).style("font-weight", "bold"),
+        )
+        .on("mouseout", (d) =>
+          d3.select(labels.nodes()[d.index]).style("font-weight", "normal"),
+        )
         .call(
           d3
             .drag()
@@ -119,15 +128,6 @@ window.customElements.define(
               d.fy = d3.event.y;
             }),
         );
-
-      const labels = g
-        .append("g")
-        .attr("class", "labels")
-        .selectAll("text")
-        .data(graph.nodes)
-        .enter()
-        .append("text")
-        .text((d) => d.id);
 
       this.simulation.nodes(graph.nodes).on("tick", () => {
         links
@@ -152,7 +152,7 @@ window.customElements.define(
         svg.selectAll(".target").classed("highlighted", true);
     }
 
-    buildNodesAndLinks(rows, settings) {
+    static buildNodesAndLinks(rows, settings) {
       const nodes = {};
       const sources = new Set();
       const targets = new Set();
@@ -188,12 +188,12 @@ window.customElements.define(
 
     render(data) {
       if (!data) {
-        return this.renderError("No Data!");
+        this.renderError("No Data!");
       }
 
-      const rows = this.getRows(data);
+      const rows = this.constructor.getRows(data);
       if (!rows) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Malformed project data!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -201,9 +201,9 @@ window.customElements.define(
         `);
       }
 
-      const settings = this.getSettings(data, "graphView");
+      const settings = this.constructor.getSettings(data, "graphView");
       if (!settings) {
-        return this.renderError(`
+        this.renderError(`
         <details>
           <summary>Graph Visualization not available!</summary>
           <pre>${JSON.stringify(data, null, 2)}</pre>
@@ -216,7 +216,7 @@ window.customElements.define(
       this.svg.style.height = "100%";
       this.svg.style.width = "100%";
       this.body.appendChild(this.svg);
-      const graph = this.buildNodesAndLinks(rows, settings);
+      const graph = this.constructor.buildNodesAndLinks(rows, settings);
       this.scriptsReady.then(() =>
         this.drawGraph(JSON.parse(JSON.stringify(graph)), settings),
       );
