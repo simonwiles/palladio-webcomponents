@@ -3,6 +3,10 @@ body {
   overflow-y: auto;
 }
 
+a {
+  color: inherit;
+}
+
 .palladio-cards {
   display: grid;
   grid-gap: 1em;
@@ -17,6 +21,7 @@ body {
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto 1fr;
   gap: 0.5em;
+  overflow: hidden;
 }
 
 .card:hover {
@@ -31,6 +36,7 @@ body {
 .subtitle {
   color: #888;
   font-size: 1.125em;
+  overflow-y: auto;
 }
 
 .text {
@@ -41,6 +47,7 @@ body {
 .image {
   grid-row: 1/-1;
   width: 100px;
+  max-height: 150px;
   background-size: cover;
   background-position: center;
   border: none;
