@@ -127,19 +127,17 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     return fetch(url)
       .then((response) => {
         if (!response.ok) {
-          // eslint-disable-next-line no-console
-          console.log("response", response);
-          return this.renderError(`
-            <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
+          this.renderError(`
+          <pre>Error retrieving:\n\t${response.url}\n${response.status}: ${response.statusText}</pre>
           `);
+          // eslint-disable-next-line no-console
+          console.error("response", response);
+          throw new Error();
         }
         return response.json();
       })
-      .catch((response) => {
-        // TODO: how do we end up here, what does the response look like, and what should the error message be?
-        // eslint-disable-next-line no-console
-        console.log("response", response);
-        return this.renderError(response);
+      .catch(() => {
+        throw new Error("Unable to retrieve project JSON.");
       });
   }
 
