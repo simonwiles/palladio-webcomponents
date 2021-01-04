@@ -86,8 +86,6 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       this.scriptsReady = Promise.resolve();
     }
 
-    // working with a "body" element in the shadow root is necessary
-    //  if styles from bootstrap are to work properly
     this.body = document.createElement("body");
     shadowRoot.appendChild(this.body);
   }
