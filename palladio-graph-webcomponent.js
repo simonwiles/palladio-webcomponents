@@ -8,6 +8,9 @@ window.customElements.define(
     constructor() {
       super();
       this.inlineStylesheets = [graphComponentStyles];
+      // the ResizeObserver that dispatches .onResize fires immediately on creation,
+      //  typically before the graph is drawn and the .zoomToFit function is ready.
+      this.zoomToFit = () => {};
     }
 
     disconnectedCallback() {
