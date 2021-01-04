@@ -46,6 +46,10 @@ window.customElements.define(
         accessToken:
           "pk.eyJ1IjoiY2VzdGEiLCJhIjoiMFo5dmlVZyJ9.Io52RcCMMnYukT77GjDJGA",
       };
+
+      // the ResizeObserver that dispatches .onResize fires immediately on creation,
+      //  typically before the graph is drawn and the .zoomToFit function is ready.
+      this.zoomToFit = () => {};
     }
 
     static get observedAttributes() {
@@ -241,21 +245,6 @@ window.customElements.define(
       if (this.isZoomToFit) this.zoomToFit();
     }
 
-    zoomToFit() {
-      // this needs to be more sophisticated if there are multiple data layers
-      const dataLayers = this.layers.filter(
-        (layer) => layer.layerType === "data",
-      );
-      if (dataLayers) {
-        this.map.invalidateSize();
-        this.map.fitBounds(
-          this.rows.map((row) =>
-            row[dataLayers[0].mapping.sourceCoordinatesKey].split(","),
-          ),
-        );
-      }
-    }
-
     render(data) {
       if (!data) {
         this.renderError("No Data!");
@@ -280,6 +269,21 @@ window.customElements.define(
         </details>
         `);
       }
+
+      this.zoomToFit = () => {
+        // this needs to be more sophisticated if there are multiple data layers
+        const dataLayers = this.layers.filter(
+          (layer) => layer.layerType === "data",
+        );
+        if (dataLayers) {
+          this.map.invalidateSize();
+          this.map.fitBounds(
+            this.rows.map((row) =>
+              row[dataLayers[0].mapping.sourceCoordinatesKey].split(","),
+            ),
+          );
+        }
+      };
 
       const view = document
         .createRange()
