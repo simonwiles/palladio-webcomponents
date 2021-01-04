@@ -80,7 +80,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       // ResizeObserver was only rolled out in Safari and Safari/Chrome on iOS in
       //  March 2020, so probably needs to be polyfilled for the time being if
       //  the behaviour is considered important.
-      if (this.onResize) {
+      if (window.ResizeObserver && this.onResize) {
         this.resizeObserver = new ResizeObserver(
           throttle(this.onResize.bind(this), 250),
         );
