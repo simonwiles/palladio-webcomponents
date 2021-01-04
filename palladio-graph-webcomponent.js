@@ -7,6 +7,7 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
+      this.visType = "graphView";
       this.inlineStylesheets = [graphComponentStyles];
       // the ResizeObserver that dispatches .onResize fires immediately on creation,
       //  typically before the graph is drawn and the .zoomToFit function is ready.
@@ -189,31 +190,8 @@ window.customElements.define(
       };
     }
 
-    render(data) {
-      if (!data) {
-        this.renderError("No Data!");
-      }
-
-      const rows = this.constructor.getRows(data);
-      if (!rows) {
-        this.renderError(`
-        <details>
-          <summary>Malformed project data!</summary>
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-        </details>
-        `);
-      }
-
-      const settings = this.constructor.getSettings(data, "graphView");
-      if (!settings) {
-        this.renderError(`
-        <details>
-          <summary>Graph Visualization not available!</summary>
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-        </details>
-        `);
-      }
-
+    onDataLoaded() {
+      const { rows, settings } = this;
       this.body.innerHTML = "";
       this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       this.svg.style.height = "100%";

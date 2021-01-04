@@ -30,9 +30,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === "project-url" && newValue !== null) {
-      this.getDataFromUrl(newValue).then((data) => {
-        if (data) this.render(data);
-      });
+      this.getDataFromUrl(newValue).then((data) => this.parseData(data));
     }
     if (["height", "width"].indexOf(attrName) !== -1) {
       this.style[attrName] = newValue;
@@ -47,9 +45,16 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
       );
     }
     this.attachShadow({ mode: "open" });
+    this.addEventListener("dataLoaded", this.onDataLoaded);
   }
 
   connectedCallback() {
+    if (this.visType === undefined) {
+      throw new TypeError(
+        "visType must be defined on classes derived from PalladioWebComponentAbstractBase",
+      );
+    }
+
     const { shadowRoot } = this;
     shadowRoot.innerHTML = "";
 
@@ -177,6 +182,37 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     errorMessage.classList.add("error-msg");
     errorMessage.innerHTML = error;
     this.body.appendChild(errorMessage);
+  }
+
+  parseData(data) {
+    if (!data || typeof data === "undefined") {
+      this.renderError("No Data!");
+    }
+
+    const rows = this.constructor.getRows(data);
+    if (!rows) {
+      this.renderError(`
+      <details>
+        <summary>Malformed project data!</summary>
+        <pre>${JSON.stringify(data, null, 2)}</pre>
+      </details>
+      `);
+      throw new Error("Malformed project data!");
+    }
+
+    const settings = this.constructor.getSettings(data, this.visType);
+    if (!settings) {
+      this.renderError(`
+      <details>
+      <summary>Visualization type "${this.visType}" not available!</summary>
+      <pre>${JSON.stringify(data, null, 2)}</pre>
+      </details>
+      `);
+      throw new Error("Visualization settings not available!");
+    }
+
+    Object.assign(this, { rows, settings });
+    this.dispatchEvent(new Event("dataLoaded"));
   }
 }
 

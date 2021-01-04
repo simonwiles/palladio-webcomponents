@@ -32,6 +32,7 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
+      this.visType = "mapView";
 
       this.inlineStylesheets = [leafletBaseStyles, tooltipStyleOverrides];
 
@@ -241,38 +242,20 @@ window.customElements.define(
               .addTo(this.map);
           });
         });
-
-      if (this.isZoomToFit) this.zoomToFit();
     }
 
-    render(data) {
-      if (!data) {
-        this.renderError("No Data!");
-      }
+    onDataLoaded() {
+      const view = document
+        .createRange()
+        .createContextualFragment(`<div class="map-view"></div>`);
 
-      const rows = this.constructor.getRows(data);
-      if (!rows) {
-        this.renderError(`
-        <details>
-          <summary>Malformed project data!</summary>
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-        </details>
-        `);
-      }
-
-      const settings = this.constructor.getSettings(data, "mapView");
-      if (!settings) {
-        this.renderError(`
-        <details>
-          <summary>Map Visualization not available!</summary>
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-        </details>
-        `);
-      }
+      this.body.innerHTML = "";
+      this.body.appendChild(view);
+      this.body.querySelector("div.map-view").style.height = "100%";
 
       this.zoomToFit = () => {
         // this needs to be more sophisticated if there are multiple data layers
-        const dataLayers = this.layers.filter(
+        const dataLayers = this.settings.layers.filter(
           (layer) => layer.layerType === "data",
         );
         if (dataLayers) {
@@ -285,23 +268,13 @@ window.customElements.define(
         }
       };
 
-      const view = document
-        .createRange()
-        .createContextualFragment(`<div class="map-view"></div>`);
-
-      this.body.innerHTML = "";
-      this.body.appendChild(view);
-      this.body.querySelector("div.map-view").style.height = "100%";
-
-      this.rows = rows;
-      this.layers = settings.layers;
-
       this.scriptsReady.then(() => {
         this.initMap();
-        if ("tileSets" in settings) {
-          this.addTileSets(settings.tileSets);
-          this.addLayers(settings.layers);
+        if ("tileSets" in this.settings) {
+          this.addTileSets(this.settings.tileSets);
+          this.addLayers(this.settings.layers);
         }
+        if (this.isZoomToFit) this.zoomToFit();
       });
     }
   },

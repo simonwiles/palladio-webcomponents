@@ -17,34 +17,11 @@ window.customElements.define(
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
+      this.visType = "listView";
       this.inlineStylesheets = [cardsComponentStyles];
     }
 
-    render(data) {
-      if (!data) {
-        this.renderError("No Data!");
-      }
-
-      const rows = this.constructor.getRows(data);
-      if (!rows) {
-        this.renderError(`
-        <details>
-          <summary>Malformed project data!</summary>
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-        </details>
-        `);
-      }
-
-      const settings = this.constructor.getSettings(data, "listView");
-      if (!settings) {
-        this.renderError(`
-        <details>
-          <summary>Gallery Visualization not available!</summary>
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-        </details>
-        `);
-      }
-
+    onDataLoaded() {
       const {
         imgurlDim,
         linkDim,
@@ -52,17 +29,17 @@ window.customElements.define(
         subtitleDim,
         textDim,
         titleDim,
-      } = settings;
+      } = this.settings;
 
       const container = document.createElement("div");
       container.classList.add("palladio-cards");
 
       if (sortDim) {
         // Need some logic here to sort on non-string types
-        rows.sort((a, b) => a[sortDim].localeCompare(b[sortDim]));
+        this.rows.sort((a, b) => a[sortDim].localeCompare(b[sortDim]));
       }
 
-      rows.forEach((row) => {
+      this.rows.forEach((row) => {
         const node = document
           .createRange()
           .createContextualFragment(defaultTemplate);
