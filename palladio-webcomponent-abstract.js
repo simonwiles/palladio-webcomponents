@@ -17,6 +17,12 @@ const throttle = (fn, wait) => {
   };
 };
 
+const baseComponentStyles = `
+:host { display: block; overflow: hidden; }
+body { height: 100%; width: 100%; margin: 0; }
+.error-msg { margin: 0; padding: 1em; color: #d8000c; background-color: #ffbaba; height: 100%; }
+`;
+
 class PalladioWebComponentAbstractBase extends HTMLElement {
   static get observedAttributes() {
     return ["height", "width", "project-url"];
@@ -49,9 +55,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
     const style = document.createElement("style");
     shadowRoot.appendChild(style);
-    style.textContent = `
-      :host { display: block; overflow: hidden; }
-      body { height: 100%; width: 100%; margin: 0; }`;
+    style.textContent = baseComponentStyles;
 
     if (this.externalStylesheets) {
       const stylesheetLink = document
