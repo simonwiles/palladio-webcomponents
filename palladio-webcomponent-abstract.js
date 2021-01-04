@@ -35,6 +35,11 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
   constructor() {
     super();
+    if (new.target === PalladioWebComponentAbstractBase) {
+      throw new TypeError(
+        `Cannot construct ${new.target.name} instances directly`,
+      );
+    }
     this.attachShadow({ mode: "open" });
   }
 
