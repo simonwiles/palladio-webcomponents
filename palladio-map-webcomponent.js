@@ -44,8 +44,6 @@ window.customElements.define(
         minPointSize: 3,
         maxPointSize: 26,
         trackResize: false,
-        accessToken:
-          "pk.eyJ1IjoiY2VzdGEiLCJhIjoiMFo5dmlVZyJ9.Io52RcCMMnYukT77GjDJGA",
       };
 
       // the ResizeObserver that dispatches .onResize fires immediately on creation,
