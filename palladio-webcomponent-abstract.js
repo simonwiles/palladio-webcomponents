@@ -108,6 +108,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
   disconnectedCallback() {
     if (this.resizeObserver) this.resizeObserver.disconnect();
+    this.removeEventListener("dataLoaded", this.onDataLoaded);
   }
 
   static loadScript(src) {
