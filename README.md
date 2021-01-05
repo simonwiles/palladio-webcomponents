@@ -15,7 +15,23 @@ See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladi
 
 Once the components have something close to feature-parity with the original AngularJS-based modules it will be possible to look at adding additional functionality.
 
-Browser support is decent (see https://caniuse.com/#feat=custom-elementsv1 -- Safari and iOS Safari/Chrome are fine), and [polyfills are available](https://www.webcomponents.org/polyfills) if necessary.
+## Philosophy
+
+## Current Status
+
+### palladio-map-webcomponent
+
+### palladio-graph-webcomponent
+
+### palladio-cards-webcomponent
+
+## Browser Support
+
+Browser support is decent -- see https://caniuse.com/#feat=custom-elementsv1. Safari and iOS Safari/Chrome are fine, as are the Chinese QQ and Baidu browsers (these components use the "Autonomous custom elements" API, and do not make use of "Customized built-in elements"). [Polyfills are available](https://www.webcomponents.org/polyfills) if necessary.
+
+### Automatic resizing with container
+
+The map and graph components have the ability to automatically resize and recenter themselves when their container resizes. This functionality depends on the `ResizeObserver` and is silently disabled if it's not available. `ResizeObserver` has been [part of most browsers for many years but was only rolled out in Safari and Safari/Chrome for iOS in March 2020](https://caniuse.com/resizeobserver); if it is crucial to your page you'll need to include a `ResizeObserver` polyfill.
 
 ## Development
 
