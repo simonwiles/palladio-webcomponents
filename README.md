@@ -7,10 +7,6 @@ This is an exploratory attempt to redevelop from scratch a minimum viable subset
 
 See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladio-webcomponents.netlify.app/ for a showcase site where you can test your own projects.
 
-## Philosophy
-
-## Current Status
-
 ## Using Palladio Web Components in your pages
 
 Palladio Web Components let you easily publish visualizations created with Palladio on your own pages.
