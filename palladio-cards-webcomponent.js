@@ -2,14 +2,14 @@ import cardsComponentStyles from "bundle-text:./palladio-cards-webcomponent.css"
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
 const defaultTemplate = `
-  <a target="_blank" class="link">
-    <div class="card">
-      <div class="image"></div>
-      <div class="title"></div>
-      <div class="subtitle"></div>
-      <div class="text"></div>
-    </div>
-  </a>
+<a target="_blank" class="link">
+  <div class="card">
+    <div class="image"></div>
+    <div class="title"></div>
+    <div class="subtitle"></div>
+    <div class="text"></div>
+  </div>
+</a>
 `;
 
 window.customElements.define(
