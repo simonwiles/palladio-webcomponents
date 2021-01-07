@@ -111,6 +111,14 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     }
   }
 
+  get projectUrl() {
+    return this.getAttribute("project-url");
+  }
+
+  set projectUrl(value) {
+    this.setAttribute("project-url", value);
+  }
+
   static loadScript(src) {
     return new Promise((resolve, reject) => {
       let script = document.querySelector(`head > script[src="${src}"]`);
