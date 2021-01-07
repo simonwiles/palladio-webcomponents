@@ -254,6 +254,13 @@ window.customElements.define(
     }
 
     onDataLoaded() {
+      if (!this.mapboxAccessToken) {
+        this.renderError(
+          'A "<code>mapbox-token</code>" attribute is required!',
+        );
+        return;
+      }
+
       const view = document
         .createRange()
         .createContextualFragment(`<div class="map-view"></div>`);
