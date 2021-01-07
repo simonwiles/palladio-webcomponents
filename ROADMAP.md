@@ -35,3 +35,7 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 - A "higher-order" component that would allow integrating multiple components all visualizing the same dataset (depends on an extended Javascript API for the existing components).
 - Facet / Timeline / Timespan components recreating the filters in the Palladio app (these would depend on the higher-order component).
 - Possibly a table component? This should be fairly easy to achieve, and might be useful for some, especially if it was integrated and coordinated with other components.
+
+## Longer Term
+
+The creation of a "higher-order" component of the kind described above would open the possibility for a new project creation site to replace the existing Palladio application. The existing site is difficult to maintain and forbidding to new contributors, and a new, more modern architecture would afford the opportunity to address some long-standing bugs and feature requests.
