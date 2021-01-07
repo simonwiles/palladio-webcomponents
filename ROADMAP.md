@@ -9,12 +9,13 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 - Correct parsing of projects with multiple tables and joins
 - Extended Javascript API
   - for those who might want to control the components from JS, but also to facilitate multi-component integration
-- Export to PNG/PDF/SVG?
+- Export current view to PNG/SVG?
 
 ## Existing Components
 
 ### palladio-map-webcomponent
 
+- [missing feature]: Handle projects with multiple data layers
 - re-center / zoom button(s)?
 - (optional) legend for sized nodes
 
