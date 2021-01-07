@@ -1,3 +1,6 @@
+[![npm Version](https://img.shields.io/npm/v/palladio-webcomponents?logo=npm)](https://www.npmjs.com/package/palladio-webcomponents)
+[![License](https://img.shields.io/github/license/simonwiles/palladio-webcomponents)](https://github.com/simonwiles/palladio-webcomponents/blob/main/LICENSE)
+
 # Palladio Web Components
 
 This is an exploratory attempt to redevelop from scratch a minimum viable subset of functionality for Palladio components in the form of modern ES6 web components.
