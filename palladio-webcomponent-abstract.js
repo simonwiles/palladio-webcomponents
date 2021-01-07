@@ -49,9 +49,17 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     const { shadowRoot } = this;
     shadowRoot.innerHTML = "";
 
+    this.body = document.createElement("body");
+    shadowRoot.appendChild(this.body);
+
     const style = document.createElement("style");
     shadowRoot.appendChild(style);
     style.textContent = baseComponentStyles;
+
+    if (!this.projectUrl) {
+      this.renderError('A "<code>project-url</code>" attribute is required!');
+      return;
+    }
 
     if (this.externalStylesheets) {
       const stylesheetLink = document
@@ -92,9 +100,6 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
         this.resizeObserver.observe(this);
       }
     });
-
-    this.body = document.createElement("body");
-    shadowRoot.appendChild(this.body);
   }
 
   disconnectedCallback() {
