@@ -24,19 +24,6 @@ body { height: 100%; width: 100%; margin: 0; }
 `;
 
 class PalladioWebComponentAbstractBase extends HTMLElement {
-  static get observedAttributes() {
-    return ["height", "width", "project-url"];
-  }
-
-  attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === "project-url" && newValue !== null) {
-      this.getDataFromUrl(newValue).then((data) => this.parseData(data));
-    }
-    if (["height", "width"].indexOf(attrName) !== -1) {
-      this.style[attrName] = newValue;
-    }
-  }
-
   constructor() {
     super();
     if (new.target === PalladioWebComponentAbstractBase) {
@@ -46,6 +33,10 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     }
     this.attachShadow({ mode: "open" });
     this.addEventListener("dataLoaded", this.onDataLoaded);
+  }
+
+  static get observedAttributes() {
+    return ["height", "width", "project-url"];
   }
 
   connectedCallback() {
@@ -109,6 +100,15 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
   disconnectedCallback() {
     if (this.resizeObserver) this.resizeObserver.disconnect();
     this.removeEventListener("dataLoaded", this.onDataLoaded);
+  }
+
+  attributeChangedCallback(attrName, oldValue, newValue) {
+    if (attrName === "project-url" && newValue !== null) {
+      this.getDataFromUrl(newValue).then((data) => this.parseData(data));
+    }
+    if (["height", "width"].indexOf(attrName) !== -1) {
+      this.style[attrName] = newValue;
+    }
   }
 
   static loadScript(src) {
