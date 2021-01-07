@@ -109,7 +109,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
 
   attributeChangedCallback(attrName, oldValue, newValue) {
     if (attrName === "project-url" && newValue !== null) {
-      this.getDataFromUrl(newValue).then((data) => this.parseData(data));
+      this.getDataFromUrl().then((data) => this.parseData(data));
     }
     if (["height", "width"].indexOf(attrName) !== -1) {
       this.style[attrName] = newValue;
@@ -146,8 +146,8 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
     });
   }
 
-  getDataFromUrl(url) {
-    return fetch(url)
+  getDataFromUrl() {
+    return fetch(this.projectUrl)
       .then((response) => {
         if (!response.ok) {
           this.renderError(`
