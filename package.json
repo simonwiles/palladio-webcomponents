@@ -15,7 +15,7 @@
     "watch:cards": "parcel watch palladio-cards-webcomponent.js",
     "build": "parcel build --detailed-report --no-cache --no-source-maps palladio-*-webcomponent.js",
     "watch": "parcel watch palladio-*-webcomponent.js",
-    "release": "rm -rf dist && yarn build && np --no-publish && rm dist/*.png && cp package.json README.md dist/ && yarn publish dist"
+    "release": "rm -rf dist && yarn build && np --no-publish && rm dist/*.png && cp package.json README.md LICENSE dist/ && yarn publish dist"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
