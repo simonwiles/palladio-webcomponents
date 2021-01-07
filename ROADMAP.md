@@ -1,8 +1,8 @@
 # Roadmap
-The initial version of Palladio Components (v. 0.?) supports simple display of map, graph, and gallery visualizations stored in a Palladio save file. There are many possible ways to improve and expand Palladio Components, and we've included a few ideas below. 
+
+The initial version of Palladio Components (v. 0.?) supports simple display of map, graph, and gallery visualizations stored in a Palladio save file. There are many possible ways to improve and expand Palladio Components, and we've included a few ideas below.
 
 If you'd like to help work on one, please get in touch by filing an issue on this repo! And if any one of these features is a higher priority for your project, please also file an issue. Palladio Components is a side project, and bugs in current functionality will be prioritized.
-
 
 ## General / Base Functionality
 
