@@ -31,7 +31,7 @@ You should specify a height and width for your visualization's container. Depend
 
 ### Gallery Component
 
-The gallery component is a responsive grid of cards, like a gallery of images and/or metadata. Some user-styling is possible -- background and text styles can be set on the component element itself or inherited from block-level parents -- but the ability to use a custom template could possibly be added in the future. (See the [roadmap](roadmap.md) for details and other potential enhancements.)
+The gallery component is a responsive grid of cards, like a gallery of images and/or metadata. Some user-styling is possible -- background and text styles can be set on the component element itself or inherited from block-level parents -- but the ability to use a custom template could possibly be added in the future. (See the [roadmap](ROADMAP.md) for details and other potential enhancements.)
 
 Include the script with the following tag:
 
