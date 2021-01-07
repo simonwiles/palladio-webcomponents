@@ -48,25 +48,33 @@ window.customElements.define(
 
       // the ResizeObserver that dispatches .onResize fires immediately on creation,
       //  typically before the graph is drawn and the .zoomToFit function is ready.
-      this.zoomToFit = () => {};
+      this.doZoomToFit = () => {};
     }
 
     static get observedAttributes() {
       return [...super.observedAttributes, "mapbox-token", "zoom-to-fit"];
     }
 
-    attributeChangedCallback(attrName, oldValue, newValue) {
-      super.attributeChangedCallback(attrName, oldValue, newValue);
-      if (attrName === "mapbox-token" && newValue !== null) {
-        this.mapConfig.accessToken = newValue;
-      }
-      if (attrName === "zoom-to-fit" && newValue !== null) {
-        this.isZoomToFit = true;
-      }
+    get zoomToFit() {
+      return this.hasAttribute("zoom-to-fit");
+    }
+
+    set zoomToFit(value) {
+      const isChecked = Boolean(value);
+      if (isChecked) this.setAttribute("zoom-to-fit", "");
+      else this.removeAttribute("zoom-to-fit");
+    }
+
+    get mapboxAccessToken() {
+      return this.getAttribute("mapbox-token");
+    }
+
+    set mapboxAccessToken(value) {
+      this.setAttribute("mapbox-token", value);
     }
 
     onResize() {
-      if (this.isZoomToFit) this.zoomToFit();
+      if (this.zoomToFit) this.doZoomToFit();
     }
 
     initMap() {
@@ -104,7 +112,7 @@ window.customElements.define(
                 : tileSet.mbId,
               tileSize: 512,
               zoomOffset: -1,
-              accessToken: this.mapConfig.accessToken,
+              accessToken: this.mapboxAccessToken,
               detectRetina: true,
             },
           ).addTo(this.map);
@@ -254,7 +262,7 @@ window.customElements.define(
       this.body.appendChild(view);
       this.body.querySelector("div.map-view").style.height = "100%";
 
-      this.zoomToFit = () => {
+      this.doZoomToFit = () => {
         // this needs to be more sophisticated if there are multiple data layers
         const dataLayers = this.settings.layers.filter(
           (layer) => layer.layerType === "data",
@@ -275,7 +283,7 @@ window.customElements.define(
           this.addTileSets(this.settings.tileSets);
           this.addLayers(this.settings.layers);
         }
-        if (this.isZoomToFit) this.zoomToFit();
+        if (this.zoomToFit) this.doZoomToFit();
       });
     }
   },
