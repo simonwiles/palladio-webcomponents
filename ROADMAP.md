@@ -6,7 +6,7 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 
 ## General / Base Functionality
 
-- Correct parsing of projects with multiple tables and joins
+- [missing feature:] Correct parsing of projects with multiple tables and joins
 - Extended Javascript API
   - for those who might want to control the components from JS, but also to facilitate multi-component integration
 - Export current view to PNG/SVG?
@@ -15,7 +15,7 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 
 ### palladio-map-webcomponent
 
-- [missing feature]: Handle projects with multiple data layers
+- [missing feature:] Handle projects with multiple data layers
 - re-center / zoom button(s)?
 - (optional) legend for sized nodes
 
@@ -27,6 +27,7 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 ### palladio-gallery-webcomponent
 
 - lazy-loading of images
+- spinner for loading images (multiple images from third-party sites can take a while...)
 - user-supplied template / styling
 - sort and filter options?
 
