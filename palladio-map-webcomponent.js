@@ -1,6 +1,6 @@
 import leafletBaseStyles from "bundle-text:leaflet/dist/leaflet.css";
-import * as L from "leaflet/dist/leaflet-src.esm";
-import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract";
+import * as L from "leaflet/dist/leaflet-src.esm.js";
+import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
 const mapboxStylesMap = {
   // Maps IDs from old "Classic" style mapbox tileset to IDs for newly created
