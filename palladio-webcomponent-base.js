@@ -23,10 +23,10 @@ body { height: 100%; width: 100%; margin: 0; }
 .error-msg { margin: 0; padding: 1em; color: #d8000c; background-color: #ffbaba; height: 100%; }
 `;
 
-class PalladioWebComponentAbstractBase extends HTMLElement {
+class PalladioWebcomponentBase extends HTMLElement {
   constructor() {
     super();
-    if (new.target === PalladioWebComponentAbstractBase) {
+    if (new.target === PalladioWebcomponentBase) {
       throw new TypeError(
         `Cannot construct ${new.target.name} instances directly`,
       );
@@ -42,7 +42,7 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
   connectedCallback() {
     if (this.visType === undefined) {
       throw new TypeError(
-        "visType must be defined on classes derived from PalladioWebComponentAbstractBase",
+        "visType must be defined on classes derived from PalladioWebcomponentBase",
       );
     }
 
@@ -230,4 +230,4 @@ class PalladioWebComponentAbstractBase extends HTMLElement {
   }
 }
 
-export default PalladioWebComponentAbstractBase;
+export default PalladioWebcomponentBase;

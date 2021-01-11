@@ -1,10 +1,10 @@
 import * as d3 from "d3";
 import graphComponentStyles from "bundle-text:./palladio-graph-webcomponent.css";
-import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
+import PalladioWebcomponentBase from "./palladio-webcomponent-base.js";
 
 window.customElements.define(
   "palladio-graph-component",
-  class extends PalladioWebComponentAbstractBase {
+  class extends PalladioWebcomponentBase {
     constructor() {
       super();
       this.visType = "graphView";

@@ -1,6 +1,6 @@
 import leafletBaseStyles from "bundle-text:leaflet/dist/leaflet.css";
 import * as L from "leaflet/dist/leaflet-src.esm.js";
-import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
+import PalladioWebcomponentBase from "./palladio-webcomponent-base.js";
 
 const mapboxStylesMap = {
   // Maps IDs from old "Classic" style mapbox tileset to IDs for newly created
@@ -29,7 +29,7 @@ const tooltipStyleOverrides = `
 
 window.customElements.define(
   "palladio-map-component",
-  class extends PalladioWebComponentAbstractBase {
+  class extends PalladioWebcomponentBase {
     constructor() {
       super();
       this.visType = "mapView";

@@ -1,5 +1,5 @@
 import galleryComponentStyles from "bundle-text:./palladio-gallery-webcomponent.css";
-import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
+import PalladioWebcomponentBase from "./palladio-webcomponent-base.js";
 
 const defaultTemplate = `
 <a target="_blank" class="link">
@@ -14,7 +14,7 @@ const defaultTemplate = `
 
 window.customElements.define(
   "palladio-gallery-component",
-  class extends PalladioWebComponentAbstractBase {
+  class extends PalladioWebcomponentBase {
     constructor() {
       super();
       this.visType = "listView";
