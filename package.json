@@ -13,8 +13,8 @@
     "watch:graph": "parcel watch palladio-graph-webcomponent.js",
     "build:cards": "parcel build --detailed-report --no-cache --no-source-maps palladio-cards-webcomponent.js",
     "watch:cards": "parcel watch palladio-cards-webcomponent.js",
-    "build": "parcel build --detailed-report --no-cache --no-source-maps palladio-*-webcomponent.js",
-    "watch": "parcel watch palladio-*-webcomponent.js",
+    "build": "parcel build --detailed-report --no-cache --no-source-maps palladio-*-component.js",
+    "watch": "parcel watch palladio-*-component.js",
     "release": "rm -rf dist && yarn build && np --no-publish && rm dist/*.png && cp package.json README.md LICENSE dist/ && yarn publish dist"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import graphComponentStyles from "bundle-text:./palladio-graph-webcomponent.css";
+import graphComponentStyles from "bundle-text:./palladio-graph-component.css";
 import PalladioWebcomponentBase from "./palladio-webcomponent-base.js";
 
 window.customElements.define(

@@ -1,4 +1,4 @@
-import galleryComponentStyles from "bundle-text:./palladio-gallery-webcomponent.css";
+import galleryComponentStyles from "bundle-text:./palladio-gallery-component.css";
 import PalladioWebcomponentBase from "./palladio-webcomponent-base.js";
 
 const defaultTemplate = `
