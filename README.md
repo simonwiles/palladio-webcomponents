@@ -32,16 +32,16 @@ The gallery component is a responsive grid of cards, like a gallery of images an
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.4/palladio-cards-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.4/palladio-gallery-webcomponent.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
 
 ```
-<palladio-cards-component
+<palladio-gallery
   height="600px" width="900px"
   project-url="<path-to-your-project.json>">
-</palladio-cards-component>
+</palladio-gallery>
 ```
 
 ### Graph Component
@@ -55,10 +55,10 @@ Include the script with the following tag:
 Put the HTML wherever you want it to appear on your page:
 
 ```
-<palladio-graph-component
+<palladio-graph
   height="600px" width="900px"
   project-url="<path-to-your-project.json>">
-</palladio-graph-component>
+</palladio-graph>
 ```
 
 ### Map Component
@@ -72,15 +72,15 @@ Include the script with the following tag:
 Put the HTML wherever you want it to appear on your page:
 
 ```
-<palladio-map-component
+<palladio-map
   height="600px" width="900px"
   zoom-to-fit
   mapbox-token="<your-mapbox-API-token-goes-here>"
   project-url="<path-to-your-project.json>">
-</palladio-map-component>
+</palladio-map>
 ```
 
-`<palladio-map-component>` takes the following additional attributes, as shown in the example above:
+`<palladio-map>` takes the following additional attributes, as shown in the example above:
 
 **`mapbox-token`** (required):  
 To use the base map tilesets you will need to supply your own [MapBox API access token](https://docs.mapbox.com/accounts/guides/tokens/). [Getting a token](https://docs.mapbox.com/accounts/guides/) is free and pretty easy, and a lot of usage is covered by the free tier (more than enough for the vast majority of projects).
