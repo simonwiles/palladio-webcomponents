@@ -1,4 +1,4 @@
-import cardsComponentStyles from "bundle-text:./palladio-cards-webcomponent.css";
+import galleryComponentStyles from "bundle-text:./palladio-gallery-webcomponent.css";
 import PalladioWebComponentAbstractBase from "./palladio-webcomponent-abstract.js";
 
 const defaultTemplate = `
@@ -13,12 +13,12 @@ const defaultTemplate = `
 `;
 
 window.customElements.define(
-  "palladio-cards-component",
+  "palladio-gallery-component",
   class extends PalladioWebComponentAbstractBase {
     constructor() {
       super();
       this.visType = "listView";
-      this.inlineStylesheets = [cardsComponentStyles];
+      this.inlineStylesheets = [galleryComponentStyles];
     }
 
     onDataLoaded() {
@@ -32,7 +32,7 @@ window.customElements.define(
       } = this.settings;
 
       const container = document.createElement("div");
-      container.classList.add("palladio-cards");
+      container.classList.add("palladio-gallery");
 
       if (sortDim) {
         // Need some logic here to sort on non-string types
