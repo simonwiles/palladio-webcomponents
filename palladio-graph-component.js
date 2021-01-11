@@ -3,7 +3,7 @@ import graphComponentStyles from "bundle-text:./palladio-graph-component.css";
 import PalladioWebcomponentBase from "./palladio-webcomponent-base.js";
 
 window.customElements.define(
-  "palladio-graph-component",
+  "palladio-graph",
   class extends PalladioWebcomponentBase {
     constructor() {
       super();

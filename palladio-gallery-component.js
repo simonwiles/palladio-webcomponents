@@ -13,7 +13,7 @@ const defaultTemplate = `
 `;
 
 window.customElements.define(
-  "palladio-gallery-component",
+  "palladio-gallery",
   class extends PalladioWebcomponentBase {
     constructor() {
       super();

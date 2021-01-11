@@ -8,7 +8,7 @@ This is an exploratory attempt to redevelop from scratch a minimum viable subset
 The intention is that they will be published to NPM and CDNs such that they can be included easily with a single script tag and then used something like this:
 
 ```
-<palladio-map-component project-url="my_project.palladio.1.2.9.json"></palladio-map-component>
+<palladio-map project-url="my_project.palladio.1.2.9.json"></palladio-map>
 ```
 
 See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladio-webcomponents.netlify.app/ for a showcase site where you can test your own projects.

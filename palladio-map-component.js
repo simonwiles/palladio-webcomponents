@@ -28,7 +28,7 @@ const tooltipStyleOverrides = `
 `;
 
 window.customElements.define(
-  "palladio-map-component",
+  "palladio-map",
   class extends PalladioWebcomponentBase {
     constructor() {
       super();
