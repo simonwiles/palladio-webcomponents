@@ -1,8 +1,8 @@
 # Roadmap
 
-The initial version of Palladio Components (v0.5.x) supports simple display of map, graph, and gallery visualizations stored in a Palladio save file. There are many possible ways to improve and expand Palladio Components, and we've included a few ideas below.
+The initial version of Palladio Web Components (v0.5.x) supports simple display of map, graph, and gallery visualizations stored in a Palladio save file. There are many possible ways to improve and expand Palladio Web Components, and we've included a few ideas below.
 
-If you'd like to help work on one, please get in touch by filing an issue on this repo! And if any one of these features is a higher priority for your project, please also file an issue. Palladio Components is a side project, and bugs in current functionality will be prioritized.
+If you'd like to help work on one, please get in touch by filing an issue on this repo! And if any one of these features is a higher priority for your project, please also file an issue. Palladio Web Components is a side project, and bugs in current functionality will be prioritized.
 
 ## General / Base Functionality
 
@@ -13,18 +13,18 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 
 ## Existing Components
 
-### palladio-map-webcomponent
+### Map
 
 - [missing feature:] Handle projects with multiple data layers
 - Re-center / zoom button(s)?
 - Optional legend for sized nodes
 
-### palladio-graph-webcomponent
+### Graph
 
 - Re-center / zoom button(s)?
 - Optional legend for sized nodes
 
-### palladio-gallery-webcomponent
+### Gallery
 
 - Lazy-loading of images
 - Spinner for loading images (multiple images from third-party sites can take a while...)
