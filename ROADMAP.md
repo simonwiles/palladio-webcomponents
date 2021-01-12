@@ -1,6 +1,6 @@
 # Roadmap
 
-The initial version of Palladio Components (v. 0.?) supports simple display of map, graph, and gallery visualizations stored in a Palladio save file. There are many possible ways to improve and expand Palladio Components, and we've included a few ideas below.
+The initial version of Palladio Components (v0.5.x) supports simple display of map, graph, and gallery visualizations stored in a Palladio save file. There are many possible ways to improve and expand Palladio Components, and we've included a few ideas below.
 
 If you'd like to help work on one, please get in touch by filing an issue on this repo! And if any one of these features is a higher priority for your project, please also file an issue. Palladio Components is a side project, and bugs in current functionality will be prioritized.
 
@@ -16,20 +16,20 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 ### palladio-map-webcomponent
 
 - [missing feature:] Handle projects with multiple data layers
-- re-center / zoom button(s)?
-- (optional) legend for sized nodes
+- Re-center / zoom button(s)?
+- Optional legend for sized nodes
 
 ### palladio-graph-webcomponent
 
-- re-center / zoom button(s)?
-- (optional) legend for sized nodes
+- Re-center / zoom button(s)?
+- Optional legend for sized nodes
 
 ### palladio-gallery-webcomponent
 
-- lazy-loading of images
-- spinner for loading images (multiple images from third-party sites can take a while...)
-- user-supplied template / styling
-- sort and filter options?
+- Lazy-loading of images
+- Spinner for loading images (multiple images from third-party sites can take a while...)
+- User-supplied template / styling
+- Sort and filter options?
 
 ## New Components
 
@@ -39,4 +39,4 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 
 ## Longer Term
 
-The creation of a "higher-order" component of the kind described above would open the possibility for a new project creation site to replace the existing Palladio application. The existing site is difficult to maintain and forbidding to new contributors, and a new, more modern architecture would afford the opportunity to address some long-standing bugs and feature requests.
+The creation of a "higher-order" component of the kind described above would open the possibility for a new project creation site to replace the existing Palladio application. The existing site is difficult to maintain and forbidding to new contributors, and a new, simplified and more modern architecture would afford the opportunity to address some long-standing bugs and feature requests.
