@@ -3,6 +3,8 @@
   "version": "0.4.3",
   "description": "Palladio Web Components",
   "repository": "git@github.com:simonwiles/palladio-webcomponents.git",
+  "homepage": "https://github.com/simonwiles/palladio-webcomponents",
+  "bugs": "https://github.com/simonwiles/palladio-webcomponents/issues",
   "author": "Simon Wiles <simonjwiles@gmail.com>",
   "license": "MIT",
   "scripts": {
