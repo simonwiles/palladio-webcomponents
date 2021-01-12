@@ -37,6 +37,13 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 - Facet / Timeline / Timespan components recreating the filters in the Palladio app (these would depend on the higher-order component).
 - Possibly a table component? This should be fairly easy to achieve, and might be useful for some, especially if it was integrated and coordinated with other components.
 
+## Documentation
+
+- A documentation site with full usage examples (preferably live examples).
+  - Probably replacing https://palladio-webcomponents.netlify.app/
+- Notes on self-hosting and NPM usage
+- Details and notes on obtaining and using a MapBox Access Token.
+
 ## Longer Term
 
 The creation of a "higher-order" component of the kind described above would open the possibility for a new project creation site to replace the existing Palladio application. The existing site is difficult to maintain and forbidding to new contributors, and a new, simplified and more modern architecture would afford the opportunity to address some long-standing bugs and feature requests.
