@@ -32,7 +32,7 @@ The gallery component is a responsive grid of cards, like a gallery of images an
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.4/palladio-gallery-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@~0/palladio-gallery-webcomponent.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -49,7 +49,7 @@ Put the HTML wherever you want it to appear on your page:
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.4/palladio-graph-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@~0/palladio-graph-webcomponent.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -66,7 +66,7 @@ Put the HTML wherever you want it to appear on your page:
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.4/palladio-map-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@~0/palladio-map-webcomponent.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
