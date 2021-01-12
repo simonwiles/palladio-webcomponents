@@ -92,9 +92,9 @@ With this (valueless) attribute supplied, the map will zoom to the contents of t
 
 Browser support is decent -- see https://caniuse.com/#feat=custom-elementsv1. Safari and iOS Safari/Chrome are fine, as are the Chinese QQ and Baidu browsers (these components use the "Autonomous custom elements" API, and do not make use of "Customized built-in elements"). [Polyfills are available](https://www.webcomponents.org/polyfills) if necessary.
 
-### Automatic resizing with container
+### Automatically resizing with the parent container
 
-The map and graph components have the ability to automatically resize and recenter themselves when their container resizes. This functionality depends on the `ResizeObserver` and is silently disabled if it's not available. `ResizeObserver` has been [part of most browsers for many years but was only rolled out in Safari and Safari/Chrome for iOS in March 2020](https://caniuse.com/resizeobserver); if it is crucial to your page you'll need to include a `ResizeObserver` polyfill.
+The map and graph components have the ability to automatically resize and recenter themselves when their container resizes (typically when the browser window is resized). This functionality depends on the `ResizeObserver` and is silently disabled if it's not available. `ResizeObserver` has been [part of most browsers for many years but was only rolled out in Safari and Safari/Chrome for iOS in March 2020](https://caniuse.com/resizeobserver); if it is crucial to your page you'll need to include a `ResizeObserver` polyfill.
 
 ## Development
 
