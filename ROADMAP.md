@@ -43,6 +43,7 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
   - Probably replacing https://palladio-webcomponents.netlify.app/.
 - Notes on self-hosting and NPM usage.
 - Details and notes on obtaining and using a MapBox Access Token.
+- Guidance on customizing styling -- what's possible with the current architecture and what's not.
 
 ## Longer Term
 
