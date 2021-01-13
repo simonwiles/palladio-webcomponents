@@ -17,6 +17,7 @@
       "error",
       { "props": true, "ignorePropertyModificationsFor": ["d"] }
     ],
-    "import/extensions": [2, "always"]
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "import/extensions": ["error", "always"]
   }
 }
