@@ -90,7 +90,7 @@ With this (valueless) attribute supplied, the map will zoom to the contents of t
 
 ## Browser Support
 
-Browser support is decent -- see https://caniuse.com/#feat=custom-elementsv1. Safari and iOS Safari/Chrome are fine, as are the Chinese QQ and Baidu browsers (these components use the "Autonomous custom elements" API, and do not make use of "Customized built-in elements"). [Polyfills are available](https://www.webcomponents.org/polyfills) if necessary.
+Browser support includes all modern browsers. Note that this does not include IE11, although Edge is fine. (it would probably be possible to make an IE11-compatible build with some additional transpilation and polyfills).
 
 ### Automatically resizing with the parent container
 
