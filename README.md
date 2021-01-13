@@ -4,7 +4,7 @@
 
 # Palladio Web Components
 
-This is an exploratory attempt to redevelop from scratch a minimum viable subset of functionality for Palladio components in the form of modern ES6 web components.
+Palladio Web Components let you easily publish visualizations created with [Palladio](http://hdlab.stanford.edu/palladio/) on your own pages.
 
 See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladio-webcomponents.netlify.app/ for a showcase site where you can test your own Palladio save files.
 
@@ -19,8 +19,6 @@ If you meet with difficulties, please get in touch (see [Getting Help](#getting-
 If you encounter bugs or have feature requests, please use [the GitHub Issue Tracker](https://github.com/simonwiles/palladio-webcomponents/issues), and if you have general questions or requests for help, please use [the GitHub Discussions forum](https://github.com/simonwiles/palladio-webcomponents/discussions).
 
 ## Using Palladio Web Components in your pages
-
-Palladio Web Components let you easily publish visualizations created with Palladio on your own pages.
 
 Use the [Palladio application](http://hdlab.stanford.edu/palladio/) to upload your data and create your visualizations. (Palladio Web Components currently supports map, network, and gallery visualizations.) Click the “Download” button to save the project as a JSON file -- this file includes your data and the visualization settings. These web components then take this JSON file as an input and allow you to embed your visualizations on your own pages. For map visualizations, you will need to provide a [MapBox API token](https://docs.mapbox.com/accounts/guides/tokens/), which can be obtained at no cost for many kinds of projects.
 
