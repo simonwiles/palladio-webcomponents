@@ -11,7 +11,7 @@ See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladi
 
 Palladio Web Components let you easily publish visualizations created with Palladio on your own pages.
 
-Use the [Palladio application](http://hdlab.stanford.edu/palladio/) to upload your data and create your visualizations. (Palladio Web Components currently supports map, network, and gallery visualizations.) Click the "Download" button to save the project as a JSON file -- this file includes your data and the visualization settings. These web components then take this JSON file as an input and allow you to embed your visualizations on your own pages. For map visualizations, you will need to provide a [MapBox API token](https://docs.mapbox.com/accounts/guides/tokens/), which can be obtained at no cost for many kinds of projects.
+Use the [Palladio application](http://hdlab.stanford.edu/palladio/) to upload your data and create your visualizations. (Palladio Web Components currently supports map, network, and gallery visualizations.) Click the “Download” button to save the project as a JSON file -- this file includes your data and the visualization settings. These web components then take this JSON file as an input and allow you to embed your visualizations on your own pages. For map visualizations, you will need to provide a [MapBox API token](https://docs.mapbox.com/accounts/guides/tokens/), which can be obtained at no cost for many kinds of projects.
 
 ### Basic Usage
 
@@ -23,7 +23,7 @@ All components take the following attributes:
 The web accessible URL to your project `.json` file. It is likely that you'll want to upload your project file to the same place as your webpage, but any [CORS-enabled](https://www.w3.org/wiki/CORS_Enabled) hosting should do, including things like DropBox.
 
 **`height` and `width` (optional):**  
-You should specify a height and width for your visualization's container. Depending on your page, this may be better done as part of your CSS; you can add a `style` attribute to the tag if needed. Any `height` and `width` attributes on the container tag itself will will take precedence over values from elsewhere.
+You should specify a height and width for your visualization’s container. Depending on your page, this may be better done as part of your CSS; you can add a `style` attribute to the tag if needed. Any `height` and `width` attributes on the container tag itself will will take precedence over values from elsewhere.
 
 ### Gallery Component
 
