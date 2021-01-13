@@ -47,4 +47,4 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 
 ## Longer Term
 
-The creation of a "higher-order" component of the kind described above would open the possibility for a new project creation site to replace the existing Palladio application. The existing site is difficult to maintain and forbidding to new contributors, and a new, simplified and more modern architecture would afford the opportunity to address some long-standing bugs and feature requests.
+The creation of a "higher-order" component of the kind described above would open the possibility for a new data exploration and project creation application to replace the existing Palladio site. The existing codebase is difficult to maintain and forbidding to new contributors, and a new, simplified and more modern architecture would afford the opportunity to address some long-standing bugs and feature requests.
