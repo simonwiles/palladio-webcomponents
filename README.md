@@ -56,7 +56,7 @@ The gallery component is a responsive grid of cards, like a gallery of images an
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-gallery-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-gallery-component.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -73,7 +73,7 @@ Put the HTML wherever you want it to appear on your page:
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-graph-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-graph-component.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -90,7 +90,7 @@ Put the HTML wherever you want it to appear on your page:
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-map-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-map-component.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -127,7 +127,7 @@ To be notified of new releases you can subscribe to ”watch” this GitHub repo
 If you include the CDN links in `<script>` tags as recommended, you can take advantage of automatic updating at the level you wish. In tags of the form:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@<version>/palladio-map-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@<version>/palladio-map-component.js"></script>
 ```
 
 you can replace `<version>` with a tag to indicate the release(s) you want. For example:
