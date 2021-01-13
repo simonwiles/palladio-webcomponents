@@ -284,14 +284,12 @@ window.customElements.define(
         }
       };
 
-      this.scriptsReady.then(() => {
-        this.initMap();
-        if ("tileSets" in this.settings) {
-          this.addTileSets(this.settings.tileSets);
-          this.addLayers(this.settings.layers);
-        }
-        if (this.zoomToFit) this.doZoomToFit();
-      });
+      this.initMap();
+      if ("tileSets" in this.settings) {
+        this.addTileSets(this.settings.tileSets);
+        this.addLayers(this.settings.layers);
+      }
+      if (this.zoomToFit) this.doZoomToFit();
     }
   },
 );

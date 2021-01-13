@@ -198,9 +198,7 @@ window.customElements.define(
       this.svg.style.width = "100%";
       this.body.appendChild(this.svg);
       const graph = this.constructor.buildNodesAndLinks(rows, settings);
-      this.scriptsReady.then(() =>
-        this.drawGraph(JSON.parse(JSON.stringify(graph)), settings),
-      );
+      this.drawGraph(JSON.parse(JSON.stringify(graph)), settings);
     }
   },
 );

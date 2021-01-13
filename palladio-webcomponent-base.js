@@ -81,25 +81,15 @@ class PalladioWebcomponentBase extends HTMLElement {
       this.shadowRoot.appendChild(styleTag);
     }
 
-    if (this.externalScripts) {
-      this.scriptsReady = Promise.all(
-        this.externalScripts.map(this.constructor.loadScript),
+    // ResizeObserver was only rolled out in Safari and Safari/Chrome on iOS in
+    //  March 2020, so probably needs to be polyfilled for the time being if
+    //  the behaviour is considered important.
+    if (window.ResizeObserver && this.onResize) {
+      this.resizeObserver = new ResizeObserver(
+        throttle(this.onResize.bind(this), 250),
       );
-    } else {
-      this.scriptsReady = Promise.resolve();
+      this.resizeObserver.observe(this);
     }
-
-    this.scriptsReady.then(() => {
-      // ResizeObserver was only rolled out in Safari and Safari/Chrome on iOS in
-      //  March 2020, so probably needs to be polyfilled for the time being if
-      //  the behaviour is considered important.
-      if (window.ResizeObserver && this.onResize) {
-        this.resizeObserver = new ResizeObserver(
-          throttle(this.onResize.bind(this), 250),
-        );
-        this.resizeObserver.observe(this);
-      }
-    });
   }
 
   disconnectedCallback() {
@@ -122,28 +112,6 @@ class PalladioWebcomponentBase extends HTMLElement {
 
   set projectUrl(value) {
     this.setAttribute("project-url", value);
-  }
-
-  static loadScript(src) {
-    return new Promise((resolve, reject) => {
-      let script = document.querySelector(`head > script[src="${src}"]`);
-      if (script !== null) {
-        if (script.getAttribute("data-loaded") === "true") return resolve();
-        script.addEventListener("load", resolve);
-        script.addEventListener("error", reject);
-        return true;
-      }
-      script = document.createElement("script");
-      script.src = src;
-      script.async = true;
-      document.head.appendChild(script);
-      script.onload = () => {
-        script.setAttribute("data-loaded", true);
-        resolve();
-      };
-      script.onerror = reject;
-      return true;
-    });
   }
 
   getDataFromUrl() {
