@@ -8,7 +8,7 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 
 - [missing feature:] Correct parsing of projects with multiple tables and joins.
 - Extended Javascript API.
-  - for those who might want to control the components from JS, but also to facilitate .multi-component integration
+  - for those who might want to control the components from JS, but also to facilitate multi-component integration.
 - Export current view to PNG/SVG?
 
 ## Existing Components
