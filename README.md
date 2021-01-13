@@ -56,7 +56,7 @@ The gallery component is a responsive grid of cards, like a gallery of images an
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@~0/palladio-gallery-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-gallery-webcomponent.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -73,7 +73,7 @@ Put the HTML wherever you want it to appear on your page:
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@~0/palladio-graph-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-graph-webcomponent.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -90,7 +90,7 @@ Put the HTML wherever you want it to appear on your page:
 Include the script with the following tag:
 
 ```
-<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@~0/palladio-map-webcomponent.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@0.5/palladio-map-webcomponent.js"></script>
 ```
 
 Put the HTML wherever you want it to appear on your page:
@@ -130,7 +130,13 @@ If you include the CDN links in `<script>` tags as recommended, you can take adv
 <script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@<version>/palladio-map-webcomponent.js"></script>
 ```
 
-you can replace `<version>` with a tag to indicate the release(s) you want. For example `@0.5.0` will get exactly that version, with no upgrades accepted. If you choose to omit `z` (e.g. `@0.5`) your page will automatically get the most recent `patch` release and stay up-to-date with any bug fixes (this is strongly advised). If you choose also to omit `y`, (e.g. just `@0`) you will automatically upgrade to all future backwards-compatible releases (in this case, new versions until we decide to do a `v1.0`). This is up to you -- we would recommend this (there are likely to be improvements, we undertake to ensure that these releases won’t break existing deployments, and we do not guarantee that all future bug fixes will be backported to all `minor` releases), but there may be minor aesthetic changes made, and if you’re happy with how it works with the current version and want to lock it down, you are free to do so. Older versions will not be removed from the CDN hosting at any stage.
+you can replace `<version>` with a tag to indicate the release(s) you want. For example:
+
+- `@0.5.0` will get exactly that version, with no upgrades accepted (this is not advised).
+- If you choose to omit `z` (e.g. `@0.5`) your page will automatically get the most recent `patch` release and stay up-to-date with any bug fixes (this is strongly advised).
+- If you choose also to omit `y`, (e.g. just `@0`) you will automatically upgrade to all future backwards-compatible releases (in this case, new versions until we decide to do a `v1.0`). This is optional -- we would encourage this (there are likely to be improvements, we undertake to ensure that these releases won’t break existing deployments, and we do not guarantee that all future bug fixes will be backported to all `minor` releases), but there may be minor aesthetic changes made and if you’re happy with how it works with the current version and want to lock it down, you are free to do so.
+
+Older versions will not be removed from the CDN hosting at any stage, so there will never be a necessity to upgrade unless you want bug fixes or new/enhanced features.
 
 ## Browser Support
 
