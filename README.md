@@ -7,6 +7,16 @@ This is an exploratory attempt to redevelop from scratch a minimum viable subset
 
 See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladio-webcomponents.netlify.app/ for a showcase site where you can test your own Palladio save files.
 
+## Current Status
+
+These components are ready to use and can be safely and stably deployed on websites and web pages. They are not, however, fully feature-complete and they are not yet well or widely tested. You are encouraged to use these components with confidence that everything that works right now will continue to work, and that bugs will be fixed and new features will be added in a stable and predictable way (see [Versioning](#versioning) below). For an idea of where we’d like to go with this, see the [roadmap](ROADMAP.md).
+
+If you meet with difficulties, please get in touch (see [Getting Help](#getting-help) below). Likewise if you are able to successfully use these components please let us know -- we’d be delighted to know that they are useful, and what your experience is like. We’d also love to see what you’re building!
+
+## Getting Help
+
+If you encounter bugs or have feature requests, please use [the GitHub Issue Tracker](https://github.com/simonwiles/palladio-webcomponents/issues), and if you have general questions or requests for help, please use [the GitHub Discussions forum](https://github.com/simonwiles/palladio-webcomponents/discussions).
+
 ## Using Palladio Web Components in your pages
 
 Palladio Web Components let you easily publish visualizations created with Palladio on your own pages.
