@@ -88,6 +88,26 @@ To use the base map tilesets you will need to supply your own [MapBox API access
 **`zoom-to-fit` (optional):**  
 With this (valueless) attribute supplied, the map will zoom to the contents of the data layer when the component first loads, and any time the container resizes for any reason. Without it, the map will initialize showing the whole map.
 
+## Versioning
+
+Releases for this project will adhere to the Semantic Versioning ("SemVer") specification. This means that version numbers will be of the form `x.y.z` (commonly referred to as `major.minor.patch`).
+
+- Increments to `z` indicate bug fix releases -- it is always advisable to be using the most up-to-date `patch` release.
+- Releases that add new features that are backwards compatible will increment `y`, the `minor` version. These updates will add new functionally and may enhance or otherwise alter existing functionality, but will not break existing deploys.
+- New `major` releases that increment `z` are likely to contain breaking changes of one sort or another -- if you upgrade to a new `major` version you should check for release notes and test your visualizations to be sure they still work as expected.
+
+To be notified of new releases you can subscribe to ”watch” this GitHub repo.
+
+### Suggested Use with the CDN
+
+If you include the CDN links in `<script>` tags as recommended, you can take advantage of automatic updating at the level you wish. In tags of the form:
+
+```
+<script src="https://cdn.jsdelivr.net/npm/palladio-webcomponents@<version>/palladio-map-webcomponent.js"></script>
+```
+
+you can replace `<version>` with a tag to indicate the release(s) you want. For example `@0.5.0` will get exactly that version, with no upgrades accepted. If you choose to omit `z` (e.g. `@0.5`) your page will automatically get the most recent `patch` release and stay up-to-date with any bug fixes (this is strongly advised). If you choose also to omit `y`, (e.g. just `@0`) you will automatically upgrade to all future backwards-compatible releases (in this case, new versions until we decide to do a `v1.0`). This is up to you -- we would recommend this (there are likely to be improvements, we undertake to ensure that these releases won’t break existing deployments, and we do not guarantee that all future bug fixes will be backported to all `minor` releases), but there may be minor aesthetic changes made, and if you’re happy with how it works with the current version and want to lock it down, you are free to do so. Older versions will not be removed from the CDN hosting at any stage.
+
 ## Browser Support
 
 Browser support includes all modern browsers. Note that this does not include IE11, although Edge is fine. (it would probably be possible to make an IE11-compatible build with some additional transpilation and polyfills).
