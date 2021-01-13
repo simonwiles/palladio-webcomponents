@@ -6,30 +6,30 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 
 ## General / Base Functionality
 
-- [missing feature:] Correct parsing of projects with multiple tables and joins
-- Extended Javascript API
-  - for those who might want to control the components from JS, but also to facilitate multi-component integration
+- [missing feature:] Correct parsing of projects with multiple tables and joins.
+- Extended Javascript API.
+  - for those who might want to control the components from JS, but also to facilitate .multi-component integration
 - Export current view to PNG/SVG?
 
 ## Existing Components
 
-### Map
+### `<palladio-map>`
 
-- [missing feature:] Handle projects with multiple data layers
+- [missing feature:] Handle projects with multiple data layers.
 - Re-center / zoom button(s)?
-- Optional legend for sized nodes
+- Optional legend for sized nodes.
 
-### Graph
+### `<palladio-graph>`
 
 - Re-center / zoom button(s)?
-- Optional legend for sized nodes
+- Optional legend for sized nodes.
 
-### Gallery
+### `<palladio-gallery>`
 
-- Lazy-loading of images
-- Spinner for loading images (multiple images from third-party sites can take a while...)
-- User-supplied template / styling
-- Sort and filter options?
+- Lazy-loading of images.
+- Spinner for loading images (multiple images from third-party sites can take a while...).
+- User-supplied template / styling.
+- Sort and filter options?.
 
 ## New Components
 
@@ -40,8 +40,8 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 ## Documentation
 
 - A documentation site with full usage examples (preferably live examples).
-  - Probably replacing https://palladio-webcomponents.netlify.app/
-- Notes on self-hosting and NPM usage
+  - Probably replacing https://palladio-webcomponents.netlify.app/.
+- Notes on self-hosting and NPM usage.
 - Details and notes on obtaining and using a MapBox Access Token.
 
 ## Longer Term
