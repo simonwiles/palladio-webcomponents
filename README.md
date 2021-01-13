@@ -8,6 +8,19 @@ Palladio Web Components let you easily publish visualizations created with [<img
 
 See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladio-webcomponents.netlify.app/ for a showcase site where you can test your own Palladio save files.
 
+- [Current Status](#current-status)
+- [Getting Help](#getting-help)
+- [Using Palladio Web Components in your pages](#using-palladio-web-components-in-your-pages)
+  - [Basic Usage](#basic-usage)
+  - [Gallery Component](#gallery-component)
+  - [Graph Component](#graph-component)
+  - [Map Component](#map-component)
+- [Versioning](#versioning)
+  - [Suggested Use with the CDN](#suggested-use-with-the-cdn)
+- [Browser Support](#browser-support)
+  - [Automatically resizing with the parent container](#automatically-resizing-with-the-parent-container)
+- [Development](#development)
+
 ## Current Status
 
 These components are ready to use and can be safely and stably deployed on websites and web pages. They are not, however, fully feature-complete and they are not yet well or widely tested. You are encouraged to use these components with confidence that everything that works right now will continue to work, and that bugs will be fixed and new features will be added in a stable and predictable way (see [Versioning](#versioning) below). For an idea of where we’d like to go with this, see the [roadmap](ROADMAP.md).
