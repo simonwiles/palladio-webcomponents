@@ -4,7 +4,7 @@
 
 # Palladio Web Components
 
-Palladio Web Components let you easily publish visualizations created with [Palladio](http://hdlab.stanford.edu/palladio/) on your own pages.
+Palladio Web Components let you easily publish visualizations created with [<img src="https://user-images.githubusercontent.com/96218/104404778-58a55500-5510-11eb-94c9-d5cdac4defcc.png" valign="top"> Palladio](http://hdlab.stanford.edu/palladio/) on your own pages.
 
 See https://codepen.io/simonwiles/pen/yLYEKrW for an example, or https://palladio-webcomponents.netlify.app/ for a showcase site where you can test your own Palladio save files.
 
