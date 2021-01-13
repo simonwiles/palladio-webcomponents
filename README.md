@@ -14,6 +14,8 @@ These components are ready to use and can be safely and stably deployed on websi
 
 If you meet with difficulties, please get in touch (see [Getting Help](#getting-help) below). Likewise if you are able to successfully use these components please let us know -- we’d be delighted to know that they are useful, and what your experience is like. We’d also love to see what you’re building!
 
+You can get updates on new releases by subscribing to ”watch“ this GitHub repo -- and please “star” this repo to increase its visibility!
+
 ## Getting Help
 
 If you encounter bugs or have feature requests, please use [the GitHub Issue Tracker](https://github.com/simonwiles/palladio-webcomponents/issues), and if you have general questions or requests for help, please use [the GitHub Discussions forum](https://github.com/simonwiles/palladio-webcomponents/discussions).
