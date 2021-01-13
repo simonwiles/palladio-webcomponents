@@ -56,11 +56,6 @@ class PalladioWebcomponentBase extends HTMLElement {
     shadowRoot.appendChild(style);
     style.textContent = baseComponentStyles;
 
-    if (!this.projectUrl) {
-      this.renderError('A "<code>project-url</code>" attribute is required!');
-      return;
-    }
-
     if (this.externalStylesheets) {
       const stylesheetLink = document
         .createRange()
@@ -89,6 +84,10 @@ class PalladioWebcomponentBase extends HTMLElement {
         throttle(this.onResize.bind(this), 250),
       );
       this.resizeObserver.observe(this);
+    }
+
+    if (!this.projectUrl) {
+      this.renderError('A "<code>project-url</code>" attribute is required!');
     }
   }
 
