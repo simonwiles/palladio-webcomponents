@@ -10,6 +10,7 @@ If you'd like to help work on one, please get in touch by filing an issue on thi
 - Extended Javascript API.
   - for those who might want to control the components from JS, but also to facilitate multi-component integration.
 - Export current view to PNG/SVG?
+- Some kind of automated test suite to guard against regressions. This is not going to be especially easy, but even just covering a modest amount of the (relatively small) codebase would give me some peace of mind.
 
 ## Existing Components
 
