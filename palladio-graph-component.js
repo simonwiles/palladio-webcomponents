@@ -39,7 +39,7 @@ window.customElements.define(
       const zoom = d3
         .zoom()
         .scaleExtent([0.1, 2])
-        .on("zoom", () => g.attr("transform", d3.event.transform));
+        .on("zoom", ({transform}) => g.attr("transform", transform));
 
       svg.call(zoom);
 
@@ -117,19 +117,19 @@ window.customElements.define(
         .call(
           d3
             .drag()
-            .on("start", (d) => {
-              if (!d3.event.active) this.simulation.alphaTarget(0.1).restart();
+            .on("start", (event, d) => {
+              if (!event.active) this.simulation.alphaTarget(0.1).restart();
               d.fx = d.x;
               d.fy = d.y;
             })
-            .on("drag", (d) => {
-              d.fx = d3.event.x;
-              d.fy = d3.event.y;
+            .on("drag", (event, d) => {
+              d.fx = event.x;
+              d.fy = event.y;
             })
-            .on("end", (d) => {
-              if (!d3.event.active) this.simulation.alphaTarget(0);
-              d.fx = d3.event.x;
-              d.fy = d3.event.y;
+            .on("end", (event, d) => {
+              if (!event.active) this.simulation.alphaTarget(0);
+              d.fx = event.x;
+              d.fy = event.y;
             }),
         );
 
