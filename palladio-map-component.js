@@ -149,6 +149,7 @@ window.customElements.define(
             }]`;
 
           // create a pointsMap to group points by location
+          //  Map() {<coords> => [ <row>, ... ] }
           let pointsMap = this.rows
             .filter((row) => row[sourceCoordinatesKey])
             .reduce(
@@ -175,8 +176,11 @@ window.customElements.define(
               );
 
             // and an edgesMap
+            //  Map() {[<sourceCoords>, <destCoords>] => [ <row>, ... ] }
             const edgesMap = this.rows
               .filter(
+                // only rows that have a source *and* a destination
+                //  (that are not the same) create edges
                 (row) =>
                   row[sourceCoordinatesKey] &&
                   row[destinationCoordinatesKey] &&

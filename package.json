@@ -9,29 +9,31 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --ext js",
-    "build:map": "parcel build --detailed-report --no-cache --no-source-maps palladio-map-webcomponent.js",
-    "watch:map": "parcel watch palladio-map-webcomponent.js",
-    "build:graph": "parcel build --detailed-report --no-cache --no-source-maps palladio-graph-webcomponent.js",
-    "watch:graph": "parcel watch palladio-graph-webcomponent.js",
-    "build:cards": "parcel build --detailed-report --no-cache --no-source-maps palladio-cards-webcomponent.js",
-    "watch:cards": "parcel watch palladio-cards-webcomponent.js",
+    "build:map": "parcel build --detailed-report --no-cache --no-source-maps palladio-map-component.js",
+    "watch:map": "parcel watch palladio-map-component.js",
+    "build:graph": "parcel build --detailed-report --no-cache --no-source-maps palladio-graph-component.js",
+    "watch:graph": "parcel watch palladio-graph-component.js",
+    "build:cards": "parcel build --detailed-report --no-cache --no-source-maps palladio-cards-component.js",
+    "watch:cards": "parcel watch palladio-cards-component.js",
     "build": "parcel build --detailed-report --no-cache --no-source-maps palladio-*-component.js",
     "watch": "parcel watch palladio-*-component.js",
     "package": "rm -rf pkg && yarn build --dist-dir pkg && rm pkg/*.png && cp README.md LICENSE pkg/",
     "release": "yarn package && np --no-publish && cp package.json pkg/ && yarn publish pkg"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "@parcel/transformer-image": "2.0.0-rc.0",
+    "@parcel/transformer-inline-string": "2.0.0-rc.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-parcel2": "^1.0.1",
-    "eslint-plugin-import": "^2.23.3",
-    "np": "^7.2.0",
-    "parcel": "^2.0.0-beta.1",
-    "prettier": "^2.2.1"
+    "eslint-plugin-import": "^2.24.2",
+    "np": "^7.5.0",
+    "parcel": "2.0.0-rc.0",
+    "prettier": "^2.4.1"
   },
   "dependencies": {
-    "d3": "^7.0.0",
+    "d3": "^7.1.1",
     "leaflet": "^1.7.1"
   }
 }
