@@ -149,9 +149,33 @@ class PalladioWebcomponentBase extends HTMLElement {
   }
 
   static getRows(data) {
-    // TODO: this is going to need to be able to handle multiple files in a project.
+    const links = data.links.map((link) => ({
+      sourceKey: link.source.field.key,
+      targetKey: link.lookup.field.key,
+      fileId: link.lookup.file.uniqueId,
+    }));
     try {
-      return data.files[0].data;
+      return data.files[0].data.map((row) => {
+        // For each link (i.e. foreign key relation), define a getter on the row object
+        //  to fetch the value if/when it's needed (effectively a lazy denormalization)
+        links.forEach(({ sourceKey, targetKey, fileId }) => {
+          const linkedFile = data.files[fileId];
+          linkedFile.fields.forEach(({ key: linkedKey }) => {
+            if (Object.prototype.hasOwnProperty.call(row, linkedKey)) return;
+            Object.defineProperty(row, linkedKey, {
+              get() {
+                const linkedRow = linkedFile.data.find(
+                  (_linkedRow) => _linkedRow[targetKey] === row[sourceKey],
+                );
+
+                if (!linkedRow) return undefined;
+                return linkedRow[linkedKey];
+              },
+            });
+          });
+        });
+        return row;
+      });
     } catch (e) {
       return false;
     }
