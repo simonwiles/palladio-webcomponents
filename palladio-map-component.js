@@ -136,10 +136,8 @@ window.customElements.define(
         .filter(({ layerType }) => layerType === "data")
         .forEach((layer) => {
           // destructure some properties into the local scope
-          const {
-            sourceCoordinatesKey,
-            destinationCoordinatesKey,
-          } = layer.mapping;
+          const { sourceCoordinatesKey, destinationCoordinatesKey } =
+            layer.mapping;
 
           const tooltipText = (points) =>
             `• ${points
