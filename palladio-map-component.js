@@ -140,9 +140,9 @@ window.customElements.define(
             layer.mapping;
 
           const tooltipText = (points) =>
-            `• ${points
-              .map((point) => point[layer.descriptiveDimKey])
-              .join("<br>• ")}<br> [${points.length} record${
+            `• ${[
+              ...new Set(points.map((point) => point[layer.descriptiveDimKey])),
+            ].join("<br>• ")}<br> [${points.length} record${
               points.length > 1 ? "s" : ""
             }]`;
 
