@@ -156,23 +156,17 @@ class PalladioWebcomponentBase extends HTMLElement {
     }));
     try {
       return data.files[0].data.map((row) => {
-        // For each link (i.e. foreign key relation), define a getter on the row object
-        //  to fetch the value if/when it's needed (effectively a lazy denormalization)
         links.forEach(({ sourceKey, targetKey, fileId }) => {
           const linkedFile = data.files[fileId];
-          linkedFile.fields.forEach(({ key: linkedKey }) => {
-            if (Object.prototype.hasOwnProperty.call(row, linkedKey)) return;
-            Object.defineProperty(row, linkedKey, {
-              get() {
-                const linkedRow = linkedFile.data.find(
-                  (_linkedRow) => _linkedRow[targetKey] === row[sourceKey],
-                );
-
-                if (!linkedRow) return undefined;
-                return linkedRow[linkedKey];
-              },
+          const linkedRow = linkedFile.data.find(
+            (_linkedRow) => _linkedRow[targetKey] === row[sourceKey],
+          );
+          if (linkedRow) {
+            Object.entries(linkedRow).forEach(([key, value]) => {
+              // eslint-disable-next-line no-param-reassign
+              row[`${sourceKey}__${key}`] = value;
             });
-          });
+          }
         });
         return row;
       });
