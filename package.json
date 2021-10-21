@@ -23,6 +23,7 @@
   "devDependencies": {
     "@parcel/transformer-image": "2.0.0-rc.0",
     "@parcel/transformer-inline-string": "2.0.0-rc.0",
+    "cypress": "^8.5.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
