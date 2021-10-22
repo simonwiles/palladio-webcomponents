@@ -18,7 +18,8 @@
     "build": "parcel build --detailed-report --no-cache --no-source-maps palladio-*-component.js",
     "watch": "parcel watch palladio-*-component.js",
     "package": "rm -rf pkg && yarn build --dist-dir pkg && rm pkg/*.png && cp README.md LICENSE pkg/",
-    "release": "yarn package && np --no-publish && cp package.json pkg/ && yarn publish pkg"
+    "release": "yarn package && np --no-publish && cp package.json pkg/ && yarn publish pkg",
+    "release:next": "yarn package && np --no-publish --any-branch && cp package.json pkg/ && yarn publish pkg --tag next"
   },
   "devDependencies": {
     "@parcel/transformer-image": "2.0.0",
