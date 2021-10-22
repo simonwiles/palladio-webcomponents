@@ -39,7 +39,7 @@ window.customElements.define(
       const zoom = d3
         .zoom()
         .scaleExtent([0.1, 2])
-        .on("zoom", ({transform}) => g.attr("transform", transform));
+        .on("zoom", ({ transform }) => g.attr("transform", transform));
 
       svg.call(zoom);
 
