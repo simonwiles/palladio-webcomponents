@@ -136,12 +136,53 @@ window.customElements.define(
         .filter(({ layerType }) => layerType === "data")
         .forEach((layer) => {
           // destructure some properties into the local scope
-          const { sourceCoordinatesKey, destinationCoordinatesKey } =
-            layer.mapping;
+          const {
+            sourceCoordinatesType,
+            sourceCoordinatesKey,
+            sourceCoordinatesDescription,
+            destinationCoordinatesType,
+            destinationCoordinatesKey,
+            destinationCoordinatesDescription,
+          } = layer.mapping;
 
-          const tooltipText = (points) =>
+          const getSourceCoords = (row) =>
+            sourceCoordinatesType === null
+              ? row[sourceCoordinatesKey]
+              : row[`${sourceCoordinatesDescription}__${sourceCoordinatesKey}`];
+
+          const getDestinationCoords = (row) =>
+            sourceCoordinatesType === null
+              ? row[destinationCoordinatesKey]
+              : row[
+                  `${destinationCoordinatesDescription}__${destinationCoordinatesKey}`
+                ];
+
+          const getSourceLabel = (row) =>
+            sourceCoordinatesType === null
+              ? row[layer.descriptiveDimKey]
+              : row[
+                  `${sourceCoordinatesDescription}__${layer.descriptiveDimKey}`
+                ];
+
+          const getDestinationLabel = (row) =>
+            destinationCoordinatesType === null
+              ? row[layer.descriptiveDimKey]
+              : row[
+                  `${destinationCoordinatesDescription}__${layer.descriptiveDimKey}`
+                ];
+
+          const pointTooltipText = (points) =>
+            `• ${[...new Set(points.map((point) => point.label))].join(
+              "<br>• ",
+            )}<br> [${points.length} record${points.length > 1 ? "s" : ""}]`;
+
+          const edgeTooltipText = (points) =>
             `• ${[
-              ...new Set(points.map((point) => point[layer.descriptiveDimKey])),
+              ...new Set(
+                points.map(
+                  (point) => `${point.sourceLabel} → ${point.destinationLabel}`,
+                ),
+              ),
             ].join("<br>• ")}<br> [${points.length} record${
               points.length > 1 ? "s" : ""
             }]`;
@@ -149,12 +190,15 @@ window.customElements.define(
           // create a pointsMap to group points by location
           //  Map() {<coords> => [ <row>, ... ] }
           let pointsMap = this.rows
-            .filter((row) => row[sourceCoordinatesKey])
+            .filter((row) => getSourceCoords(row))
             .reduce(
               (_pointsMap, row) =>
-                _pointsMap.set(row[sourceCoordinatesKey], [
-                  ...(_pointsMap.get(row[sourceCoordinatesKey]) || []),
-                  row,
+                _pointsMap.set(getSourceCoords(row), [
+                  ...(_pointsMap.get(getSourceCoords(row)) || []),
+                  {
+                    label: getSourceLabel(row),
+                    aggregateKey: row[layer.aggregateKey],
+                  },
                 ]),
               new Map(),
             );
@@ -163,12 +207,15 @@ window.customElements.define(
             // if this is a point-to-point map, we need markers for the
             //  destination locations too
             pointsMap = this.rows
-              .filter((row) => row[destinationCoordinatesKey])
+              .filter((row) => getDestinationCoords(row))
               .reduce(
                 (_pointsMap, row) =>
-                  _pointsMap.set(row[destinationCoordinatesKey], [
-                    ...(_pointsMap.get(row[destinationCoordinatesKey]) || []),
-                    row,
+                  _pointsMap.set(getDestinationCoords(row), [
+                    ...(_pointsMap.get(getDestinationCoords(row)) || []),
+                    {
+                      label: getDestinationLabel(row),
+                      aggregateKey: row[layer.aggregateKey],
+                    },
                   ]),
                 pointsMap,
               );
@@ -180,34 +227,35 @@ window.customElements.define(
                 // only rows that have a source *and* a destination
                 //  (that are not the same) create edges
                 (row) =>
-                  row[sourceCoordinatesKey] &&
-                  row[destinationCoordinatesKey] &&
-                  !(
-                    row[sourceCoordinatesKey] === row[destinationCoordinatesKey]
-                  ),
+                  getSourceCoords(row) &&
+                  getDestinationCoords(row) &&
+                  !(getSourceCoords(row) === getDestinationCoords(row)),
               )
               .reduce(
                 (_edgesMap, row) =>
                   _edgesMap.set(
-                    [row[sourceCoordinatesKey], row[destinationCoordinatesKey]],
+                    [getSourceCoords(row), getDestinationCoords(row)],
                     [
                       ...(_edgesMap.get([
-                        row[sourceCoordinatesKey],
-                        row[destinationCoordinatesKey],
+                        getSourceCoords(row),
+                        getDestinationCoords(row),
                       ]) || []),
-                      row,
+                      {
+                        sourceLabel: getSourceLabel(row),
+                        destinationLabel: getDestinationLabel(row),
+                        aggregateKey: row[layer.aggregateKey],
+                      },
                     ],
                   ),
                 new Map(),
               );
-
             edgesMap.forEach((points, [sourceCoords, targetCoords]) => {
               L.polyline([sourceCoords.split(","), targetCoords.split(",")], {
                 color: "rgba(102,102,102,.2)",
                 weight: 2,
                 smoothFactor: 1,
               })
-                .bindTooltip(tooltipText(points), {
+                .bindTooltip(edgeTooltipText(points), {
                   className: "map-tooltip",
                   direction: "top",
                 })
@@ -221,7 +269,7 @@ window.customElements.define(
                 points.length
               : // "SUM" -- scale according to sum of layer.aggregateKey properties
                 points.reduce(
-                  (a, b) => a + parseInt(b[layer.aggregateKey] || 0, 10),
+                  (a, b) => a + parseInt(b.aggregateKey || 0, 10),
                   0,
                 );
 
@@ -246,7 +294,7 @@ window.customElements.define(
                 ? scale(getAggregatedValue(points))
                 : minPointSize,
             })
-              .bindTooltip(tooltipText(points), {
+              .bindTooltip(pointTooltipText(points), {
                 className: "map-tooltip",
                 direction: "top",
               })
@@ -272,16 +320,28 @@ window.customElements.define(
       this.body.querySelector("div.map-view").style.height = "100%";
 
       this.doZoomToFit = () => {
-        // this needs to be more sophisticated if there are multiple data layers
+        // TODO: this needs to be more sophisticated if there are multiple data layers
         const dataLayers = this.settings.layers.filter(
           (layer) => layer.layerType === "data",
         );
         if (dataLayers.length) {
+          const {
+            sourceCoordinatesType,
+            sourceCoordinatesKey,
+            sourceCoordinatesDescription,
+          } = dataLayers[0].mapping;
           this.map.invalidateSize();
           this.map.fitBounds(
-            this.rows.map((row) =>
-              row[dataLayers[0].mapping.sourceCoordinatesKey].split(","),
-            ),
+            this.rows.map((row) => {
+              const coords =
+                sourceCoordinatesType === null
+                  ? row[sourceCoordinatesKey]
+                  : row[
+                      `${sourceCoordinatesDescription}__${sourceCoordinatesKey}`
+                    ];
+              if (coords) return coords.split(",");
+              return undefined;
+            }),
           );
         }
       };

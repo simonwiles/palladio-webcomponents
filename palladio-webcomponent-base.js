@@ -149,9 +149,31 @@ class PalladioWebcomponentBase extends HTMLElement {
   }
 
   static getRows(data) {
-    // TODO: this is going to need to be able to handle multiple files in a project.
+    const links = data.links.map((link) => ({
+      sourceKey: link.source.field.key,
+      targetKey: link.lookup.field.key,
+      fileId: link.lookup.file.uniqueId,
+    }));
     try {
-      return data.files[0].data;
+      return data.files
+        .find(({ uniqueId }) => uniqueId === 0)
+        .data.map((row) => {
+          links.forEach(({ sourceKey, targetKey, fileId }) => {
+            const linkedFile = data.files.find(
+              ({ uniqueId }) => uniqueId === fileId,
+            );
+            const linkedRow = linkedFile.data.find(
+              (_linkedRow) => _linkedRow[targetKey] === row[sourceKey],
+            );
+            if (linkedRow) {
+              Object.entries(linkedRow).forEach(([key, value]) => {
+                // eslint-disable-next-line no-param-reassign
+                row[`${sourceKey}__${key}`] = value;
+              });
+            }
+          });
+          return row;
+        });
     } catch (e) {
       return false;
     }
