@@ -276,7 +276,7 @@ window.customElements.define(
         const dataLayers = this.settings.layers.filter(
           (layer) => layer.layerType === "data",
         );
-        if (dataLayers) {
+        if (dataLayers.length) {
           this.map.invalidateSize();
           this.map.fitBounds(
             this.rows.map((row) =>
