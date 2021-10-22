@@ -2,6 +2,13 @@ import * as d3 from "d3";
 import graphComponentStyles from "bundle-text:./palladio-graph-component.css";
 import PalladioWebcomponentBase from "./palladio-webcomponent-base.js";
 
+/* eslint-disable camelcase, import/newline-after-import */
+import selection_interrupt from "./node_modules/d3-transition/src/selection/interrupt.js";
+import selection_transition from "./node_modules/d3-transition/src/selection/transition.js";
+d3.selection.prototype.interrupt = selection_interrupt;
+d3.selection.prototype.transition = selection_transition;
+/* eslint-enable camelcase, import/newline-after-import */
+
 window.customElements.define(
   "palladio-graph",
   class extends PalladioWebcomponentBase {
