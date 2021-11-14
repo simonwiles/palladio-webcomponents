@@ -149,34 +149,49 @@ class PalladioWebcomponentBase extends HTMLElement {
   }
 
   static getRows(data) {
-    const links = data.links.map((link) => ({
-      sourceKey: link.source.field.key,
-      targetKey: link.lookup.field.key,
-      fileId: link.lookup.file.uniqueId,
-    }));
-    try {
-      return data.files
-        .find(({ uniqueId }) => uniqueId === 0)
-        .data.map((row) => {
-          links.forEach(({ sourceKey, targetKey, fileId }) => {
-            const linkedFile = data.files.find(
-              ({ uniqueId }) => uniqueId === fileId,
-            );
-            const linkedRow = linkedFile.data.find(
-              (_linkedRow) => _linkedRow[targetKey] === row[sourceKey],
-            );
-            if (linkedRow) {
-              Object.entries(linkedRow).forEach(([key, value]) => {
-                // eslint-disable-next-line no-param-reassign
-                row[`${sourceKey}__${key}`] = value;
-              });
+    const links = data.links.reduce(
+      (_links, link) => ({
+        ..._links,
+
+        [link.source.field.key]: {
+          targetKey: link.lookup.field.key,
+          // file: data.files.find(
+          //   ({ uniqueId }) => uniqueId === link.lookup.file.uniqueId,
+          // ),
+          fileId: link.lookup.file.uniqueId,
+        },
+      }),
+      {},
+    );
+
+    const makeRowProxy = (row) =>
+      new Proxy(row, {
+        get(target, prop /* , receiver */) {
+          if (prop in target) {
+            return target[prop];
+          }
+          if (prop.indexOf("__")) {
+            const [sourceKey, targetKey] = prop.split("__");
+            if (row[sourceKey] && sourceKey in links) {
+              // const { file: linkedFile, targetKey: linkedKey } =
+              const { fileId: linkedFileId, targetKey: linkedKey } =
+                links[sourceKey];
+              const linkedFile = data.files.find(
+                ({ uniqueId }) => uniqueId === linkedFileId,
+              );
+              const linkedRow = linkedFile.data.find(
+                (_linkedRow) => _linkedRow[linkedKey] === row[sourceKey],
+              );
+              return linkedRow[targetKey];
             }
-          });
-          return row;
-        });
-    } catch (e) {
-      return false;
-    }
+          }
+          return undefined;
+        },
+      });
+
+    return data.files
+      .find(({ uniqueId }) => uniqueId === 0)
+      .data.map((row) => makeRowProxy(row));
   }
 
   renderError(error) {
